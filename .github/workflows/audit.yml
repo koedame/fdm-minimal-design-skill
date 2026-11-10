@@ -1,0 +1,43 @@
+name: Audit
+
+# The pinned Python environment (requirements.txt, requirements-dev.txt) is
+# checked against the PyPI advisory database. A new advisory can appear without
+# any change to this repository, so besides pull requests that touch the
+# requirements and pushes, this runs every week; a failing scheduled run is how
+# a freshly published advisory reaches us. Every dependency is pinned, so the
+# files are audited as they are (--no-deps) without resolving anything.
+
+on:
+  pull_request:
+    paths:
+      - "requirements*.txt"
+      - ".github/workflows/audit.yml"
+  push:
+    branches: [main]
+  schedule:
+    - cron: "23 3 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pip-audit:
+    name: PyPI advisories
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+
+      - name: Install pip-audit
+        run: pip install pip-audit==2.10.1
+
+      - name: Audit the runtime environment
+        run: pip-audit -r requirements.txt --no-deps --disable-pip
+
+      - name: Audit the test tools
+        run: pip-audit -r requirements-dev.txt --no-deps --disable-pip

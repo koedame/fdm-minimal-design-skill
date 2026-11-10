@@ -1,0 +1,72 @@
+name: CI
+
+# Builds every sample and model with the pinned CadQuery environment and runs
+# the same checks the skill asks for (references/04_review.md, steps 4 and 5),
+# then packages the skill.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: Samples, models and skill bundle
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install the pinned environment
+        run: pip install -r requirements-dev.txt
+
+      - name: Unit tests
+        run: python -m pytest -q
+
+      - name: Verify the 12 samples (validity, interference, watertight, bed, ground contact)
+        run: python skills/fdm-minimal-design/scripts/verify.py --all
+
+      - name: Verify the hinge of 07_hinged_case over its opening range
+        run: >-
+          python skills/fdm-minimal-design/scripts/verify.py 07_hinged_case
+          --hinge "lid:base:0,32,24:1,32,24:0,-30,-60,-90,-110"
+
+      - name: Verify the template for new objects
+        run: >-
+          python skills/fdm-minimal-design/scripts/verify.py pen_cup
+          --module skills/fdm-minimal-design/scripts/template_new_object.py
+
+      - name: Check the models in models/
+        run: python tools/models.py check
+
+      - name: Render the samples
+        run: >-
+          python skills/fdm-minimal-design/scripts/render.py --all
+          --out build/previews --sheet build/previews/overview.png
+
+      - name: Build the skill bundle
+        run: python tools/build_skill.py
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: fdm-minimal-design
+          path: |
+            dist/fdm-minimal-design.skill
+            build/previews/
+          retention-days: 14

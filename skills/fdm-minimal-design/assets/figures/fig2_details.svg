@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 480" width="1360" height="960" role="img"><title>Details that carry the design language</title><style>
+text{font-family:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif}
+.th{font-size:14px;font-weight:500;fill:#2C2C2A}
+.ts{font-size:12px;fill:#5F5E5A}
+.leader{stroke:#888780;stroke-width:0.6;stroke-dasharray:3 3;fill:none}
+</style>
+<rect width="100%" height="100%" fill="#FFFFFF"/><defs><pattern id="perf" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.8" fill="#5F5E5A"/></pattern></defs>
+<text class="ts" x="50" y="48">Front view</text>
+<rect x="50" y="60" width="350" height="210" rx="14" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<rect x="58" y="68" width="334" height="194" rx="8" fill="#D9D7D0" stroke="#B4B2A9" stroke-width="0.5"/>
+<rect x="78" y="88" width="168" height="152" fill="url(#perf)"/>
+<circle cx="320" cy="140" r="44" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<circle cx="320" cy="140" r="34" fill="none" stroke="#B4B2A9" stroke-width="0.5"/>
+<line x1="320" y1="108" x2="320" y2="122" stroke="#3A3A38" stroke-width="2" stroke-linecap="round"/>
+<circle cx="286" cy="222" r="9" fill="#EF9F27"/>
+<circle cx="316" cy="222" r="9" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<circle cx="346" cy="222" r="9" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="286" y="250" text-anchor="middle" style="fill:#888780">on</text>
+<text class="ts" x="316" y="250" text-anchor="middle" style="fill:#888780">1</text>
+<text class="ts" x="346" y="250" text-anchor="middle" style="fill:#888780">2</text>
+<line class="leader" x1="240" y1="92" x2="424" y2="76"/><circle cx="240" cy="92" r="2" fill="#888780"/>
+<text class="ts" x="430" y="80">Small holes, densely packed</text>
+<line class="leader" x1="352" y1="118" x2="424" y2="122"/><circle cx="352" cy="118" r="2" fill="#888780"/>
+<text class="ts" x="430" y="126">One concentric step, one indicator line</text>
+<line class="leader" x1="286" y1="213" x2="424" y2="166"/><circle cx="286" cy="213" r="2" fill="#888780"/>
+<text class="ts" x="430" y="170">Accent only on the power button</text>
+<line class="leader" x1="354" y1="246" x2="424" y2="212"/><circle cx="354" cy="246" r="2" fill="#888780"/>
+<text class="ts" x="430" y="216">Labels small and light grey</text>
+<line class="leader" x1="396" y1="255" x2="424" y2="258"/><circle cx="396" cy="255" r="2" fill="#888780"/>
+<text class="ts" x="430" y="262">Reveal line between plate and housing</text>
+<text class="ts" x="50" y="318">Plan view</text>
+<rect x="50" y="330" width="350" height="110" rx="22" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<rect x="66" y="434" width="318" height="6" fill="#D9D7D0" stroke="#B4B2A9" stroke-width="0.5"/>
+<line class="leader" x1="392" y1="340" x2="424" y2="356"/><circle cx="392" cy="340" r="2" fill="#888780"/>
+<text class="ts" x="430" y="360">Generous radius in plan</text>
+<line class="leader" x1="384" y1="437" x2="424" y2="430"/><circle cx="384" cy="437" r="2" fill="#888780"/>
+<text class="ts" x="430" y="434">Front plate as a thin separate part</text></svg>
