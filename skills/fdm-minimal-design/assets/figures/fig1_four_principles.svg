@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" width="1360" height="1000" role="img"><title>Four principles of the design language</title><style>
+text{font-family:"Inter","Helvetica Neue",Helvetica,Arial,sans-serif}
+.th{font-size:14px;font-weight:500;fill:#2C2C2A}
+.ts{font-size:12px;fill:#5F5E5A}
+.leader{stroke:#888780;stroke-width:0.6;stroke-dasharray:3 3;fill:none}
+</style>
+<rect width="100%" height="100%" fill="#FFFFFF"/>
+<text class="th" x="40" y="50">1. Rounded plan, sharp edges</text>
+<rect x="50" y="75" width="120" height="80" rx="18" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="110" y="180" text-anchor="middle">Plan: generous radius</text>
+<rect x="200" y="95" width="120" height="22" rx="1" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<text class="ts" x="260" y="136" text-anchor="middle">Side: crisp edge (C0.5)</text>
+<rect x="200" y="155" width="120" height="22" rx="11" fill="none" stroke="#888780" stroke-width="1" stroke-dasharray="4 3"/>
+<text class="ts" x="260" y="196" text-anchor="middle">No: large radius all round</text>
+<text class="th" x="360" y="50">2. Everything on one grid</text>
+<line class="leader" x1="380" y1="68" x2="380" y2="212"/><line class="leader" x1="400" y1="68" x2="400" y2="212"/><line class="leader" x1="420" y1="68" x2="420" y2="212"/><line class="leader" x1="440" y1="68" x2="440" y2="212"/><line class="leader" x1="460" y1="68" x2="460" y2="212"/><line class="leader" x1="480" y1="68" x2="480" y2="212"/><line class="leader" x1="500" y1="68" x2="500" y2="212"/><line class="leader" x1="520" y1="68" x2="520" y2="212"/><line class="leader" x1="540" y1="68" x2="540" y2="212"/><line class="leader" x1="560" y1="68" x2="560" y2="212"/><line class="leader" x1="580" y1="68" x2="580" y2="212"/><line class="leader" x1="600" y1="68" x2="600" y2="212"/><line class="leader" x1="620" y1="68" x2="620" y2="212"/><line class="leader" x1="370" y1="80" x2="630" y2="80"/><line class="leader" x1="370" y1="100" x2="630" y2="100"/><line class="leader" x1="370" y1="120" x2="630" y2="120"/><line class="leader" x1="370" y1="140" x2="630" y2="140"/><line class="leader" x1="370" y1="160" x2="630" y2="160"/><line class="leader" x1="370" y1="180" x2="630" y2="180"/><line class="leader" x1="370" y1="200" x2="630" y2="200"/>
+<rect x="380" y="80" width="240" height="120" rx="14" fill="#ECEAE4" fill-opacity="0.85" stroke="#888780" stroke-width="0.5"/>
+<circle cx="400" cy="100" r="4" fill="#5F5E5A"/><circle cx="400" cy="120" r="4" fill="#5F5E5A"/><circle cx="400" cy="140" r="4" fill="#5F5E5A"/><circle cx="400" cy="160" r="4" fill="#5F5E5A"/><circle cx="400" cy="180" r="4" fill="#5F5E5A"/><circle cx="420" cy="100" r="4" fill="#5F5E5A"/><circle cx="420" cy="120" r="4" fill="#5F5E5A"/><circle cx="420" cy="140" r="4" fill="#5F5E5A"/><circle cx="420" cy="160" r="4" fill="#5F5E5A"/><circle cx="420" cy="180" r="4" fill="#5F5E5A"/><circle cx="440" cy="100" r="4" fill="#5F5E5A"/><circle cx="440" cy="120" r="4" fill="#5F5E5A"/><circle cx="440" cy="140" r="4" fill="#5F5E5A"/><circle cx="440" cy="160" r="4" fill="#5F5E5A"/><circle cx="440" cy="180" r="4" fill="#5F5E5A"/><circle cx="460" cy="100" r="4" fill="#5F5E5A"/><circle cx="460" cy="120" r="4" fill="#5F5E5A"/><circle cx="460" cy="140" r="4" fill="#5F5E5A"/><circle cx="460" cy="160" r="4" fill="#5F5E5A"/><circle cx="460" cy="180" r="4" fill="#5F5E5A"/><circle cx="480" cy="100" r="4" fill="#5F5E5A"/><circle cx="480" cy="120" r="4" fill="#5F5E5A"/><circle cx="480" cy="140" r="4" fill="#5F5E5A"/><circle cx="480" cy="160" r="4" fill="#5F5E5A"/><circle cx="480" cy="180" r="4" fill="#5F5E5A"/>
+<circle cx="540" cy="120" r="10" fill="#3A3A38"/><circle cx="580" cy="120" r="10" fill="#3A3A38"/><circle cx="560" cy="160" r="10" fill="#3A3A38"/>
+<text class="ts" x="500" y="232" text-anchor="middle">Outline, holes and buttons share one pitch</text>
+<text class="th" x="40" y="280">3. Two tones + one accent</text>
+<rect x="50" y="300" width="260" height="105" rx="14" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<rect x="70" y="318" width="140" height="70" rx="3" fill="#3A3A38"/>
+<circle cx="258" cy="335" r="12" fill="#EF9F27"/>
+<circle cx="258" cy="370" r="12" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<rect x="50" y="420" width="30" height="30" rx="4" fill="#ECEAE4" stroke="#888780" stroke-width="0.5"/>
+<rect x="130" y="420" width="30" height="30" rx="4" fill="#3A3A38"/>
+<rect x="210" y="420" width="30" height="30" rx="4" fill="#EF9F27"/>
+<text class="ts" x="65" y="470" text-anchor="middle">Body</text>
+<text class="ts" x="145" y="470" text-anchor="middle">Secondary</text>
+<text class="ts" x="225" y="470" text-anchor="middle">One function</text>
+<text class="th" x="360" y="280">4. Repeat one shape</text>
+<rect x="380" y="300" width="230" height="140" rx="12" fill="#3A3A38"/>
+<circle cx="420" cy="328" r="15" fill="#ECEAE4"/><circle cx="470" cy="328" r="15" fill="#ECEAE4"/><circle cx="520" cy="328" r="15" fill="#ECEAE4"/><circle cx="570" cy="328" r="15" fill="#ECEAE4"/><circle cx="420" cy="370" r="15" fill="#ECEAE4"/><circle cx="470" cy="370" r="15" fill="#ECEAE4"/><circle cx="520" cy="370" r="15" fill="#ECEAE4"/><circle cx="570" cy="370" r="15" fill="#ECEAE4"/><circle cx="420" cy="412" r="15" fill="#ECEAE4"/><circle cx="470" cy="412" r="15" fill="#ECEAE4"/><circle cx="520" cy="412" r="15" fill="#ECEAE4"/>
+<circle cx="570" cy="412" r="15" fill="#EF9F27"/>
+<text class="ts" x="495" y="470" text-anchor="middle">Show differences by colour, not by shape</text></svg>

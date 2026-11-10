@@ -1,0 +1,50 @@
+fdm-minimal-design — licences
+https://github.com/koedame/fdm-minimal-design-skill
+
+This folder is under two licences:
+
+1. Scripts and skill documents — MIT License
+   SKILL.md, LICENSE.txt, references/*.md and scripts/*.py.
+   The full text is below.
+
+2. 3D models and images — Creative Commons Attribution 4.0 International (CC BY 4.0)
+   Everything in assets/: the figures (SVG, PNG), the sample previews (PNG)
+   and the sample models (STEP), including STEP and STL files generated from
+   the samples in scripts/fdm_samples.py.
+   Licence: https://creativecommons.org/licenses/by/4.0/
+   Attribution: "fdm-minimal-design by koedame, CC BY 4.0", with a link to
+   https://github.com/koedame/fdm-minimal-design-skill and a note of any changes.
+
+No warranty. The models and dimensions are untested on real prints. Printed
+parts are not certified for any use: for anything that holds batteries or LEDs,
+gets hot, or touches food, the safety of the printed parts is not guaranteed;
+use certified electronic components and check the materials and the electrical
+design yourself.
+
+The design language is inspired by 1960s-70s Braun products (Dieter Rams).
+This project is not affiliated with, endorsed by or sponsored by Braun or its
+trademark owners.
+
+-------------------------------------------------------------------------------
+
+MIT License
+
+Copyright (c) 2026 koedame
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

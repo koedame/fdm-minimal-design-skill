@@ -1,0 +1,14 @@
+{
+  "id": "001_pen_cup",
+  "title": "Pen cup",
+  "summary": "A square cup for pens on a floating plinth.",
+  "based_on": ["03_tray"],
+  "size_mm": [72, 72, 108],
+  "parts": [
+    {"name": "cup", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "tags": ["desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}

@@ -1,0 +1,6 @@
+# Direct dependencies. requirements.txt pins these and everything they pull in;
+# regenerate it from a clean virtual environment with:
+#   pip install -r requirements.in && pip freeze > requirements.txt
+cadquery==2.8.0   # modelling, STEP/STL export; brings vtk for render.py
+trimesh==5.2.0    # mesh checks in verify.py (watertight, extents)
+pillow==13.0.0    # contact sheet in render.py
