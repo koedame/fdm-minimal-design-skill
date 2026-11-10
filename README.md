@@ -53,7 +53,8 @@ is installed (see [Environment](#environment)).
 
 ## Environment
 
-The scripts need Python 3.11 or later. The tested versions are pinned in `requirements.txt`:
+The scripts need Python 3.11 or later. The tested versions are pinned in `requirements.txt`.
+On Linux without a display, `render.py` needs OSMesa or EGL (`sudo apt-get install libosmesa6` on Debian and Ubuntu).
 
 ```bash
 python -m venv .venv

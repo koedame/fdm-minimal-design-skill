@@ -52,6 +52,7 @@ cp -r fdm-minimal-design-skill/skills/fdm-minimal-design ~/.claude/skills/
 ## 環境
 
 スクリプトには Python 3.11 以上が要る。確かめた版は `requirements.txt` に固定してある。
+画面の無い Linux では、`render.py` に OSMesa か EGL が要る（Debian・Ubuntu なら `sudo apt-get install libosmesa6`）。
 
 ```bash
 python -m venv .venv

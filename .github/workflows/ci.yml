@@ -33,6 +33,10 @@ jobs:
             requirements.txt
             requirements-dev.txt
 
+      # VTK renders off-screen through OSMesa when there is no display.
+      - name: Install OSMesa for off-screen rendering
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libosmesa6
+
       - name: Install the pinned environment
         run: pip install -r requirements-dev.txt
 
