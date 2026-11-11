@@ -1,0 +1,15 @@
+{
+  "id": "002_sensor_box_vented",
+  "title": "Vented sensor box",
+  "summary": "An upright box for a room sensor, with slot vents on both sides and a bottom plate on two snaps.",
+  "based_on": ["08_power_bank", "04_cylinder_speaker"],
+  "size_mm": [48, 48, 72],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "bottom_plate", "qty": 1, "orientation": "Outer face down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Snap (tab)", "Connectors"],
+  "tags": ["electronics", "sensor", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
