@@ -1,0 +1,15 @@
+{
+  "id": "007_canister_tall",
+  "title": "Tall canister",
+  "summary": "A tall screw-top canister for dry goods; the lid is flush with the body.",
+  "based_on": ["12_threaded_jar"],
+  "size_mm": [72, 72, 144],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG or PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PETG or PLA, matte"}
+  ],
+  "mechanisms": ["Screw lid"],
+  "tags": ["kitchen", "container", "food"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
