@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__ — 3D viewer</title>
+<!-- One self-contained page written by scripts/viewer.py: three.js, the viewer and the model are inside. -->
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #fbfbfa; --ink: #3a3a38; --ink2: #8a8a86; --line: #e2e2de; --accent: #f09e26;
+    --unit: 4px;
+    font: 300 12px/1.5 "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    color: var(--ink); background: var(--bg);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body { display: grid; grid-template-columns: minmax(0, 1fr) 344px; height: 100vh; }
+  #view { position: relative; overflow: hidden; min-height: 0; }
+  #view canvas { width: 100%; height: 100%; }
+  #overlay { position: absolute; inset: 0; pointer-events: none; overflow: visible; }
+  #overlay line { stroke: var(--ink2); stroke-width: 1; }
+  #overlay text { fill: var(--ink); font-size: 11px; font-weight: 400; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; }
+  #overlay text.sub { fill: var(--ink2); font-weight: 300; }
+  #status { position: absolute; left: 24px; bottom: 20px; color: var(--ink2); }
+  aside { border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto; padding: 24px 24px 32px; }
+  h1 { font-size: 16px; font-weight: 400; letter-spacing: 0.02em; margin: 0; text-transform: capitalize; }
+  h2 { font-size: 10px; font-weight: 400; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink2); margin: 0 0 8px; }
+  section { padding: 20px 0; border-top: 1px solid var(--line); }
+  section:first-of-type { border-top: 0; padding-top: 4px; }
+  .meta { color: var(--ink2); margin-top: 4px; }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .seg button { font: inherit; color: var(--ink2); background: transparent; border: 0; padding: 8px 0; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { color: var(--ink); background: #fff; box-shadow: inset 0 -2px 0 var(--accent); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+  .row label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); }
+  input[type="checkbox"] { accent-color: var(--accent); margin: 0; }
+  input:disabled + span, .row.off { color: var(--ink2); opacity: 0.6; }
+  table { width: 100%; border-collapse: collapse; }
+  td, th { text-align: left; font-weight: 300; padding: 6px 0; vertical-align: top; border-top: 1px solid var(--line); }
+  th { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink2); font-weight: 400; border-top: 0; }
+  .num { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
+  .part label { display: flex; gap: 8px; align-items: flex-start; cursor: pointer; }
+  .sw { flex: none; width: 12px; height: 12px; border-radius: 2px; margin-top: 2px; border: 1px solid rgba(0, 0, 0, 0.12); }
+  .name { font-weight: 400; overflow-wrap: anywhere; }
+  .orient { color: var(--ink2); }
+  .link { font: inherit; color: var(--ink2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  .help td { border-top: 0; padding: 2px 0; color: var(--ink2); }
+  .help td:first-child { color: var(--ink); width: 34%; padding-right: 8px; }
+  details { color: var(--ink2); }
+  summary { cursor: pointer; }
+  pre { white-space: pre-wrap; font: 300 10px/1.5 ui-monospace, Menlo, Consolas, monospace; }
+  @media (max-width: 760px) {
+    body { grid-template-columns: 1fr; grid-template-rows: 62vh auto; height: auto; }
+    #view { height: 62vh; }
+    aside { border-left: 0; border-top: 1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+<main id="view">
+  <svg id="overlay"></svg>
+  <div id="status">Loading…</div>
+</main>
+<aside>
+  <section>
+    <h1 id="title">__TITLE__</h1>
+    <div class="meta" id="size"></div>
+  </section>
+  <section>
+    <h2>Show</h2>
+    <div class="seg" id="arrangement">
+      <button type="button" data-v="assembled" aria-pressed="true">Assembled</button>
+      <button type="button" data-v="print" aria-pressed="false">Print layout</button>
+    </div>
+    <div class="row" id="explode-row">
+      <span>Exploded</span>
+      <input type="range" id="explode" min="0" max="1" step="0.01" value="0" aria-label="Exploded view">
+    </div>
+    <div class="row">
+      <label><input type="checkbox" id="edges" checked><span>Edges</span></label>
+      <label><input type="checkbox" id="dims" checked><span>Dimensions</span></label>
+      <button type="button" class="link" id="reset">Reset view</button>
+    </div>
+  </section>
+  <section>
+    <div class="row" style="margin-top:0"><h2 style="margin:0">Parts</h2><button type="button" class="link" id="all">Show all</button></div>
+    <table>
+      <thead><tr><th>Part · print orientation</th><th class="num">Qty</th><th class="num">Print size mm</th></tr></thead>
+      <tbody id="parts"></tbody>
+    </table>
+  </section>
+  <section>
+    <h2>Controls</h2>
+    <table class="help">
+      <tr><td>Rotate</td><td>Drag · trackpad: <span id="tp-rotate"></span></td></tr>
+      <tr><td>Pan</td><td>Shift + drag, middle drag · trackpad: <span id="tp-pan"></span></td></tr>
+      <tr><td>Zoom</td><td>Wheel · trackpad: <span id="tp-zoom"></span></td></tr>
+    </table>
+    <div class="row">
+      <span>Two-finger scroll</span>
+      <div class="seg" id="scroll" style="width:150px">
+        <button type="button" data-v="zoom" aria-pressed="true">Zoom</button>
+        <button type="button" data-v="pan" aria-pressed="false">Pan</button>
+      </div>
+    </div>
+  </section>
+  <section>
+    <details>
+      <summary>About this file</summary>
+      <p>Written by the fdm-minimal-design skill. Sizes are from the CAD model; the shape shown is a mesh within
+        <span id="tol"></span> mm of it. Judge gaps and edges on a real print, not on screen.</p>
+      <p>The 3D view uses three.js (MIT licence):</p>
+      <pre>__LICENSE__</pre>
+    </details>
+  </section>
+</aside>
+<script>/*THREE*/</script>
+<script>/*VIEWER*/</script>
+<script>
+const DATA = "__DATA__";
+const GLB = "__GLB__";
+</script>
+<script>/*PAGE*/</script>
+</body>
+</html>

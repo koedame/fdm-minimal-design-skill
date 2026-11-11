@@ -1,6 +1,6 @@
 ---
 name: fdm-minimal-design
-description: Design, review, and model minimalist, refined objects for FDM 3D printing (enclosures, stands, clocks, lamps, containers, desk items). Use this skill when the user asks for a minimalist or "simple but not cheap-looking" design, or describes the look as "Braun-like" or "Dieter Rams-style", even if those words are not used. Also use it when someone asks why their own shape looks lazy or amateurish. Includes design principles, numeric design rules, Dos and Don'ts, a review procedure, 12 sample objects (STEP) and CadQuery scripts to generate, verify and render models.
+description: Design, review, and model minimalist, refined objects for FDM 3D printing (enclosures, stands, clocks, lamps, containers, desk items). Use this skill when the user asks for a minimalist or "simple but not cheap-looking" design, or describes the look as "Braun-like" or "Dieter Rams-style", even if those words are not used. Also use it when someone asks why their own shape looks lazy or amateurish. Includes design principles, numeric design rules, Dos and Don'ts, a review procedure, 12 sample objects (STEP) and CadQuery scripts to generate, verify and render models and to write an offline HTML 3D viewer.
 ---
 
 # FDM minimal design
@@ -55,6 +55,7 @@ Figures are in `assets/figures/` (SVG and PNG). Sample previews are in `assets/s
    python scripts/template_new_object.py --out out
    python scripts/verify.py <name> --module scripts/template_new_object.py [--bed 220] [--hinge ...]
    python scripts/render.py  <name> --module scripts/template_new_object.py --out previews
+   python scripts/viewer.py  <name> --module scripts/template_new_object.py --out viewers
    ```
 5. Review with every step of `04_review.md`, and fix defects and violations before handing over.
 
@@ -66,6 +67,7 @@ Check it with the procedure in `04_review.md` and return the problems in a table
 
 - **STL in print orientation** (one per part) and **STEP** (coloured assembly)
 - **Preview images**
+- **HTML 3D viewer** (`viewers/<name>.html` from `scripts/viewer.py`): one file that opens offline in any browser, with the assembled design in its colours, every part in print orientation, part visibility, an exploded view, the overall dimensions and the parts table. It is the way to check the shape for anyone without CAD; say that it is a mesh within 0.05 mm of the model, not the STEP itself
 - **Dimension rationale table**
 - **Table of print orientation and colour per part**
 - **Review results** (including the verification numbers)
@@ -80,7 +82,7 @@ Check it with the procedure in `04_review.md` and return the problems in a table
 
 ## Environment
 
-- **What the scripts need:** Python 3.11 or later and `cadquery`. `trimesh` and `vtk` are optional and are used for mesh checks and rendering. Install with `pip install cadquery trimesh` (vtk comes with cadquery). The repository this skill comes from pins tested versions in `requirements.txt`.
+- **What the scripts need:** Python 3.11 or later and `cadquery`. The page from `viewer.py` needs nothing but a browser with WebGL; three.js is inside the file. `trimesh` and `vtk` are optional and are used for mesh checks and rendering. Install with `pip install cadquery trimesh` (vtk comes with cadquery). The repository this skill comes from pins tested versions in `requirements.txt`.
 - **If CadQuery is not available:** give advice in the style of A and point to the STEP files of the samples as reference shapes. STEP opens in common CAD software, which can export STL from it.
 
 ## Independent project

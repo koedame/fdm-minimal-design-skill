@@ -16,7 +16,9 @@ def test_when_built_every_file_sits_under_one_folder_named_after_the_skill(tmp_p
 def test_when_built_the_bundle_holds_skill_md_references_scripts_and_licence(tmp_path):
     entries = set(names(build_skill.build(tmp_path, with_step=False)))
     for n in ("SKILL.md", "LICENSE.txt", "references/05_catalog.md", "scripts/fdm_samples.py",
-              "scripts/verify.py", "scripts/render.py", "assets/samples/overview.png"):
+              "scripts/verify.py", "scripts/render.py", "scripts/viewer.py", "scripts/viewer/page.html",
+              "scripts/viewer/fdm-viewer.js", "scripts/viewer/three.min.js", "scripts/viewer/three-LICENSE.txt",
+              "assets/samples/overview.png"):
         assert f"fdm-minimal-design/{n}" in entries
 
 

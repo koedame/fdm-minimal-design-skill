@@ -2,7 +2,7 @@ name: CI
 
 # Builds every sample and model with the pinned CadQuery environment and runs
 # the same checks the skill asks for (references/04_review.md, steps 4 and 5),
-# then packages the skill.
+# writes the HTML viewers of the samples, then packages the skill.
 
 on:
   pull_request:
@@ -43,6 +43,9 @@ jobs:
       - name: Unit tests
         run: python -m pytest -q
 
+      - name: Viewer input tests (wheel and trackpad events per browser)
+        run: node --test tests/js/*.test.mjs
+
       - name: Verify the 12 samples (validity, interference, watertight, bed, ground contact)
         run: python skills/fdm-minimal-design/scripts/verify.py --all
 
@@ -64,6 +67,9 @@ jobs:
           python skills/fdm-minimal-design/scripts/render.py --all
           --out build/previews --sheet build/previews/overview.png
 
+      - name: Write the HTML viewers of the samples
+        run: python skills/fdm-minimal-design/scripts/viewer.py --all --out build/viewers
+
       - name: Build the skill bundle
         run: python tools/build_skill.py
 
@@ -73,4 +79,5 @@ jobs:
           path: |
             dist/fdm-minimal-design.skill
             build/previews/
+            build/viewers/
           retention-days: 14

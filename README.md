@@ -14,7 +14,7 @@ single accent, repetition of one shape — and how to fit it to the constraints 
 ## What it does
 
 - **Advises** on an object you model yourself: grid, proportions, radii, chamfers, print orientation, part split, with numbers.
-- **Builds** 3D models with [CadQuery](https://github.com/CadQuery/cadquery): STL per part in print orientation, a coloured STEP assembly and preview images.
+- **Builds** 3D models with [CadQuery](https://github.com/CadQuery/cadquery): STL per part in print orientation, a coloured STEP assembly, preview images and an HTML 3D viewer.
 - **Reviews** a design with a fixed procedure: a dimension rationale table, Dos and Don'ts, use cases, numeric checks and a rendering.
 
 It comes with:
@@ -25,6 +25,7 @@ It comes with:
 | `scripts/fdm_samples.py` | A helper library and 12 sample objects (clock, remote, tray, speaker, stand, radio, hinged case, power bank, wall unit, lantern, split riser, threaded jar) |
 | `scripts/verify.py` | Numeric checks: solid validity, interference, watertight meshes, bed fit, ground contact, hinge sweep |
 | `scripts/render.py` | Preview images (VTK, off-screen) |
+| `scripts/viewer.py` | An interactive 3D viewer as one HTML file that opens offline (assembled and print layout, part visibility, exploded view, dimensions, parts table) |
 | `scripts/template_new_object.py` | The starting point for a new object |
 | `assets/` | Figures and the sample previews (the `.skill` bundle also holds the sample STEP files) |
 
@@ -63,6 +64,7 @@ pip install -r requirements.txt
 python skills/fdm-minimal-design/scripts/fdm_samples.py --out out     # STL + STEP for all samples
 python skills/fdm-minimal-design/scripts/verify.py --all
 python skills/fdm-minimal-design/scripts/render.py --all --out previews
+python skills/fdm-minimal-design/scripts/viewer.py --all --out viewers  # one HTML file per sample
 ```
 
 ## Building the .skill file
@@ -79,8 +81,9 @@ CI builds the same file on every pull request and keeps it as a workflow artifac
 ```
 skills/fdm-minimal-design/   the skill (SKILL.md, references, scripts, assets)
 models/                      models designed with the skill, one directory each (format: models/README.md)
-tools/                       build_skill.py (the .skill bundle), models.py (check and export models/)
-tests/                       tests for the tools
+tools/                       build_skill.py (the .skill bundle), models.py (check and export models/),
+                             build_three.sh (the three.js bundle of the viewer)
+tests/                       tests for the tools (pytest) and for the viewer's input handling (node --test tests/js/*.test.mjs)
 ```
 
 Generated 3D files (STEP, STL) are not committed. They are regenerated from the scripts and published through the
@@ -88,11 +91,14 @@ Generated 3D files (STEP, STL) are not committed. They are regenerated from the 
 
 ## Licence
 
-- **Code and skill documents — [MIT](LICENSE).** Python files (`*.py`), `SKILL.md`, `references/`, the READMEs and
-  other documentation.
+- **Code and skill documents — [MIT](LICENSE).** Python files (`*.py`), the viewer (`scripts/viewer/`), `SKILL.md`,
+  `references/`, the READMEs and other documentation.
 - **3D models and images — [CC BY 4.0](LICENSE-CC-BY-4.0.txt).** STEP, STL and other model files published from this
   repository (including those generated from the samples and from `models/`), and all images (PNG, SVG).
   Attribute as "fdm-minimal-design by koedame, CC BY 4.0", link to this repository and say if you changed anything.
+- **three.js** — `scripts/viewer/three.min.js` is a build of [three.js](https://github.com/mrdoob/three.js) 0.187.0,
+  © three.js authors, under the MIT licence ([text](skills/fdm-minimal-design/scripts/viewer/three-LICENSE.txt)).
+  Every page written by `viewer.py` contains it with its licence.
 
 ## No warranty and safety
 
