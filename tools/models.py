@@ -39,6 +39,57 @@ FIELDS = {   # field: (type, check on the value or None)
     "license": (str, lambda v: v == "CC-BY-4.0"),
 }
 PART_FIELDS = {"name": str, "qty": int, "orientation": str, "material": str}
+OPTIONAL_FIELDS = ("view", "motions")    # checked in check_view and check_motions
+NUMBER = (int, float)
+
+
+def numbers(v, n=None):
+    return (isinstance(v, list) and (n is None or len(v) == n)
+            and all(isinstance(x, NUMBER) and not isinstance(x, bool) for x in v))
+
+
+def check_view(view):
+    if not isinstance(view, dict) or set(view) - {"direction", "zoom"} or not numbers(view.get("direction"), 3):
+        return ["model.json: 'view' must be {\"direction\": [x, y, z]} with an optional \"zoom\" number"]
+    zoom = view.get("zoom")
+    if zoom is not None and not (isinstance(zoom, NUMBER) and not isinstance(zoom, bool) and zoom > 0):
+        return ["model.json: view.zoom must be a positive number"]
+    return []
+
+
+def check_motions(motions):
+    """The shape of each motion (verify.motion_check); the part names are checked against design.py later."""
+    if not isinstance(motions, list):
+        return ["model.json: 'motions' must be a list"]
+    problems = []
+    for i, m in enumerate(motions):
+        where = f"model.json: motions[{i}]"
+        if not isinstance(m, dict):
+            problems.append(f"{where} must be an object")
+            continue
+        unknown = set(m) - {"part", "against", "hinge", "slide", "free", "stop", "snap"}
+        if unknown:
+            problems.append(f"{where} has unknown fields: {', '.join(sorted(unknown))}")
+        for f in ("part", "against"):
+            if not isinstance(m.get(f), str):
+                problems.append(f"{where}.{f} must be a part name")
+        if ("hinge" in m) == ("slide" in m):
+            problems.append(f"{where} needs either 'hinge' (two points on the axis) or 'slide' (a direction)")
+        elif "hinge" in m and not (isinstance(m["hinge"], list) and len(m["hinge"]) == 2
+                                   and all(numbers(p, 3) for p in m["hinge"]) and m["hinge"][0] != m["hinge"][1]):
+            problems.append(f"{where}.hinge must be two different points [[x, y, z], [x, y, z]]")
+        elif "slide" in m and not (numbers(m["slide"], 3) and any(m["slide"])):
+            problems.append(f"{where}.slide must be a direction [dx, dy, dz]")
+        for f in ("free", "stop"):
+            if f in m and not numbers(m[f]):
+                problems.append(f"{where}.{f} must be a list of positions")
+        snap = m.get("snap")
+        if snap is not None and not (isinstance(snap, dict) and set(snap) == {"at", "max_mm3"} and numbers(snap["at"])
+                                     and isinstance(snap["max_mm3"], NUMBER) and snap["max_mm3"] > 0):
+            problems.append(f'{where}.snap must be {{"at": [positions], "max_mm3": number}}')
+        if not any(m.get(f) for f in ("free", "stop")) and not (isinstance(snap, dict) and snap.get("at")):
+            problems.append(f"{where} has no position to check (free, stop or snap)")
+    return problems
 
 
 def model_dirs(models_dir, ids=None):
@@ -66,8 +117,12 @@ def check_metadata(model_dir, meta):
             problems.append(f"model.json: '{field}' must be {typ.__name__}")
         elif ok and not ok(meta[field]):
             problems.append(f"model.json: '{field}' has an invalid value: {meta[field]!r}")
-    for field in sorted(set(meta) - set(FIELDS)):
+    for field in sorted(set(meta) - set(FIELDS) - set(OPTIONAL_FIELDS)):
         problems.append(f"model.json: unknown field '{field}'")
+    if "view" in meta:
+        problems += check_view(meta["view"])
+    if "motions" in meta:
+        problems += check_motions(meta["motions"])
     if meta.get("id") != model_dir.name:
         problems.append(f"model.json: id {meta.get('id')!r} does not match the directory name {model_dir.name!r}")
     for s in meta.get("based_on", []) if isinstance(meta.get("based_on"), list) else []:
@@ -81,6 +136,8 @@ def check_metadata(model_dir, meta):
                 problems.append(f"model.json: parts[{i}].{field} must be {typ.__name__}")
         if isinstance(p.get("qty"), int) and p["qty"] < 1:
             problems.append(f"model.json: parts[{i}].qty must be 1 or more")
+        if "ref" in p and not isinstance(p["ref"], bool):
+            problems.append(f"model.json: parts[{i}].ref must be true or false")
     return problems
 
 
@@ -95,6 +152,16 @@ def check_against_design(model_dir, meta, parts):
     for name in sorted(set(built) & set(declared)):
         if declared[name] != built[name]:
             problems.append(f"model.json: part '{name}' qty {declared[name]} but design.py makes {built[name]}")
+    bought = {p.get("name"): p.get("ref", False) for p in meta.get("parts", []) if isinstance(p, dict)}
+    for name in sorted(set(built) & set(bought)):
+        if bought[name] != parts[name].ref:
+            problems.append(f"model.json: part '{name}' " + ("is marked ref but design.py prints it" if bought[name]
+                            else "is a bought part in design.py (ref=True) but has no \"ref\": true"))
+    motions = meta.get("motions")
+    for i, m in enumerate(motions if isinstance(motions, list) else []):
+        for f in ("part", "against"):
+            if isinstance(m, dict) and isinstance(m.get(f), str) and m[f] not in parts:
+                problems.append(f"model.json: motions[{i}].{f} '{m[f]}' is not a part in design.py")
     size = meta.get("size_mm")
     if isinstance(size, list) and len(size) == 3:
         boxes = [p.asm.val().BoundingBox() for p in parts.values()]
@@ -134,7 +201,9 @@ def check_model(model_dir, bed=256.0):
         return problems
     parts = fdm_samples.SAMPLES[model_dir.name]()
     problems += check_against_design(model_dir, meta, parts)
-    if not verify.check(model_dir.name, bed):
+    # the motions are swept only when they are well formed; the other checks of verify.py run anyway
+    motions = [] if any("motions" in p for p in problems) else meta.get("motions", [])
+    if not verify.check(model_dir.name, bed, motions):
         problems.append("verify.py: needs attention (see its output above)")
     return problems
 

@@ -3,13 +3,18 @@ Preview images of assembled designs (references/04_review.md, Step 5). Uses VTK 
 
   python render.py 06_radio --out previews
   python render.py --all --out previews --sheet overview.png
-  python render.py my_lamp --module template_new_object.py --view -0.6,-1,0.5
+  python render.py my_lamp --module template_new_object.py --view -0.6 -1 0.5
+  python render.py my_lamp --module template_new_object.py --view -0.6 -1 0.5 1.1
+
+The camera looks at the design from the direction given (x, y, z from the object), from VIEWS for the
+samples, or from "view" in a model.json next to the --module file ({"direction": [x, y, z], "zoom": z}).
+Without a zoom the design is framed so that it fills 90 % of the image in its tighter direction,
+whatever its proportions.
 
 The images are for checking proportions, alignment lines, the single accent and seam lines.
 They are not proof of quality; judge gaps and edges on a real print.
 """
 import argparse
-import importlib.util
 import os
 import sys
 import tempfile
@@ -26,15 +31,37 @@ VIEWS = {  # camera direction from the object, zoom
     "09_wall_unit": ((-0.45, -1.0, 0.35), 1.15), "10_lantern": ((0.75, -1.0, 0.45), 1.05),
     "11_split_riser": ((-0.7, -1.0, 0.55), 1.2), "12_threaded_jar": ((-0.6, -1.0, 0.55), 1.15),
 }
-DEFAULT_VIEW = ((-0.6, -1.0, 0.6), 1.15)
+DEFAULT_VIEW = ((-0.6, -1.0, 0.6), None)   # None: frame the design (fit)
+FILL = 0.9
+
+
+def meta_view(meta):
+    """(direction, zoom) from the "view" of a model.json, or None."""
+    v = meta.get("view")
+    return (tuple(v["direction"]), v.get("zoom")) if v else None
+
+
+def fit(ren, points, aspect, fill=FILL):
+    """Zoom the camera so the points fill `fill` of the image in its tighter direction."""
+    import numpy as np
+    cam = ren.GetActiveCamera()
+    for _ in range(3):                         # perspective: the zoom is not exactly linear, settle it
+        m = cam.GetCompositeProjectionTransformMatrix(aspect, -1, 1)
+        mat = np.array([[m.GetElement(i, j) for j in range(4)] for i in range(4)])
+        q = points @ mat[:, :3].T + mat[:, 3]
+        reach = np.abs(q[:, :2] / q[:, 3:4]).max()
+        cam.Zoom(fill / reach)
 
 
 def render(name, out_png, view=None, size=(1000, 800)):
+    import numpy as np
     import vtk
+    from vtk.util.numpy_support import vtk_to_numpy
     parts = fs.SAMPLES[name]()
     d, zoom = view or VIEWS.get(name, DEFAULT_VIEW)
     ren = vtk.vtkRenderer()
     ren.SetBackground(0.97, 0.97, 0.96)
+    points = []
     with tempfile.TemporaryDirectory() as tmp:
         for n, p in parts.items():
             f = os.path.join(tmp, f"{n}.stl")
@@ -42,6 +69,7 @@ def render(name, out_png, view=None, size=(1000, 800)):
             r = vtk.vtkSTLReader()
             r.SetFileName(f)
             r.Update()
+            points.append(vtk_to_numpy(r.GetOutput().GetPoints().GetData()))
             nm = vtk.vtkPolyDataNormals()
             nm.SetInputConnection(r.GetOutputPort())
             nm.SetFeatureAngle(35)
@@ -63,7 +91,10 @@ def render(name, out_png, view=None, size=(1000, 800)):
         cam.SetViewUp(0, 0, 1)
         cam.SetViewAngle(25)
         ren.ResetCamera()
-        cam.Zoom(zoom)
+        if zoom:
+            cam.Zoom(zoom)
+        else:
+            fit(ren, np.concatenate(points).astype(float), size[0] / size[1])
         for pos, inten in (((-300, -500, 600), 0.9), ((400, -200, 200), 0.35)):
             l = vtk.vtkLight()
             l.SetPosition(*pos)
@@ -109,24 +140,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("names", nargs="*")
     ap.add_argument("--all", action="store_true")
-    ap.add_argument("--module")
+    ap.add_argument("--module", help="python file that registers extra designs in fdm_samples.SAMPLES "
+                    "(the view of a model.json next to it is used)")
     ap.add_argument("--out", default="previews")
-    ap.add_argument("--view", help="camera direction x,y,z (optional zoom as 4th value)")
+    ap.add_argument("--view", nargs="+", type=float, metavar="V",
+                    help="camera direction x y z from the object, and optionally a zoom (default: fit)")
     ap.add_argument("--sheet", help="also write a contact sheet PNG")
     a = ap.parse_args()
-    if a.module:
-        spec = importlib.util.spec_from_file_location("user_designs", a.module)
-        mod = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mod)
+    meta = fs.load_module(a.module) if a.module else {}
     names = list(fs.SAMPLES) if a.all else a.names
     if not names:
         ap.error("give sample names or --all")
-    view = None
-    if a.view:
-        v = [float(t) for t in a.view.split(",")]
-        view = (tuple(v[:3]), v[3] if len(v) > 3 else 1.15)
+    if a.view and len(a.view) not in (3, 4):
+        ap.error("--view takes x y z and an optional zoom")
+    view = (tuple(a.view[:3]), a.view[3] if len(a.view) > 3 else None) if a.view else None
     os.makedirs(a.out, exist_ok=True)
-    pngs = [render(n, os.path.join(a.out, f"{n}.png"), view) for n in names]
+    pngs = [render(n, os.path.join(a.out, f"{n}.png"), view or (meta_view(meta) if n == meta.get("id") else None))
+            for n in names]
     for p in pngs:
         print("wrote", p)
     if a.sheet:

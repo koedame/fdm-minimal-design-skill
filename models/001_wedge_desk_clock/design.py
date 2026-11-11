@@ -11,7 +11,7 @@ import sys
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
 from fdm_samples import (Part, SAMPLES, T, CH, CH_BED, GAP, OFF, PLATE, DARK,  # noqa: E402
-                         CLOCK_SHAFT_HOLE, HAND_HOLES, box, cyl, rrect, rx, rz)
+                         CLOCK_SHAFT_HOLE, HAND_HOLES, box, cyl, rrect, rx, rz, on_slope)
 
 # slope: a 7:24:25 right triangle x 4. The face rises 96 over a run of 28 and is exactly 100 long.
 RUN, RISE, FACE = 28.0, 96.0, 100.0
@@ -26,11 +26,11 @@ BOSS_U, BOSS_X, BOSS_R = 24.0, 36.0, 5.0
 
 def to_world(wp):
     """Face frame (face on z=0, body toward -z, u up the face along +y) -> use frame."""
-    return rx(wp, TILT)
+    return on_slope(wp, TILT)
 
 
 def to_face(wp):
-    return rx(wp, -TILT)
+    return on_slope(wp, -TILT)
 
 
 def prism(w, r, z0, z1, cu=FACE / 2):
@@ -107,7 +107,7 @@ def wedge_desk_clock():
         "dial_marks_inlay": Part(marks_w, rx(marks, 180), DARK, anchor="dial"),
         "hand_hour": Part(on_face(hour, DIAL_T + 0.6, 300), hour, DARK),
         "hand_minute": Part(on_face(minute, DIAL_T + 1.8, 48), minute, DARK),
-        "movement_ref": Part(to_world(move), move, DARK),
+        "movement_ref": Part(to_world(move), None, DARK, ref=True),
     }
 
 

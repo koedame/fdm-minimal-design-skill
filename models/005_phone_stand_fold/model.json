@@ -9,6 +9,9 @@
     {"name": "leg", "qty": 1, "orientation": "On its side, pin hole vertical", "material": "PLA, matte"}
   ],
   "mechanisms": ["Pin hinge"],
+  "motions": [
+    {"part": "leg", "against": "base", "hinge": [[0, 24, 12], [1, 24, 12]], "free": [0, 10, 20, 30, 40, 50], "stop": [-1]}
+  ],
   "tags": ["phone", "stand", "desk"],
   "printed": false,
   "license": "CC-BY-4.0"

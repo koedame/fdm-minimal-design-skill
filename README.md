@@ -23,7 +23,7 @@ It comes with:
 |---|---|
 | `references/` | Principles, numeric design rules, Dos and Don'ts, the review procedure and a catalogue of the samples |
 | `scripts/fdm_samples.py` | A helper library and 12 sample objects (clock, remote, tray, speaker, stand, radio, hinged case, power bank, wall unit, lantern, split riser, threaded jar) |
-| `scripts/verify.py` | Numeric checks: solid validity, interference, watertight meshes, bed fit, ground contact, hinge sweep |
+| `scripts/verify.py` | Numeric checks: solid validity, interference, watertight meshes, bed fit, ground contact, hinge and slide sweeps |
 | `scripts/render.py` | Preview images (VTK, off-screen) |
 | `scripts/viewer.py` | An interactive 3D viewer as one HTML file that opens offline (assembled and print layout, part visibility, exploded view, dimensions, parts table) |
 | `scripts/template_new_object.py` | The starting point for a new object |

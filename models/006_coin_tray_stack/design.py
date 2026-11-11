@@ -11,7 +11,7 @@ import cadquery as cq
 
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
-from fdm_samples import (Part, SAMPLES, T, CH, CH_BED, GAP, OFF)  # noqa: E402
+from fdm_samples import (Part, SAMPLES, T, CH, CH_BED, GAP, OFF, copies)  # noqa: E402
 
 RO, H = 40.0, 20.0                 # 80 across, 20 high (4:1)
 RI = RO - T                        # 37.48: inside of the wall
@@ -37,9 +37,7 @@ def tray():
 
 def coin_tray_stack():
     one = tray()
-    # kept as separate solids (a union would fuse them on the seats)
-    stack = cq.Workplane("XY").add(cq.Compound.makeCompound(
-        [one.translate((0, 0, i * PITCH)).val() for i in range(N)]))
+    stack = copies(one.translate((0, 0, i * PITCH)) for i in range(N))   # a union would fuse them on the seats
     return {"tray": Part(stack, one, OFF, qty=N)}
 
 

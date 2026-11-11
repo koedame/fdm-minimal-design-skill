@@ -10,12 +10,15 @@ orientation, with part visibility, an exploded view, the overall dimensions and 
 (colour, quantity, print orientation, print size). three.js, its licence and the meshes are embedded,
 so the file reads nothing else: it can be sent as it is and opened with a double click.
 
+With --module, a model.json next to the file gives the print orientation of each part
+(parts[].orientation) and the camera (view); without it the orientation is worked out from the shapes.
+Bought parts (Part(ref=True)) are shown in the assembly only, not in the print layout.
+
 The page is viewer/page.html around viewer/fdm-viewer.js (the 3D view on its own,
 usable in other pages through FDMViewer.create) and viewer/three.min.js.
 """
 import argparse
 import base64
-import importlib.util
 import json
 import os
 import re
@@ -31,7 +34,7 @@ from OCP.BRepBndLib import BRepBndLib     # noqa: E402
 from OCP.BRepGProp import BRepGProp       # noqa: E402
 from OCP.GProp import GProp_GProps        # noqa: E402
 import fdm_samples as fs                  # noqa: E402
-from render import VIEWS, DEFAULT_VIEW    # noqa: E402
+from render import VIEWS, DEFAULT_VIEW, meta_view    # noqa: E402
 
 VIEWER_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "viewer")
 TOLERANCE = 0.05        # mm, mesh deviation from the true surface
@@ -47,12 +50,7 @@ DOWN = {
     (-1, 0, 0): "Left side on the bed",
     (1, 0, 0): "Right side on the bed",
 }
-
-
-def load_module(path):
-    spec = importlib.util.spec_from_file_location("user_designs", path)
-    mod = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(mod)           # the module registers its designs in fs.SAMPLES
+BOUGHT = "Bought part, not printed"
 
 
 def shape_of(wp):
@@ -200,24 +198,30 @@ def layout(slots):
     return [(at[i][0] - (x0 + x1) / 2, at[i][1] - (y0 + y1) / 2) for i in range(len(slots))]
 
 
-def model(name, tolerance=TOLERANCE, angular=ANGULAR_TOLERANCE):
-    """The data and the GLB for one design: (data dict, glb bytes)."""
+def model(name, meta=None, tolerance=TOLERANCE, angular=ANGULAR_TOLERANCE):
+    """The data and the GLB for one design: (data dict, glb bytes).
+
+    meta: the model.json of the design, if it has one; its part orientations and view are used.
+    """
+    meta = meta or {}
+    written = {p.get("name"): p.get("orientation") for p in meta.get("parts", [])}
     parts = fs.SAMPLES[name]()
     # print-oriented shapes sit on z=0 from their own box, inlays (anchor) share their parent's shift,
-    # as in fdm_samples.export
+    # as in fdm_samples.export; bought parts are not on the bed
+    printed_parts = {n: p for n, p in parts.items() if not p.ref}
     shifts, prn = {}, {}
-    for pname, p in parts.items():
+    for pname, p in printed_parts.items():
         s = shape_of(p.prn)
         (x0, y0, z0), _ = bbox(s)
         shifts[pname] = shifts[p.anchor] if p.anchor else (-x0, -y0, -z0)
         prn[pname] = s.translate(cq.Vector(*shifts[pname]))
-    roots = [n for n, p in parts.items() if not p.anchor]
-    group_of = {n: (parts[n].anchor if parts[n].anchor else n) for n in parts}
+    roots = [n for n, p in printed_parts.items() if not p.anchor]
+    group_of = {n: (p.anchor if p.anchor else n) for n, p in printed_parts.items()}
     while any(g not in roots for g in group_of.values()):     # inlay of an inlay
         group_of = {n: group_of[g] if g not in roots else g for n, g in group_of.items()}
     extents = {}
     for r in roots:
-        boxes = [bbox(prn[n]) for n in parts if group_of[n] == r]
+        boxes = [bbox(prn[n]) for n in printed_parts if group_of[n] == r]
         extents[r] = tuple(max(b[1][k] for b in boxes) for k in range(3))
     places = dict(zip(roots, layout([extents[r] for r in roots])))
 
@@ -230,13 +234,17 @@ def model(name, tolerance=TOLERANCE, angular=ANGULAR_TOLERANCE):
         hi = [max(u, v) for u, v in zip(hi, amax)]
         materials.append((pname, p.color))
         assembled.append((pname, i, *tessellate(a, tolerance, angular), (0.0, 0.0, 0.0)))
-        x, y = places[group_of[pname]]
-        printed.append((pname, i, *tessellate(prn[pname], tolerance, angular), (x, y, 0.0)))
-        pmin, pmax = bbox(prn[pname])
-        info.append({"name": pname, "color": hex_color(p.color), "qty": p.qty, "anchor": p.anchor,
-                     "orientation": orientation(p),
-                     "print_size": [round(h - l, 1) for l, h in zip(pmin, pmax)]})
-    view, zoom = VIEWS.get(name, DEFAULT_VIEW)
+        row = {"name": pname, "color": hex_color(p.color), "qty": p.qty, "anchor": p.anchor}
+        if p.ref:
+            row.update(ref=True, orientation=written.get(pname) or BOUGHT, print_size=None)
+        else:
+            x, y = places[group_of[pname]]
+            printed.append((pname, i, *tessellate(prn[pname], tolerance, angular), (x, y, 0.0)))
+            pmin, pmax = bbox(prn[pname])
+            row.update(orientation=written.get(pname) or orientation(p),
+                       print_size=[round(h - l, 1) for l, h in zip(pmin, pmax)])
+        info.append(row)
+    view, zoom = meta_view(meta) or VIEWS.get(name, DEFAULT_VIEW)
     data = {"name": name, "size": [round(h - l, 1) for l, h in zip(lo, hi)], "tolerance": tolerance,
             "view": list(view), "zoom": zoom, "parts": info}
     return data, glb([("assembled", assembled), ("print", printed)], materials)
@@ -267,11 +275,11 @@ def page(data, glb_bytes):
     return re.sub("|".join(map(re.escape, fill)), lambda m: fill[m.group(0)], html)
 
 
-def write(name, out_dir, tolerance=TOLERANCE, angular=ANGULAR_TOLERANCE):
+def write(name, out_dir, meta=None, tolerance=TOLERANCE, angular=ANGULAR_TOLERANCE):
     os.makedirs(out_dir, exist_ok=True)
     path = os.path.join(out_dir, f"{name}.html")
     with open(path, "w", encoding="utf-8") as f:
-        f.write(page(*model(name, tolerance, angular)))
+        f.write(page(*model(name, meta, tolerance, angular)))
     return path
 
 
@@ -279,18 +287,18 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.strip().splitlines()[0])
     ap.add_argument("names", nargs="*")
     ap.add_argument("--all", action="store_true")
-    ap.add_argument("--module", help="python file that registers extra designs in fdm_samples.SAMPLES")
+    ap.add_argument("--module", help="python file that registers extra designs in fdm_samples.SAMPLES "
+                    "(the orientations and view of a model.json next to it are used)")
     ap.add_argument("--out", default="viewers", help="output directory, one <name>.html per design")
     ap.add_argument("--tolerance", type=float, default=TOLERANCE,
                     help=f"mesh deviation in mm (default {TOLERANCE}); larger gives a smaller file")
     a = ap.parse_args()
-    if a.module:
-        load_module(a.module)
+    meta = fs.load_module(a.module) if a.module else {}
     names = list(fs.SAMPLES) if a.all else a.names
     if not names:
         ap.error("give design names or --all")
     for n in names:
-        p = write(n, a.out, a.tolerance)
+        p = write(n, a.out, meta if n == meta.get("id") else None, a.tolerance)
         print(f"wrote {p} ({os.path.getsize(p) / 1e6:.1f} MB)")
 
 

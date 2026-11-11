@@ -9,7 +9,7 @@
     {"name": "divider_48", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
     {"name": "divider_72", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
     {"name": "divider_96", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
-    {"name": "dowels_steel_ref", "qty": 6, "orientation": "Reference only, do not print", "material": "Steel dowel pin, 3 x 16"}
+    {"name": "dowels_steel_ref", "qty": 6, "ref": true, "orientation": "Reference only, do not print", "material": "Steel dowel pin, 3 x 16"}
   ],
   "mechanisms": ["Split joint"],
   "tags": ["desk", "stationery", "letters"],

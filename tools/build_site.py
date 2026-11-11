@@ -61,7 +61,8 @@ def sample_entries():
     if missing:
         raise SystemExit(f"{CATALOG.name} has no heading for {', '.join(missing)}")
     return [{"id": sid, "group": "samples", "number": sid[:2], **found[sid], "based_on": [], "mechanisms": [],
-             "printed": False, "preview": SKILL_DIR / "assets" / "samples" / sid / "preview.png", "design": None}
+             "printed": False, "preview": SKILL_DIR / "assets" / "samples" / sid / "preview.png", "design": None,
+             "meta": None}
             for sid in SAMPLE_IDS]
 
 
@@ -71,7 +72,8 @@ def model_entries(models_dir):
         meta = json.loads((d / "model.json").read_text(encoding="utf-8"))   # checked by tools/models.py check
         entries.append({"id": d.name, "group": "models", "number": d.name[:3], "title": meta["title"],
                         "summary": meta["summary"], "based_on": meta["based_on"], "mechanisms": meta["mechanisms"],
-                        "printed": meta["printed"], "preview": d / "preview.png", "design": d / "design.py"})
+                        "printed": meta["printed"], "preview": d / "preview.png", "design": d / "design.py",
+                        "meta": meta})
     return entries
 
 
@@ -103,7 +105,7 @@ def build_model(job):
     mid = entry["id"]
     d = Path(out) / "models" / mid
     d.mkdir(parents=True, exist_ok=True)
-    data, glb = viewer.model(mid)
+    data, glb = viewer.model(mid, entry["meta"])
     (d / "model.glb").write_bytes(glb)
     (d / f"{mid}_viewer.html").write_text(viewer.page(data, glb), encoding="utf-8")
     with tempfile.TemporaryDirectory() as work:

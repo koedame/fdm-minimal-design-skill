@@ -9,6 +9,12 @@
     {"name": "lid", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
   ],
   "mechanisms": ["Sliding lid"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 100], "stop": [-0.3],
+     "snap": {"at": [1, 30, 60], "max_mm3": 1.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "free": [0.25], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0.3], "stop": [0.4]}
+  ],
   "tags": ["case", "cards", "desk"],
   "printed": false,
   "license": "CC-BY-4.0"
