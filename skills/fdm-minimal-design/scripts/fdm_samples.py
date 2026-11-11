@@ -16,12 +16,12 @@ Design rules applied everywhere (see references/02_rules.md):
 
 To start a new object, copy template_new_object.py rather than editing this file.
 
-  01_clock          rotational face in a square body   | through-bore, step instead of a ceiling
+  01_clock          round dial in an arched body        | through-bore, step instead of a ceiling
   02_remote         handheld slab, body + face plate    | face plate printed face-down, inset with reveal
   03_tray           open container                      | single part, 2:1 cells, wall hierarchy
   04_cylinder       vertical tube speaker               | 2:1 tube, round-ended vertical slots
   05_stand          angled device stand                 | printed on its side so the profile is crisp
-  06_radio          box device with knob and buttons    | sleeve body, slide-in plate, cover on magnets
+  06_radio          box device, grille over controls    | sleeve body, slide-in plate, cover on magnets
   07_hinged_case    box with hinged lid                 | pin hinge, 45-deg knuckle webs, magnets
   08_power_bank     slab with battery door and port     | dovetail slide door, printed snap tab, USB-C window
   09_wall_unit      wall-mounted unit                   | keyhole bracket, removable snap hooks, clear window
@@ -29,6 +29,7 @@ To start a new object, copy template_new_object.py rather than editing this file
   11_split_riser    object larger than the bed          | halves printed on side, dowels, joint as V line
   12_threaded_jar   screw-top container                 | 45-deg threads, flush lid
 """
+import math
 import os
 from dataclasses import dataclass
 import cadquery as cq
@@ -84,10 +85,14 @@ def fillet_at(wp, xy, r, zmax=1000):
 
 
 def knob_local(R, H, inner_r, groove, rib_n, rib_z0, dshaft=True):
-    """Axis +Z, front face at z=0. Concentric step + one indicator groove (toward -Y)."""
+    """Axis +Z, front face at z=0. Concentric step + one indicator toward -Y:
+    groove=(r0, r1) cuts a line from r0 to r1, groove=r cuts a dot (diameter 2.4) at radius r."""
     k = cyl(R, 0, H).faces("<Z").chamfer(CH).faces(">Z").chamfer(CH)
     k = k.cut(cyl(inner_r, -0.01, 0.81))
-    k = k.cut(box(-0.6, 0.6, -groove[1], -groove[0], -0.01, 1.4))
+    if isinstance(groove, tuple):
+        k = k.cut(box(-0.6, 0.6, -groove[1], -groove[0], -0.01, 1.4))
+    else:
+        k = k.cut(cyl(1.2, -0.01, 1.41, 0, -groove))
     ribs = (cq.Workplane("XY").workplane(offset=rib_z0)
             .polarArray(R, 0, 360, rib_n).rect(1.0, 0.8).extrude(H))
     k = k.cut(ribs)
@@ -121,47 +126,63 @@ def feet(wp, pts, z_bottom=0.0):
 
 # ---------------- 01 clock ----------------
 CLOCK_SHAFT_HOLE = 7.6      # movement thread; check your movement
-HAND_HOLES = {"hour": 5.2, "minute": 3.1, "second": 1.1}  # vary by movement
+HAND_HOLES = {"hour": 5.2, "minute": 3.1}  # vary by movement; the sample has no second hand
 
 
 def clock():
-    # grid 4: S=100 (25), R=16 (4), DEP=36 (9), dial 88 (22)
-    S, R, DEP = 100.0, 16.0, 36.0
+    # grid 4: W=104 (26), arch R=52 (13), DEP=36 (9), dial 88 (22), dot ring 72 (18)
+    # The top of the body is a half circle concentric with the dial, so the frame around the
+    # dial is one even band (52 - 44 = 8). Below the dial the frame doubles (16), which puts
+    # the dial above the middle of the body. The bottom stands flat; its corners take R8,
+    # the same width as the frame.
+    W, DEP = 104.0, 36.0
+    R_TOP = W / 2
     DIAL_R = 44.0
-    MARK_OUT, MAJ_IN, MIN_IN = 40.0, 30.0, 34.0
-    outer = rrect(S, S, R, 0, DEP).faces("<Z").chamfer(CH_BED).faces(">Z").chamfer(CH)
+    FRAME = R_TOP - DIAL_R                    # 8
+    LOW = -(DIAL_R + 2 * FRAME)               # bottom face, 60 below the dial centre
+    RING, MAJ_D, MIN_D = 36.0, 4.8, 2.4       # dot diameters 2:1
+    outline = (cq.Workplane("XY").moveTo(-R_TOP, LOW).lineTo(R_TOP, LOW).lineTo(R_TOP, 0)
+               .threePointArc((0, R_TOP), (-R_TOP, 0)).close().extrude(DEP))
+    for x in (-R_TOP, R_TOP):
+        outline = fillet_at(outline, (x, LOW), FRAME)
+    outer = outline.faces("<Z").chamfer(CH_BED).faces(">Z").chamfer(CH)
     housing = outer.cut(cyl(41.0, -1, DEP + 2)).cut(cyl(DIAL_R + GAP, DEP - 2.4, 3))
     housing = chamfer_rim(housing, DIAL_R + GAP, DEP)          # same edge as the outer rim
 
     dial = cyl(DIAL_R, DEP - 2.4, 2.4).faces(">Z").chamfer(CH)
-    marks = None
+    marks = top_mark = None
     for i in range(12):
         major = i % 3 == 0
-        w, r0 = (2.4, MAJ_IN) if major else (1.2, MIN_IN)    # widths: 2:1
-        m = rz(box(-w / 2, w / 2, r0, MARK_OUT, DEP - 0.4, DEP), -30 * i)
-        marks = m if marks is None else marks.union(m)
-    dial = dial.cut(marks).cut(cyl(CLOCK_SHAFT_HOLE / 2, DEP - 3, 4))
+        d = MAJ_D if major else MIN_D
+        a = math.radians(30 * i)
+        m = cyl(d / 2, DEP - 0.4, 0.4, RING * math.sin(a), RING * math.cos(a))
+        if i == 0:
+            top_mark = m                       # 12 o'clock: the one accent, marks which way is up
+        else:
+            marks = m if marks is None else marks.union(m)
+    dial = dial.cut(marks).cut(top_mark).cut(cyl(CLOCK_SHAFT_HOLE / 2, DEP - 3, 4))
 
-    def hand(w, front, back, hub, hole, t):
-        h = box(-w / 2, w / 2, -back, front, 0, t).union(cyl(hub, 0, t))
-        return h.cut(cyl(hole / 2, -1, t + 2))
+    def hand(w, tip, hub, hole, t):
+        # round-ended bar: the same circle as the dots, drawn out
+        h = box(-w / 2, w / 2, 0, tip - w / 2, 0, t).union(cyl(w / 2, 0, t, 0, tip - w / 2))
+        return h.union(cyl(hub, 0, t)).cut(cyl(hole / 2, -1, t + 2))
 
-    # hand lengths are taken from the dial: hour stops 2 mm short of the major marks,
-    # minute ends mid-way in the minor marks, second reaches the marks' outer radius.
-    # hubs step down 1 mm each so the stack reads as concentric rings.
+    # hand widths are the two dot diameters. The minute hand stops 1.6 mm (4 lines) short
+    # of the major dots; the hour hand is 3/4 of the minute hand. Hubs step down 1 mm.
+    MIN_TIP = RING - MAJ_D / 2 - 1.6           # 32
     hands = {
-        "hand_hour": (hand(4.0, MAJ_IN - 2, 0, 5.0, HAND_HOLES["hour"], 1.0), DEP + 0.6, 60, DARK),
-        "hand_minute": (hand(2.4, (MIN_IN + MARK_OUT) / 2, 0, 4.0, HAND_HOLES["minute"], 1.0), DEP + 1.8, -48, DARK),
-        "hand_second": (hand(1.2, MARK_OUT, 12, 3.0, HAND_HOLES["second"], 0.8), DEP + 3.0, 180, ACC),
+        "hand_hour": (hand(MAJ_D, 0.75 * MIN_TIP, 5.0, HAND_HOLES["hour"], 1.0), DEP + 0.6, 60),
+        "hand_minute": (hand(MIN_D, MIN_TIP, 4.0, HAND_HOLES["minute"], 1.0), DEP + 1.8, -48),
     }
     disp = lambda wp: rx(wp, 90)
     parts = {
         "housing": Part(disp(housing), housing, OFF),
         "dial": Part(disp(dial), rx(dial, 180), PLATE),
         "dial_marks_inlay": Part(disp(marks), rx(marks, 180), DARK, anchor="dial"),
+        "dial_top_mark_inlay": Part(disp(top_mark), rx(top_mark, 180), ACC, anchor="dial"),
     }
-    for n, (h, z0, ang, col) in hands.items():
-        parts[n] = Part(disp(rz(h, ang).translate((0, 0, z0))), h, col)
+    for n, (h, z0, ang) in hands.items():
+        parts[n] = Part(disp(rz(h, ang).translate((0, 0, z0))), h, DARK)
     return parts
 
 
@@ -359,9 +380,10 @@ FONT = _find_font()
 def radio():
     """Box device. Sleeve body (open top), plate slides down into grooves, top cover on magnets.
     Front 144 x 96 = 3:2. Front-plate layout uses alignment lines instead of loose placement:
-      * grille margin is equal on left, top and bottom
-      * control column is centred between the grille and the plate edge
-      * dial top = grille top, label baseline zone = grille bottom
+      * the grille is a band across the top of the plate; its margin m is the same on the
+        left, top and right, and again below the dial
+      * dial left edge = grille left edge, right button edge = grille right edge
+      * the dial and the buttons share one centre line; the labels sit under the buttons
     """
     W, D, H_BODY, H_COVER, R = 144.0, 72.0, 88.0, 8.0, 12.0
     T_FRONT, FLOOR = 4.8, 2.4
@@ -398,23 +420,19 @@ def radio():
     # ---- front plate layout ----
     vx = WIN_X - GAP                         # visible half width 57.75
     vz0, vz1 = WIN_Z0 + GAP, H_BODY          # visible plate (cover sits on top)
-    zc = (vz0 + vz1) / 2
     PD, PP = 2.4, 4.0
-    NR = 15
-    half = PP * (NR - 1) / 2
-    rows = [zc - half + PP * j for j in range(NR)]
-    m = (vz1 - zc) - (half + PD / 2)         # grille margin, used on left/top/bottom
-    cols = [-vx + m + PD / 2 + PP * i for i in range(12)]
-    grille_r = cols[-1] + PD / 2
-    ctrl_x = (grille_r + vx) / 2             # control column centre
-    pitch = 16.0
-    btn_xs = [ctrl_x - pitch, ctrl_x, ctrl_x + pitch]
-    DIAL_R, DIAL_H = 16.0, 11.5              # dial diameter = outer button centre distance (2 x 16)
-    dial_z = rows[-1] + PD / 2 - DIAL_R      # dial top = grille top
+    NC, NR = 25, 4
+    m = vx - PP * (NC - 1) / 2 - PD / 2      # grille margin 8.55, used left/top/right and below the dial
+    cols = [PP * (i - (NC - 1) / 2) for i in range(NC)]
+    rows = [vz1 - m - PD / 2 - PP * j for j in range(NR)]
+    DIAL_R, DIAL_H = 16.0, 8.0               # dial diameter = outer button centre distance (2 x 16)
+    dial_x = -vx + m + DIAL_R                # dial left edge = grille left edge
+    dial_z = vz0 + m + DIAL_R                # margin below the dial = grille margin
+    BTN_D, pitch = 10.0, 16.0
+    btn_xs = [vx - m - BTN_D / 2 - pitch * k for k in (2, 1, 0)]   # right button edge = grille right edge
+    btn_z = dial_z                           # one centre line for every control
     LABEL_H = 3.0
-    label_z = rows[0] - PD / 2 + LABEL_H / 2  # label zone bottom = grille bottom
-    BTN_D = 10.0
-    btn_z = label_z + LABEL_H / 2 + 3.0 + BTN_D / 2
+    label_z = btn_z - BTN_D / 2 - 3.0 - LABEL_H / 2
 
     face = box(-vx, vx, 0, PT_FACE, vz0, PLATE_TOP).edges("|Y").fillet(0.75).faces("<Y").chamfer(CH)
     tongue = box(-(GROOVE_X - GAP), GROOVE_X - GAP, PT_FACE, PT, GZ0 + GAP, PLATE_TOP)
@@ -422,7 +440,7 @@ def radio():
     fp = lambda o: cq.Workplane(cq.Plane(origin=o, xDir=(1, 0, 0), normal=(0, -1, 0)))
     plate = plate.cut(fp((0, PT + 1, 0)).pushPoints([(x, z) for x in cols for z in rows])
                       .circle(PD / 2).extrude(PT + 2))
-    for (x, z, d) in [(ctrl_x, dial_z, 7.2)] + [(x, btn_z, BTN_D + 0.6) for x in btn_xs]:
+    for (x, z, d) in [(dial_x, dial_z, 7.2)] + [(x, btn_z, BTN_D + 0.6) for x in btn_xs]:
         plate = plate.cut(fp((x, PT + 1, z)).circle(d / 2).extrude(PT + 2))
     inlay = None
     for x, txt in zip(btn_xs, ["on", "1", "2"]):
@@ -445,7 +463,7 @@ def radio():
     cover = cover.union(lip)
 
     # ---- dial and buttons ----
-    dial_l = knob_local(DIAL_R, DIAL_H, DIAL_R - 3.5, (4.5, DIAL_R - 5.0), 44, 3.0)
+    dial_l = knob_local(DIAL_R, DIAL_H, DIAL_R - 3.5, DIAL_R - 7.0, 44, 4.0)   # low disc, dot indicator
     btn_l = button_local(BTN_D, 3.0, PT, 6.5, stem_r=2.0, stem_len=4.0)
     to_asm = lambda wp, x, y, z: wp.rotate((0, 0, 0), (1, 0, 0), -90).translate((x, y, z))
     parts = {
@@ -453,7 +471,7 @@ def radio():
         "front_plate": Part(plate, rx(plate, 90), PLATE),
         "label_inlay": Part(inlay, rx(inlay, 90), LABEL_GRAY, anchor="front_plate"),
         "top_cover": Part(cover, rx(cover, 180), OFF),
-        "dial": Part(to_asm(dial_l, ctrl_x, -(DIAL_H + 0.5), dial_z), rx(dial_l, 180), OFF),
+        "dial": Part(to_asm(dial_l, dial_x, -(DIAL_H + 0.5), dial_z), rx(dial_l, 180), OFF),
         "button_on": Part(to_asm(btn_l, btn_xs[0], -3.0, btn_z), btn_l, ACC),
     }
     b12 = to_asm(btn_l, btn_xs[1], -3.0, btn_z).union(to_asm(btn_l, btn_xs[2], -3.0, btn_z))

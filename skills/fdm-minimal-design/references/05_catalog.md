@@ -46,25 +46,27 @@ Preview images are in `assets/samples/<name>/`, with the STEP files next to them
 ---
 
 
-## 01 clock — square body + round dial
+## 01 clock — arched body + round dial
 
-- **Rationale for dimensions:** decided on a 4 mm grid. Outline 100, R16, depth 36, dial Ø88.
+- **Rationale for dimensions:** decided on a 4 mm grid. Width 104, depth 36, dial Ø88.
+  - The top of the body is a half circle (R52) concentric with the dial, so the frame around the dial is one even band of 8.
+  - Below the dial the frame doubles to 16, which puts the dial above the middle of the body. Height 112.
+  - The bottom stands flat. Its two corners take R8, the same as the frame width, so the object uses two radii.
 - **Print strategy:** the housing prints back face down, with a through bore and a counterbore on the front side. The step becomes a shelf seen from above, so no bridge forms.
 - **Details:**
-  - The indices are 12 inlays; major and minor indices have widths of 2:1.
-  - Hand lengths are taken from the dial. The hour hand stops 2 mm short of the major indices, the minute hand ends in the middle of the minor indices, and the second hand reaches the outer end of the indices.
-  - Only the second hand gets the accent colour.
+  - The indices are 12 round dots inlaid in the dial; major and minor dots have diameters of 2:1 (Ø4.8 and Ø2.4) on one circle of Ø72.
+  - The hands are round-ended bars, the same circle drawn out. Their widths are the two dot diameters. The minute hand stops 1.6 mm short of the major dots, and the hour hand is 3/4 of the minute hand.
+  - There is no second hand. The accent goes on the 12 o'clock dot only: it tells which way is up on a dial without numerals.
 
 | Part | Orientation | Colour |
 |---|---|---|
 | housing | Back face down | Off-white |
-| dial + dial_marks_inlay | Front face down (layers 1–2 in another colour) | Light grey + dark |
+| dial + dial_marks_inlay + dial_top_mark_inlay | Front face down (layers 1–2 in other colours) | Light grey + dark + accent |
 | hand_hour / hand_minute | Flat | Dark |
-| hand_second | Flat | Accent |
 
 **Notes:**
 - Shaft diameters of movements and hand holes differ from product to product. Match `CLOCK_SHAFT_HOLE` and `HAND_HOLES` to the parts you have.
-- The second-hand hole (Ø1.1) assumes finishing with a drill.
+- Use a movement without a seconds shaft, or leave its second hand off.
 
 ## 02 remote — one-piece body + face plate
 
@@ -138,9 +140,10 @@ Preview images are in `assets/samples/<name>/`, with the STEP files next to them
   - The front opening runs to the top, and the front plate slides down into grooves. This avoids a bridge of about 120 mm.
   - The top cover is located by a lip and four magnets.
 - **Front plate layout:** decided by alignment lines, not by positions.
-  - The perforation margin is equal on the left, top and bottom.
-  - The control column sits midway between the right edge of the perforation and the right edge of the plate.
-  - The top of the dial aligns with the top of the perforation, the bottom of the labels with the bottom of the perforation.
+  - The perforation is a band of 25 × 4 holes across the top of the plate. Its margin is equal on the left, top and right, and the same margin is left below the dial.
+  - The left edge of the dial aligns with the left edge of the perforation, the right edge of the last button with its right edge.
+  - The dial and the three buttons share one centre line; the labels sit under the buttons.
+  - The dial is a low disc (height 8) with one step and one dot as the indicator; the grip ribs are on the back band only.
   - Chamfers are C0.5 throughout.
 
 | Part | Orientation | Colour |

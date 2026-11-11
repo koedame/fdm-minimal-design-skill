@@ -1,16 +1,15 @@
 # fdm-minimal-design
 
-An agent skill for designing minimal, refined products for FDM 3D printing, with example models.
+fdm-minimal-design is an agent skill for designing minimalist objects for FDM 3D printing. Its design language is
+inspired by the consumer products Braun made in the 1960s and 1970s, many of them designed by Dieter Rams. The
+repository also holds example models.
 
 [日本語](README.ja.md)
 
 ![The 12 sample objects](skills/fdm-minimal-design/assets/samples/overview.png)
 
 The skill teaches Claude a design language — large radii in plan with sharp edges, a grid, achromatic colours with a
-single accent, repetition of one shape — and how to fit it to the constraints of FDM printing. The language is inspired
-by the design language seen in Braun products of the 1960s and 1970s (Dieter Rams). **This project is not affiliated
-with, endorsed by or sponsored by Braun or its trademark owners**, and it does not reproduce the form, names or logos of
-any Braun product.
+single accent, repetition of one shape — and how to fit it to the constraints of FDM printing.
 
 ## What it does
 
@@ -104,3 +103,10 @@ Everything here is provided as is, without warranty (see the licences). In parti
 - **Printed parts are not certified for anything.** For objects that hold batteries or LEDs, get hot, or touch food,
   the safety of the printed parts is not guaranteed. Use certified electronic components (batteries, chargers, LED
   drivers, power supplies) and check the materials and the electrical design yourself.
+
+## Independent project
+
+This is an independent project. It is not affiliated with, endorsed by, or sponsored by Braun, The Procter & Gamble
+Company, De'Longhi, Vitsœ, or Dieter Rams. "Braun" is a trademark of its respective owner and is used here only to
+describe a historical design style. The skill and the models do not reproduce any specific Braun product, logo, or
+trade dress.

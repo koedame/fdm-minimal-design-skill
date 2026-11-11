@@ -2,7 +2,7 @@
 
 The thinking behind the rules (02) and the Dos and Don'ts (03). When a rule leaves you unsure, come back here.
 
-The subject is the design language this skill is inspired by (see the description in `SKILL.md`): one shared across a family of household appliances, audio equipment, clocks and calculators from the 1950s to the 1970s.
+The subject is the design language this skill is inspired by (see the introduction of `SKILL.md`): one shared across a family of household appliances, audio equipment, clocks and calculators from the 1950s to the 1970s.
 It is not for reproducing any particular product; it is for applying the **thinking** to your own designs.
 
 ---
