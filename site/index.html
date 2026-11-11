@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>fdm-minimal-design — an agent skill for minimal objects printed in FDM</title>
+<meta name="description" content="An agent skill that designs minimalist objects for FDM 3D printing, and the models designed with it, in 3D.">
+<!-- Written by tools/build_site.py from site/index.html. Nothing here is read from another server. -->
+<style>
+  :root {
+    --bg: #f6f6f4; --panel: #fbfbfa; --ink: #3a3a38; --ink2: #8a8a86; --line: #e2e2de; --accent: #f09e26;
+    font: 300 13px/1.6 "Helvetica Neue", Helvetica, Arial, system-ui, sans-serif;
+    color: var(--ink); background: var(--bg);
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; }
+  body:has(dialog[open]) { overflow: hidden; }
+  a { color: inherit; text-underline-offset: 2px; text-decoration-color: var(--ink2); }
+  a:hover { text-decoration-color: var(--ink); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .wrap { max-width: 1104px; margin: 0 auto; padding: 0 24px; }
+  h1, h2, h3 { font-weight: 400; margin: 0; }
+  .label, h2, h3 { font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink2); }
+  code, pre { font: 300 12px/1.6 ui-monospace, Menlo, Consolas, monospace; }
+
+  header.top { display: flex; justify-content: space-between; align-items: baseline; padding: 24px 0; }
+  header.top .name { font-size: 15px; font-weight: 400; letter-spacing: 0.02em; }
+  header.top nav { display: flex; gap: 24px; }
+
+  .intro { padding: 48px 0 56px; border-bottom: 1px solid var(--line); }
+  .intro .lead { font-size: 15px; max-width: 34em; margin: 0 0 48px; }
+  .intro .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  .intro h3 { margin-bottom: 8px; }
+  .intro p { margin: 0; }
+  .install { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; margin-top: 48px; }
+  .install pre { margin: 0; padding: 12px 16px; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .install ol { margin: 0; padding-left: 20px; }
+  .install p { margin: 8px 0 0; color: var(--ink2); }
+
+  .list { padding: 48px 0 16px; }
+  .list-head { display: flex; align-items: baseline; gap: 12px; }
+  .count { color: var(--ink2); font-variant-numeric: tabular-nums; }
+  .lead2 { margin: 4px 0 24px; color: var(--ink2); }
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(208px, 1fr)); gap: 16px; }
+  .card { display: grid; grid-template-columns: auto 1fr; column-gap: 8px; text-decoration: none; border: 1px solid transparent; border-radius: 4px; padding: 0 0 12px; transition: border-color 0.12s, background 0.12s; }
+  .card:hover { border-color: var(--line); background: var(--panel); }
+  .card img { grid-column: 1 / -1; width: 100%; height: auto; aspect-ratio: 5 / 4; display: block; border-radius: 4px 4px 0 0; margin-bottom: 8px; }
+  .card .num, .card .meta { color: var(--ink2); font-variant-numeric: tabular-nums; }
+  .card .num { padding-left: 12px; }
+  .card .title { font-weight: 400; padding-right: 12px; }
+  .card .meta { grid-column: 2; font-size: 11px; padding-right: 12px; }
+  .empty { grid-column: 1 / -1; color: var(--ink2); }
+
+  footer { margin-top: 48px; padding: 32px 0 48px; border-top: 1px solid var(--line); color: var(--ink2); font-size: 11px; }
+  footer .cols { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+  footer p { margin: 4px 0 0; }
+
+  /* the 3D view of one model */
+  dialog { width: calc(100vw - 48px); height: calc(100vh - 48px); max-width: none; max-height: none; padding: 0; border: 1px solid var(--line); border-radius: 4px; color: var(--ink); background: var(--panel); }
+  dialog::backdrop { background: rgba(58, 58, 56, 0.35); }
+  dialog[open] { display: grid; grid-template-columns: minmax(0, 1fr) 344px; }
+  #stage { position: relative; min-height: 0; overflow: hidden; background: var(--bg) center / contain no-repeat; }
+  #stage canvas { width: 100%; height: 100%; }
+  #status { position: absolute; left: 24px; bottom: 20px; color: var(--ink2); }
+  #help { position: absolute; right: 24px; bottom: 20px; color: var(--ink2); font-size: 11px; }
+  dialog aside { border-left: 1px solid var(--line); overflow-y: auto; padding: 20px 24px 32px; }
+  .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .bar .nav { display: flex; gap: 4px; }
+  .btn { font: inherit; color: var(--ink2); background: none; border: 1px solid var(--line); border-radius: 4px; padding: 4px 10px; cursor: pointer; }
+  .btn:hover { color: var(--ink); }
+  dialog section { padding: 20px 0; border-top: 1px solid var(--line); }
+  dialog section:first-of-type { border-top: 0; padding-top: 16px; }
+  .mhead { font-size: 15px; letter-spacing: 0.02em; text-transform: none; color: var(--ink); }
+  #m-num { color: var(--ink2); margin-right: 8px; font-variant-numeric: tabular-nums; }
+  .muted { color: var(--ink2); }
+  #m-summary { margin: 4px 0 0; }
+  #m-meta { margin: 4px 0 0; color: var(--ink2); }
+  .seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; margin-top: 8px; }
+  .seg button { font: inherit; color: var(--ink2); background: transparent; border: 0; padding: 6px 0; cursor: pointer; }
+  .seg button + button { border-left: 1px solid var(--line); }
+  .seg button[aria-pressed="true"] { color: var(--ink); background: #fff; box-shadow: inset 0 0 0 1px var(--accent); }
+  .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+  input[type="range"] { flex: 1; accent-color: var(--accent); }
+  .row.off { color: var(--ink2); opacity: 0.6; }
+  .link { font: inherit; color: var(--ink2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
+  table { width: 100%; border-collapse: collapse; margin-top: 8px; }
+  td, th { text-align: left; font-weight: 300; padding: 6px 0; vertical-align: top; border-top: 1px solid var(--line); }
+  th { font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink2); font-weight: 400; border-top: 0; }
+  .n { text-align: right; white-space: nowrap; font-variant-numeric: tabular-nums; padding-left: 12px; }
+  .part { display: flex; gap: 8px; align-items: flex-start; }
+  .sw { flex: none; width: 12px; height: 12px; border-radius: 2px; margin-top: 4px; border: 1px solid rgba(0, 0, 0, 0.12); }
+  .part b { font-weight: 400; overflow-wrap: anywhere; }
+  .dl { list-style: none; margin: 8px 0 0; padding: 0; }
+  .dl li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; border-top: 1px solid var(--line); }
+  .dl li:first-child { border-top: 0; }
+  #m-licence p { margin: 8px 0 0; }
+
+  @media (max-width: 860px) {
+    .intro .cols, .install, footer .cols { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  }
+  @media (max-width: 760px) {
+    .wrap { padding: 0 16px; }
+    .intro { padding: 24px 0 40px; }
+    .intro .lead { margin-bottom: 32px; }
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+    .card .num { padding-left: 8px; }
+    .card .title, .card .meta { padding-right: 8px; }
+    dialog { width: 100%; height: 100%; margin: 0; inset: 0; border: 0; border-radius: 0; }
+    dialog[open] { display: block; overflow-y: auto; }
+    #stage { height: 56vh; }
+    #help { display: none; }
+    dialog aside { border-left: 0; border-top: 1px solid var(--line); overflow: visible; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <h1 class="name">fdm-minimal-design</h1>
+    <nav><a href="#models">Models</a><a href="__REPO__">GitHub</a></nav>
+  </header>
+
+  <section class="intro" aria-label="About the skill">
+    <p class="lead">An agent skill for designing minimalist objects for FDM 3D printing: large radii in plan with
+      sharp edges, a grid, achromatic colours with a single accent, and one shape repeated.</p>
+    <div class="cols">
+      <div><h3>Advise</h3><p>On an object you model yourself: grid, proportions, radii, chamfers, print orientation and part split, with numbers.</p></div>
+      <div><h3>Build</h3><p>3D models in CadQuery: an STL per part in print orientation, a coloured STEP assembly, previews and a 3D viewer.</p></div>
+      <div><h3>Review</h3><p>A fixed procedure: a table of reasons for every dimension, Dos and Don'ts, use cases, numeric checks and a rendering.</p></div>
+    </div>
+    <div class="install">
+      <div>
+        <h3>Install in Claude Code</h3>
+        <pre><code>git clone __REPO__.git
+cp -r fdm-minimal-design-skill/skills/fdm-minimal-design ~/.claude/skills/</code></pre>
+      </div>
+      <div>
+        <h3>Install in Claude.ai</h3>
+        <ol>
+          <li>Download <code>fdm-minimal-design.skill</code> from the <a href="__REPO__/releases">releases</a>.</li>
+          <li>Turn on code execution in Settings → Capabilities.</li>
+          <li>Upload the file in Customize → Skills.</li>
+        </ol>
+        <p>Details, requirements and the source are on <a href="__REPO__">GitHub</a>.</p>
+      </div>
+    </div>
+  </section>
+
+  <!--MODELS-->
+  <!--SAMPLES-->
+
+  <footer>
+    <div class="cols">
+      <div><span class="label">Licence</span>
+        <p>Models and images: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Credit “fdm-minimal-design by koedame”.</p>
+        <p>Code and skill documents: <a href="__REPO__/blob/main/LICENSE">MIT</a>.</p></div>
+      <div><span class="label">No warranty</span>
+        <p>Provided as is. Unless marked, the models have not been printed on a real printer. Print a test piece of the
+          fitting parts first. Printed parts are not certified for anything.</p></div>
+      <div><span class="label">This page</span>
+        <p>Reads nothing from other servers and sets no cookies. The 3D view uses <a href="viewer/three-LICENSE.txt">three.js</a> (MIT).</p></div>
+    </div>
+  </footer>
+</div>
+
+<dialog id="model" aria-labelledby="m-title" aria-describedby="m-summary">
+  <div id="stage"><div id="status"></div><div id="help">Drag to rotate · Shift + drag to pan · Wheel to zoom</div></div>
+  <aside>
+    <div class="bar">
+      <div class="nav"><button type="button" class="btn" id="prev" aria-label="Previous model">←</button><button type="button" class="btn" id="next" aria-label="Next model">→</button></div>
+      <button type="button" class="btn" id="close">Close</button>
+    </div>
+    <section>
+      <h2 class="mhead"><span id="m-num"></span><span id="m-title"></span></h2>
+      <p id="m-summary"></p>
+      <p id="m-meta"></p>
+    </section>
+    <section>
+      <span class="label">Show</span>
+      <div class="seg" id="arrangement">
+        <button type="button" data-v="assembled" aria-pressed="true">Assembled</button>
+        <button type="button" data-v="print" aria-pressed="false">Print layout</button>
+      </div>
+      <div class="row" id="explode-row">
+        <span>Exploded</span>
+        <input type="range" id="explode" min="0" max="1" step="0.01" value="0" aria-label="Exploded view">
+      </div>
+      <div class="row"><span></span><button type="button" class="link" id="reset">Reset view</button></div>
+    </section>
+    <section>
+      <span class="label">Parts</span>
+      <table>
+        <thead><tr><th>Part · print orientation</th><th class="n">Qty</th><th class="n">Print size mm</th></tr></thead>
+        <tbody id="m-parts"></tbody>
+      </table>
+    </section>
+    <section>
+      <span class="label">Download</span>
+      <ul class="dl" id="m-downloads"></ul>
+    </section>
+    <section id="m-licence">
+      <span class="label">Licence</span>
+      <p><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Credit as “<span id="m-credit"></span>”,
+        link to <a href="__REPO__">the repository</a> and say if you changed anything.</p>
+    </section>
+  </aside>
+</dialog>
+
+<script>const SITE = "__DATA__";</script>
+<script src="site.js" defer></script>
+</body>
+</html>

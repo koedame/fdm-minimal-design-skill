@@ -75,13 +75,26 @@ python tools/build_skill.py --no-step    # STEP なし（CadQuery が要らな�
 
 CI がプルリクエストごとに同じファイルを作り、ワークフローの成果物として残す。
 
+## サイトの作り方
+
+```bash
+python tools/build_site.py --out build/site                       # models/ の全モデルと 12 のサンプル
+python tools/build_site.py --out build/site 001_pen_cup 06_radio  # 指定したものだけ
+```
+
+スキルの紹介と、モデル・サンプルの一覧を載せた静的なページを 1 枚書き出す。一覧から選ぶと `viewer.py` のビューワーで 3D で見られ、
+STEP・造形向きの STL（zip）・ビューワーの HTML をダウンロードできる。一覧は `models/` から組むので、モデルを足してもサイトの手直しは要らない。
+ページは外のサーバーから何も読まない。フォルダーをそのまま静的なホスティングに置く。手元で見るときは `python -m http.server -d build/site`
+（`index.html` をファイルとして開くと 3D 表示は読み込めない）。CI がプルリクエストごとに組み、ワークフローの成果物として残す。
+
 ## リポジトリの構成
 
 ```
 skills/fdm-minimal-design/   スキル本体（SKILL.md・references・scripts・assets）
 models/                      スキルで設計したモデル。1 モデル 1 ディレクトリ（形は models/README.md）
+site/                        サイトのページとスクリプト（tools/build_site.py が組む）
 tools/                       build_skill.py（.skill を組む）、models.py（models/ の検査と書き出し）、
-                             build_three.sh（ビューワーに入れる three.js を組む）
+                             build_site.py（サイトを組む）、build_three.sh（ビューワーに入れる three.js を組む）
 tests/                       道具のテスト（pytest）とビューワーの操作の入力のテスト（node --test tests/js/*.test.mjs）
 ```
 
@@ -89,7 +102,7 @@ tests/                       道具のテスト（pytest）とビューワーの
 
 ## ライセンス
 
-- **コードとスキルの文書 — [MIT](LICENSE)。** Python のファイル（`*.py`）、ビューワー（`scripts/viewer/`）、`SKILL.md`、`references/`、README などの文書
+- **コードとスキルの文書 — [MIT](LICENSE)。** Python のファイル（`*.py`）、ビューワー（`scripts/viewer/`）、サイト（`site/`）、`SKILL.md`、`references/`、README などの文書
 - **3D モデルと画像 — [CC BY 4.0](LICENSE-CC-BY-4.0.txt)。** このリポジトリから公開する STEP・STL などのモデルのファイル（サンプルと `models/` から生成したものを含む）と、すべての画像（PNG・SVG）。
   表示は「fdm-minimal-design by koedame, CC BY 4.0」とし、このリポジトリへのリンクと、変更したならその旨を添える
 - **three.js** — `scripts/viewer/three.min.js` は [three.js](https://github.com/mrdoob/three.js) 0.187.0 を組んだもの。
