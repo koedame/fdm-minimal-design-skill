@@ -1,0 +1,18 @@
+{
+  "id": "004_night_light_cube",
+  "title": "Night light cube",
+  "summary": "A translucent cube on a low base whose back strip carries the slide switch.",
+  "based_on": ["10_lantern"],
+  "size_mm": [64, 80, 80],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "deck", "qty": 1, "orientation": "Bottom face down", "material": "PLA, matte"},
+    {"name": "diffuser_translucent", "qty": 1, "orientation": "Top face down", "material": "PETG or PLA, translucent white"},
+    {"name": "slider_knob", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "slider_carrier", "qty": 1, "orientation": "Flat", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Location", "Slide switch", "Light, windows", "Connectors"],
+  "tags": ["light", "LED", "bedroom"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
