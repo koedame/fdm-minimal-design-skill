@@ -47,16 +47,18 @@ Figures are in `assets/figures/` (SVG and PNG). Sample previews are in `assets/s
 
 1. **Write the dimension rationale table first** (`04_review.md` Step 1). A dimension you cannot justify becomes a spot that looks lazy.
 2. Copy `scripts/template_new_object.py` and write a function.
-   - Reuse the helpers in `scripts/fdm_samples.py` (`rrect`, `cyl`, `box`, `button_local`, `knob_local`, `feet`, `teardrop_x`, `stadium_x`, `thread_solid`, `fillet_at`, `chamfer_rim`) and its constants (`T`, `DIV`, `CH`, `CH_BED`, `GAP`).
+   - Reuse the helpers in `scripts/fdm_samples.py` (`rrect`, `cyl`, `box`, `button_local`, `knob_local`, `feet`, `teardrop_x`, `stadium_x`, `thread_solid`, `fillet_at`, `chamfer_rim`, `on_slope`, `copies`) and its constants (`T`, `DIV`, `CH`, `CH_BED`, `GAP`).
    - Adapting the function of a nearby sample directly is fine too.
-3. For each part, define the assembled shape (orientation in use, Z up) and the print-oriented shape with `Part(asm, prn, color)`. Choose the print orientation according to chapter 5 of `02_rules.md`.
+   - Read chapter 9 of `02_rules.md` (CadQuery notes) before modelling: shell before chamfering, `copies()` for several copies of a part, `on_slope()` for features on a sloped face.
+3. For each part, define the assembled shape (orientation in use, Z up) and the print-oriented shape with `Part(asm, prn, color)`. Choose the print orientation according to chapter 5 of `02_rules.md`. Several copies: `Part(copies(...), one_copy, color, qty=n)`. A bought part shown for fit (a movement, a driver, dowels): `Part(asm, None, color, ref=True)`.
 4. Export and verify.
    ```bash
    python scripts/template_new_object.py --out out
-   python scripts/verify.py <name> --module scripts/template_new_object.py [--bed 220] [--hinge ...]
-   python scripts/render.py  <name> --module scripts/template_new_object.py --out previews
+   python scripts/verify.py <name> --module scripts/template_new_object.py [--bed 220] [--hinge ...] [--slide ...]
+   python scripts/render.py  <name> --module scripts/template_new_object.py --out previews [--view x y z [zoom]]
    python scripts/viewer.py  <name> --module scripts/template_new_object.py --out viewers
    ```
+   A `model.json` next to the design file can record what the code does not say, and the scripts read it with `--module`: the print orientation of each part in words (`parts[].orientation`, shown by the viewer), the camera of the preview (`view`) and the motions to sweep with what each position must give (`motions`: free, a stop that catches, a snap pushed over; `04_review.md` Step 4).
 5. Review with every step of `04_review.md`, and fix defects and violations before handing over.
 
 ### C. Review an existing design
