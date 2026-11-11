@@ -1,0 +1,15 @@
+{
+  "id": "005_phone_stand_fold",
+  "title": "Folding phone stand",
+  "summary": "A base and a leg on a pin hinge; the leg stops on a heel at 50 degrees and folds flat onto the base.",
+  "based_on": ["07_hinged_case", "05_stand"],
+  "size_mm": [72, 96, 59],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "On its side, pin hole vertical", "material": "PLA, matte"},
+    {"name": "leg", "qty": 1, "orientation": "On its side, pin hole vertical", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Pin hinge"],
+  "tags": ["phone", "stand", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
