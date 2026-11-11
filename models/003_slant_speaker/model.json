@@ -1,0 +1,16 @@
+{
+  "id": "003_slant_speaker",
+  "title": "Slant speaker",
+  "summary": "A passive speaker for a 2-inch driver, its front leaning back at 1:4 with a field of slots.",
+  "based_on": ["04_cylinder_speaker", "02_remote"],
+  "size_mm": [80, 96, 128],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "bottom_plate", "qty": 1, "orientation": "Outer face down", "material": "PLA, matte"},
+    {"name": "driver_ref", "qty": 1, "orientation": "Reference only, do not print", "material": "2-inch full-range driver (bought)"}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "tags": ["speaker", "audio", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
