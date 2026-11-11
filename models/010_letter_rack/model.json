@@ -1,0 +1,18 @@
+{
+  "id": "010_letter_rack",
+  "title": "Letter rack",
+  "summary": "Three upright dividers of rising height, doweled and glued into a low base.",
+  "based_on": ["11_split_riser", "03_tray"],
+  "size_mm": [160, 96, 104],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "divider_48", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
+    {"name": "divider_72", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
+    {"name": "divider_96", "qty": 1, "orientation": "On its side, front face down", "material": "PLA, matte"},
+    {"name": "dowels_steel_ref", "qty": 6, "orientation": "Reference only, do not print", "material": "Steel dowel pin, 3 x 16"}
+  ],
+  "mechanisms": ["Split joint (dowels)"],
+  "tags": ["desk", "stationery", "letters"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
