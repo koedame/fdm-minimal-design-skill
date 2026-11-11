@@ -18,7 +18,7 @@ SKIN = 0.84                              # in front of the magnets: 4 layers at 
 MAG_D = 10.2                             # Ø10 x 3 magnets
 MAG_X = [-64.0, -32.0, 0.0, 32.0, 64.0]  # pitch 32, 16 from the ends
 KEY_X, KZ0, TRAVEL = 48.0, 12.0, 8.0     # keyholes: entry centre 12 up, the bar drops 8 onto the screws
-HEAD, SHANK = 8.4, 4.4                   # countersunk screw, head up to Ø8
+HEAD, SHANK = 8.4, 4.2                   # head Ø8.4, slot 4.2 as the wall mounting rule; countersunk screw
 LEDGE = 2.0                              # back ledge the head hooks behind
 
 
