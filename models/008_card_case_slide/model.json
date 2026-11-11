@@ -8,7 +8,7 @@
     {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
     {"name": "lid", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
   ],
-  "mechanisms": ["Sliding lid (dovetail)", "Detent"],
+  "mechanisms": ["Sliding lid"],
   "tags": ["case", "cards", "desk"],
   "printed": false,
   "license": "CC-BY-4.0"

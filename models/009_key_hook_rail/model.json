@@ -7,7 +7,7 @@
   "parts": [
     {"name": "rail", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"}
   ],
-  "mechanisms": ["Wall mounting (keyholes)", "Magnets"],
+  "mechanisms": ["Wall mounting", "Magnets"],
   "tags": ["wall", "entryway", "keys"],
   "printed": false,
   "license": "CC-BY-4.0"

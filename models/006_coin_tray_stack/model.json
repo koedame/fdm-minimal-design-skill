@@ -7,7 +7,7 @@
   "parts": [
     {"name": "tray", "qty": 3, "orientation": "Bottom down", "material": "PLA, matte"}
   ],
-  "mechanisms": ["Location", "Stacking"],
+  "mechanisms": ["Location"],
   "tags": ["tray", "desk", "entryway"],
   "printed": false,
   "license": "CC-BY-4.0"

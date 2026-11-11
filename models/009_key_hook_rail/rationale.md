@@ -9,10 +9,10 @@ A plain bar on the wall by the door that holds keys by their steel rings. Five m
 |---|---|---|
 | Bar | 160 × 32 × 12 | 5:1 face; 12 deep takes the magnets and the keyhole pockets |
 | Face radius | R4 | 12.5% of 32 |
-| Magnets | 5 × Ø10 × 3 in Ø10.2 blind holes, pitch 32, 16 from the ends | One key ring per magnet with room between |
+| Magnets | 5 × Ø10 × 3 in Ø10.2 blind holes, pitch 32, 16 from the ends | Larger than the rule's 6 × 3 (same +0.2 hole) to pull through the skin; one key ring per magnet |
 | Skin in front of the magnets | 0.84 | Thin for the pull; 4 layers at 0.2 still print a closed face on the bed |
-| Keyholes | x ±48 (96 apart), entry Ø8.4 at 12 up, slot 4.4 wide rising 8 | The bar is hung on two screws and dropped 8 onto them |
-| Keyhole pocket | Ø8.4 head pocket 3 deep, 45° seat to the 4.4 slot, 2.0 ledge at the back | The countersunk head seats on the 45° cone; face-down printing needs no support |
+| Keyholes | x ±48 (96 apart), entry Ø8.4 at 12 up, slot 4.2 wide rising 8 | The wall mounting rule's sizes; the bar is hung on two screws and dropped 8 onto them |
+| Keyhole pocket | Ø8.4 head pocket 3 deep, 45° seat to the 4.2 slot, 2.0 ledge at the back | Departs from the rule (head relief on the wall-side face): the front must stay unbroken over the magnets, and in a 12 deep bar the head can sit inside. The countersunk head seats on the 45° cone, and face-down printing needs no support |
 | Chamfers | 0.6 on the front (bed side), 0.5 on the back | As every part |
 
 ## Parts
@@ -23,7 +23,9 @@ A plain bar on the wall by the door that holds keys by their steel rings. Five m
 
 ## Review
 
-No defects or rule violations found.
+| Target | Problem | Kind | Fix |
+|---|---|---|---|
+| rail | Keyhole slot 4.4 wide, wider than the wall mounting rule's 4.2 | Rule violation | 4.2 |
 
 Use cases:
 - **Mount:** drive two countersunk screws (head up to Ø8) 96 apart, level, leaving about 2.5 mm of the head standing off the wall;
