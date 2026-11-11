@@ -1,19 +1,26 @@
 fdm-minimal-design — licences
 https://github.com/koedame/fdm-minimal-design-skill
 
-This folder is under two licences:
+This folder is under these licences:
 
 1. Scripts and skill documents — MIT License
-   SKILL.md, LICENSE.txt, references/*.md and scripts/*.py.
-   The full text is below.
+   SKILL.md, LICENSE.txt, references/*.md, scripts/*.py and scripts/viewer/
+   (the HTML viewer) except three.min.js. The full text is below.
 
 2. 3D models and images — Creative Commons Attribution 4.0 International (CC BY 4.0)
    Everything in assets/: the figures (SVG, PNG), the sample previews (PNG)
    and the sample models (STEP), including STEP and STL files generated from
-   the samples in scripts/fdm_samples.py.
+   the samples in scripts/fdm_samples.py, and the sample meshes inside the HTML
+   viewers written by scripts/viewer.py.
    Licence: https://creativecommons.org/licenses/by/4.0/
    Attribution: "fdm-minimal-design by koedame, CC BY 4.0", with a link to
    https://github.com/koedame/fdm-minimal-design-skill and a note of any changes.
+
+3. three.js — MIT License
+   scripts/viewer/three.min.js is a build of three.js 0.187.0
+   (https://github.com/mrdoob/three.js), Copyright © 2010-2026 three.js authors.
+   The full text is in scripts/viewer/three-LICENSE.txt, and every page written
+   by scripts/viewer.py contains it.
 
 No warranty. The models and dimensions are untested on real prints. Printed
 parts are not certified for any use: for anything that holds batteries or LEDs,

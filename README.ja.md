@@ -13,7 +13,7 @@ Braun 製品（その多くを Dieter Rams がデザインした）に着想を�
 ## できること
 
 - **助言**: 自分の CAD で作る物について、グリッド・比率・R・面取り・造形向き・部品分割を数値で答える
-- **3D モデルを作る**: [CadQuery](https://github.com/CadQuery/cadquery) で、造形向きに置いた部品ごとの STL・色付きの STEP アセンブリ・プレビュー画像を出す
+- **3D モデルを作る**: [CadQuery](https://github.com/CadQuery/cadquery) で、造形向きに置いた部品ごとの STL・色付きの STEP アセンブリ・プレビュー画像・HTML の 3D ビューワーを出す
 - **レビュー**: 寸法の根拠表 → Do/Don'ts → 使用状態 → 数値の検証 → 描画、の決まった手順で設計を見る
 
 中身:
@@ -24,6 +24,7 @@ Braun 製品（その多くを Dieter Rams がデザインした）に着想を�
 | `scripts/fdm_samples.py` | ヘルパーのライブラリと 12 種のサンプル（時計・リモコン・トレイ・スピーカー・スタンド・ラジオ・ヒンジケース・モバイルバッテリー・壁付け機器・ランタン・分割ライザー・ねじ蓋の容器） |
 | `scripts/verify.py` | 数値の検証: ソリッドの有効性・干渉・メッシュの閉じ・ベッドに収まるか・接地・ヒンジの開き角 |
 | `scripts/render.py` | プレビュー画像（VTK のオフスクリーン描画） |
+| `scripts/viewer.py` | オフラインで開ける 1 ファイルの HTML の 3D ビューワー（組み付けた状態と造形向きの配置・部品の表示の切り替え・分解図・寸法・部品の一覧） |
 | `scripts/template_new_object.py` | 新しい物を作るときのひな形 |
 | `assets/` | 図とサンプルのプレビュー（`.skill` にはサンプルの STEP も入る） |
 
@@ -62,6 +63,7 @@ pip install -r requirements.txt
 python skills/fdm-minimal-design/scripts/fdm_samples.py --out out     # 全サンプルの STL と STEP
 python skills/fdm-minimal-design/scripts/verify.py --all
 python skills/fdm-minimal-design/scripts/render.py --all --out previews
+python skills/fdm-minimal-design/scripts/viewer.py --all --out viewers  # サンプルごとに HTML を 1 つ
 ```
 
 ## .skill の作り方
@@ -78,17 +80,20 @@ CI がプルリクエストごとに同じファイルを作り、ワークフ�
 ```
 skills/fdm-minimal-design/   スキル本体（SKILL.md・references・scripts・assets）
 models/                      スキルで設計したモデル。1 モデル 1 ディレクトリ（形は models/README.md）
-tools/                       build_skill.py（.skill を組む）、models.py（models/ の検査と書き出し）
-tests/                       道具のテスト
+tools/                       build_skill.py（.skill を組む）、models.py（models/ の検査と書き出し）、
+                             build_three.sh（ビューワーに入れる three.js を組む）
+tests/                       道具のテスト（pytest）とビューワーの操作の入力のテスト（node --test tests/js/*.test.mjs）
 ```
 
 生成物の 3D ファイル（STEP・STL）はコミットしない。スクリプトから作り直せるので、`.skill` とリリースで配る。モデルが増えてもクローンが重くならない。
 
 ## ライセンス
 
-- **コードとスキルの文書 — [MIT](LICENSE)。** Python のファイル（`*.py`）、`SKILL.md`、`references/`、README などの文書
+- **コードとスキルの文書 — [MIT](LICENSE)。** Python のファイル（`*.py`）、ビューワー（`scripts/viewer/`）、`SKILL.md`、`references/`、README などの文書
 - **3D モデルと画像 — [CC BY 4.0](LICENSE-CC-BY-4.0.txt)。** このリポジトリから公開する STEP・STL などのモデルのファイル（サンプルと `models/` から生成したものを含む）と、すべての画像（PNG・SVG）。
   表示は「fdm-minimal-design by koedame, CC BY 4.0」とし、このリポジトリへのリンクと、変更したならその旨を添える
+- **three.js** — `scripts/viewer/three.min.js` は [three.js](https://github.com/mrdoob/three.js) 0.187.0 を組んだもの。
+  © three.js authors、MIT ライセンス（[本文](skills/fdm-minimal-design/scripts/viewer/three-LICENSE.txt)）。`viewer.py` が書き出すページには、ライセンスの本文ごと入る
 
 ## 無保証と安全について
 
