@@ -1,0 +1,15 @@
+{
+  "id": "008_card_case_slide",
+  "title": "Card case with a sliding lid",
+  "summary": "A business card case whose lid slides in a 45 degree dovetail and clicks shut over a ridge.",
+  "based_on": ["07_hinged_case"],
+  "size_mm": [102, 68, 24],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Sliding lid (dovetail)", "Detent"],
+  "tags": ["case", "cards", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
