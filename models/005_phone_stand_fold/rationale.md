@@ -41,8 +41,8 @@ Use cases:
 - **Print:** both parts on their sides with the pin hole vertical, so the round ends, the ridge and the 45° webs are in the layer plane.
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed; ground contact 6811 mm² over 71 × 96 mm.
-Hinge sweep about the pin axis: no overlap from the open pose to folded (0, 10, 20, 30, 40, 50°); 2° past open the leg
-enters the heel by 108 mm³, which is the stop working.
+Hinge sweep about the pin axis (the `motions` of model.json, swept by verify.py on every check): no overlap from the open
+pose to folded (0, 10, 20, 30, 40, 50°); 1° past open the leg enters the heel by 26 mm³ (2°: 108 mm³), which is the stop working.
 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a phone stand; the plate-on-plate fold with a
 round-ended leg and a heel stop is not taken from any product. No product was used as a model.

@@ -49,11 +49,19 @@ LABEL_GRAY = (0.55, 0.55, 0.53)   # labels: close to the plate, not black
 
 @dataclass
 class Part:
+    """One part: the assembled shape (in use, Z up), the print-oriented shape and the colour.
+
+    qty > 1: asm holds every copy in place and prn one copy; build asm with copies() so that
+    copies that touch stay separate solids. ref=True marks a bought part (a clock movement, a
+    driver, steel dowels) that is shown in the assembly and checked for fit but not printed:
+    prn may be None and no print STL is written for it.
+    """
     asm: cq.Workplane
     prn: cq.Workplane
     color: tuple
     anchor: str = None
     qty: int = 1
+    ref: bool = False
 
 
 # ---------------- helpers ----------------
@@ -68,6 +76,24 @@ def rrect(w, h, r, z0, t, cx=0, cy=0):
 
 def cyl(r, z0, h, x=0, y=0):
     return cq.Workplane("XY").workplane(offset=z0).center(x, y).circle(r).extrude(h)
+
+
+def copies(shapes):
+    """Several copies of a part (qty > 1) as one shape that keeps every copy a separate solid.
+
+    A union fuses copies that touch (stacked trays, a pin in a row of pins) into one solid, and
+    then the tools cannot tell the copies apart (verify.py reports it)."""
+    return cq.Workplane("XY").add(cq.Compound.makeCompound([s.val() for s in shapes]))
+
+
+def on_slope(wp, tilt, origin=(0, 0, 0)):
+    """Move a shape built in the XY frame onto a face that leans back `tilt` degrees from the desk.
+
+    Local x stays +X, local y runs up the slope (and back), local +Z is the outward normal of the face
+    (forward and up); the local origin goes to `origin`. tilt 90 is a vertical front face, 0 a top face.
+    Build features with the usual helpers (rrect, cyl, box, slot2D on an XY workplane) and move them;
+    on_slope(wp, -tilt) brings a shape back into the face frame when the origin is (0, 0, 0)."""
+    return wp.rotate((0, 0, 0), (1, 0, 0), tilt).translate(origin)
 
 
 def rx(wp, deg):
@@ -843,6 +869,23 @@ SAMPLES = {
 }
 
 
+def load_module(path):
+    """Run a design file (it registers its designs in SAMPLES) and return the model.json next to it.
+
+    model.json is optional ({} without it). The scripts read from it what a design file does not say:
+    the print orientation of each part (parts[].orientation), the camera of render.py (view) and the
+    motions verify.py sweeps (motions); the format is in models/README.md of the repository."""
+    import importlib.util
+    import json
+    spec = importlib.util.spec_from_file_location("user_designs", path)
+    spec.loader.exec_module(importlib.util.module_from_spec(spec))
+    meta = os.path.join(os.path.dirname(os.path.abspath(path)), "model.json")
+    if not os.path.isfile(meta):
+        return {}
+    with open(meta, encoding="utf-8") as f:
+        return json.load(f)
+
+
 def export(root, names=None):
     """Write print-oriented STLs, assembly STLs (for render.py), STEP and colours for each design."""
     import json
@@ -862,12 +905,13 @@ def export(root, names=None):
         shifts = {}
         asm = cq.Assembly(name=sname)
         for name, p in parts.items():
-            bb = p.prn.val().BoundingBox()
-            shift = shifts[p.anchor] if p.anchor else (-bb.xmin, -bb.ymin, -bb.zmin)
-            shifts[name] = shift
-            suffix = f"_x{p.qty}" if p.qty > 1 else ""
-            cq.exporters.export(p.prn.translate(shift), os.path.join(out, f"print_{name}{suffix}.stl"),
-                                tolerance=0.02, angularTolerance=0.1)
+            if not p.ref:                      # a bought part is in the assembly, not on the bed
+                bb = p.prn.val().BoundingBox()
+                shift = shifts[p.anchor] if p.anchor else (-bb.xmin, -bb.ymin, -bb.zmin)
+                shifts[name] = shift
+                suffix = f"_x{p.qty}" if p.qty > 1 else ""
+                cq.exporters.export(p.prn.translate(shift), os.path.join(out, f"print_{name}{suffix}.stl"),
+                                    tolerance=0.02, angularTolerance=0.1)
             cq.exporters.export(p.asm, os.path.join(out, f"_asm_{name}.stl"),
                                 tolerance=0.02, angularTolerance=0.1)
             asm.add(p.asm, name=name, color=cq.Color(*p.color))

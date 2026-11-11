@@ -10,6 +10,8 @@ Steps (references/04_review.md):
      is a number that will look unfinished.
   2. Pick the nearest sample(s) in references/05_catalog.md and reuse their helpers.
   3. Model in the assembly frame (Z up in use). Give each part its print orientation in Part.prn.
+     Several copies of a part: Part(copies([...]), one_copy, colour, qty=n); a union would fuse
+     copies that touch. A bought part shown for fit: Part(asm, None, colour, ref=True).
   4. Run verify.py and render.py, then walk references/03_dos_donts.md top to bottom.
 
 Dimension rationale (example below: a square pen cup)

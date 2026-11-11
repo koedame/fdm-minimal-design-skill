@@ -181,8 +181,8 @@
     const visibleBox = () => {
       const box = new T.Box3();
       for (const p of Object.values(parts)) {
-        const m = p[state.arrangement];
-        if (m.node.visible) box.union(boxOf(m.mesh));
+        const m = p[state.arrangement]; // a bought part has no node in the print layout
+        if (m && m.node.visible) box.union(boxOf(m.mesh));
       }
       return box.isEmpty() ? boxOf(groups[state.arrangement]) : box;
     };

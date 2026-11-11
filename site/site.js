@@ -50,7 +50,7 @@
       tr.querySelector("b").textContent = words(p.name);
       tr.querySelector(".muted").textContent = p.anchor ? `${p.orientation}, printed with ${words(p.anchor)}` : p.orientation;
       tr.cells[1].textContent = String(p.qty);
-      tr.cells[2].textContent = dims(p.print_size);
+      tr.cells[2].textContent = p.print_size ? dims(p.print_size) : "—"; // a bought part is not printed
       return tr;
     });
     $("m-parts").replaceChildren(...rows);

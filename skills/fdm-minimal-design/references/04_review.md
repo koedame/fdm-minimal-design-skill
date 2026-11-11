@@ -49,6 +49,7 @@ Use `scripts/verify.py`. Do not settle for "looks fine" from an image.
 
 ```bash
 python scripts/verify.py <sample_name> [--bed 256] [--hinge "moving:fixed:x1,y1,z1:x2,y2,z2:deg1,deg2,..."]
+                                         [--slide "moving:fixed:dx,dy,dz:mm1,mm2,..."]
 ```
 
 What it checks:
@@ -57,8 +58,18 @@ What it checks:
 - **Closed mesh** (watertight): the print STL is closed
 - **Lowest point in print orientation**: sits on z=0
 - **Fits the bed**
+- **Copies**: a part with qty > 1 holds that many separate solids (copies fused by a union are reported)
 - **Contact width**: in the assembled state, the width and area of the section near z=0
-- **Interference of moving parts** (optional): give the moving part, the fixed part, two points on the rotation axis (assembly frame) and the angles, to see the interference at each angle. Example for the hinged case: `--hinge "lid:base:0,32,24:1,32,24:-30,-60,-90,-110"`
+- **Interference of moving parts** (optional): a hinge (the moving part, the fixed part, two points on the rotation axis in the assembly frame and the angles) or a slide (the moving part, the fixed part, a direction and the distances in mm), to see the interference at each position. `--hinge` and `--slide` expect none anywhere. Example for the hinged case: `--hinge "lid:base:0,32,24:1,32,24:-30,-60,-90,-110"`
+- **Motions recorded in `model.json`** (next to the `--module` file): they are checked every time, and each position says what it must give, so the stops and snaps are proven too, not only the free range:
+  ```json
+  "motions": [
+    {"part": "leg", "against": "base", "hinge": [[0, 24, 12], [1, 24, 12]], "free": [0, 10, 20, 30, 40, 50], "stop": [-1]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 100], "stop": [-0.3],
+     "snap": {"at": [1, 30, 60], "max_mm3": 1.0}}
+  ]
+  ```
+  `free`: no overlap. `stop`: overlap, so the stop or end wall really catches the part there. `snap`: an overlap of at most `max_mm3`, a snap or detent being pushed over. Positions are degrees (hinge) or mm (slide) from the assembled pose.
 
 ## Step 5 Look at the whole in a rendering
 

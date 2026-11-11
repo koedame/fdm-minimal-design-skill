@@ -113,7 +113,34 @@ def test_when_a_design_from_a_module_is_written_with_the_cli_it_produces_one_htm
     assert (tmp_path / "001_pen_cup.html").is_file()
     assert "wrote" in capsys.readouterr().out
     data, _ = embedded((tmp_path / "001_pen_cup.html").read_text(encoding="utf-8"))
+    assert [p["orientation"] for p in data["parts"]] == ["Bottom down"]     # as written in its model.json
+
+
+def test_when_a_design_has_no_model_json_the_orientation_is_worked_out_from_the_shapes(tmp_path, monkeypatch):
+    design = tmp_path / "design.py"
+    design.write_text((FIXTURE / "design.py").read_text().replace('"..", "..", "..", "skills"', '"skills"'))
+    monkeypatch.setenv("FDM_SCRIPTS", str(ROOT / "skills" / "fdm-minimal-design" / "scripts"))
+    monkeypatch.setattr(sys, "argv", ["viewer.py", "001_pen_cup", "--module", str(design), "--out", str(tmp_path)])
+    viewer.main()
+    data, _ = embedded((tmp_path / "001_pen_cup.html").read_text(encoding="utf-8"))
     assert [p["orientation"] for p in data["parts"]] == ["As used, base on the bed"]
+
+
+def test_when_a_part_is_bought_it_is_in_the_assembly_but_not_in_the_print_layout():
+    base = fdm_samples.box(-20, 20, -20, 20, 0, 10)
+    pin = fdm_samples.cyl(1.5, 2, 16)
+    fdm_samples.SAMPLES["_test_bought"] = lambda: {
+        "base": fdm_samples.Part(base, base, fdm_samples.OFF),
+        "pin_ref": fdm_samples.Part(pin, None, fdm_samples.DARK, ref=True)}
+    try:
+        data, glb = viewer.model("_test_bought", {"parts": [{"name": "pin_ref", "orientation": "Steel pin, bought"}]})
+    finally:
+        del fdm_samples.SAMPLES["_test_bought"]
+    pin_row = next(p for p in data["parts"] if p["name"] == "pin_ref")
+    assert (pin_row["ref"], pin_row["orientation"], pin_row["print_size"]) == (True, "Steel pin, bought", None)
+    doc = gltf_json(glb)
+    groups = {n["name"]: [doc["nodes"][c]["extras"]["part"] for c in n["children"]] for n in doc["nodes"] if "children" in n}
+    assert groups == {"assembled": ["base", "pin_ref"], "print": ["base"]}
 
 
 @pytest.mark.parametrize("turn, expected", [

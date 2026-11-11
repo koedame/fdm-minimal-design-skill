@@ -49,7 +49,7 @@
     tr.querySelector(".name").textContent = p.name.replace(/_/g, " ");
     tr.querySelector(".orient").textContent = p.anchor ? `${p.orientation}, printed with ${p.anchor.replace(/_/g, " ")}` : p.orientation;
     tr.cells[1].textContent = `${p.qty}`;
-    tr.cells[2].textContent = dims(p.print_size);
+    tr.cells[2].textContent = p.print_size ? dims(p.print_size) : "—"; // a bought part is not printed
     const box = tr.querySelector("input");
     box.addEventListener("change", () => {
       viewer.setVisible(p.name, box.checked);
@@ -122,7 +122,7 @@
     } else {
       const taken = []; // label boxes already drawn; a label that would overlap one moves down
       for (const p of DATA.parts) {
-        if (!boxes[p.name].checked || p.anchor) continue;
+        if (!boxes[p.name].checked || p.anchor || p.ref) continue;
         const { min: [x0, y0, z0], max: [x1] } = viewer.box(p.name);
         const s = viewer.toScreen([(x0 + x1) / 2, y0, z0]);
         if (s.behind) continue;

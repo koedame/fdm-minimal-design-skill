@@ -40,9 +40,9 @@ Use cases:
 - **Print:** both parts bottom down; the lip and the seat ring have 45° undersides; no supports.
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed, ground contact 6688 mm² over 100.9 × 66.9 mm.
-Slide check (lid moved against the body, with a short script, since verify.py only sweeps hinges): along the slide, 0 mm³
-at the closed position, 0.88 mm³ (the ridge under the lid) from 1 to 60 mm out, free at 100; 0.3 further in, 5 mm³ (the stop).
-Down 0.25 free, 0.3 on the ring; up 0.3 free, 0.4 against the lip.
+Slide check (the `motions` of model.json, swept by verify.py on every check): along the slide, 0 mm³ at the closed position,
+0.88 mm³ (the ridge under the lid) from 1 to 60 mm out, free at 100; 0.3 further in, 5 mm³ (the stop).
+Down 0.25 free, 0.3 on the ring (29 mm³); up 0.3 free, 0.4 against the lip (6 mm³).
 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a case; a box with a sliding lid is a generic
 form, and no product was used as a model.

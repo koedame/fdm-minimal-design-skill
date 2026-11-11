@@ -11,7 +11,7 @@
     {"name": "dial_marks_inlay", "qty": 1, "orientation": "Layers 1-2 of the dial", "material": "PLA, matte"},
     {"name": "hand_hour", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
     {"name": "hand_minute", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
-    {"name": "movement_ref", "qty": 1, "orientation": "Reference only, do not print", "material": "Quartz clock movement (bought)"}
+    {"name": "movement_ref", "qty": 1, "ref": true, "orientation": "Reference only, do not print", "material": "Quartz clock movement (bought)"}
   ],
   "mechanisms": ["Location", "Magnets"],
   "tags": ["clock", "desk", "battery"],

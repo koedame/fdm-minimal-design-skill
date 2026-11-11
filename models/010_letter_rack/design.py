@@ -7,11 +7,10 @@ rises toward the back so every compartment shows what is in it.
 import os
 import sys
 
-import cadquery as cq
-
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
-from fdm_samples import (Part, SAMPLES, CH, CH_BED, OFF, DARK, box, cyl, rrect, rx, feet, teardrop_x)  # noqa: E402
+from fdm_samples import (Part, SAMPLES, CH, CH_BED, OFF, DARK, box, cyl, rrect, rx, feet, teardrop_x,  # noqa: E402
+                         copies)
 
 BL, BD, BH, BR = 160.0, 96.0, 8.0, 12.0  # base 5:3; R = 12.5 % of 96
 DT = 6.0                                 # divider thickness: a Ø3.2 hole leaves 1.4 each side
@@ -45,9 +44,8 @@ def letter_rack():
     for i, (y, h) in enumerate(zip(YS, HEIGHTS)):
         d = divider(y, h)
         parts[f"divider_{int(h)}"] = Part(d, rx(d, 90), OFF)  # on its side: the -Y face on the bed
-    pins = [cyl(1.5, BH - B_DEPTH + 0.25, PIN_L, x, y).val() for y in YS for x in DOWEL_X]
-    parts["dowels_steel_ref"] = Part(cq.Workplane("XY").add(cq.Compound.makeCompound(pins)),
-                                     cyl(1.5, 0, PIN_L), DARK, qty=len(pins))
+    pins = copies(cyl(1.5, BH - B_DEPTH + 0.25, PIN_L, x, y) for y in YS for x in DOWEL_X)
+    parts["dowels_steel_ref"] = Part(pins, None, DARK, qty=len(YS) * len(DOWEL_X), ref=True)
     return parts
 
 

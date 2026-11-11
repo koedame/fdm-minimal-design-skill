@@ -13,7 +13,7 @@ import cadquery as cq
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
 from fdm_samples import (Part, SAMPLES, T, CH, CH_BED, GAP, OFF, DARK,  # noqa: E402
-                         cyl, rrect, rx, rz, plane_yz, teardrop_x)
+                         cyl, rrect, rx, rz, plane_yz, teardrop_x, on_slope)
 
 W, H = 80.0, 128.0                 # 8:5
 D_BOT, D_TOP = 96.0, 64.0          # front leans back 32 over 128 = 1:4
@@ -25,12 +25,13 @@ DRIVER_D, FRAME_T, MAG_D, MAG_T = 53.0, 4.0, 30.0, 12.0   # a common 2-inch full
 BOSS_XY = [(sx * 28.0, y) for sx in (-1, 1) for y in (-8.0, 40.0)]
 
 
-def front_plane(offset=0.0):
-    """Plane on the sloped front: x across, local y up the slope, normal outward; origin at the top edge."""
-    a = math.atan2(D_BOT - D_TOP, H)                     # 14.04 deg from vertical
-    n = cq.Vector(0, -math.cos(a), math.sin(a))
-    o = cq.Vector(0, -D_BOT / 2 + (D_BOT - D_TOP), H) + n * offset
-    return cq.Workplane(cq.Plane(origin=o, xDir=(1, 0, 0), normal=n))
+TILT = 90 - math.degrees(math.atan2(D_BOT - D_TOP, H))   # the front leans back 14.04 deg from vertical
+TOP_EDGE = (0, -D_BOT / 2 + (D_BOT - D_TOP), H)
+
+
+def on_front(wp):
+    """Face frame (x across, y up the slope, +z outward, origin at the top edge) -> use frame."""
+    return on_slope(wp, TILT, TOP_EDGE)
 
 
 def slant_speaker():
@@ -45,7 +46,8 @@ def slant_speaker():
     fc = -(MARGIN + SLOT_L / 2)                          # field centre, along the slope from the top edge
     for i in range(N):
         x = (i - (N - 1) / 2) * PITCH
-        body = body.cut(front_plane(1.0).center(x, fc).slot2D(SLOT_L, SLOT_W, 90).extrude(-(T + 2.0)))
+        body = body.cut(on_front(cq.Workplane("XY").workplane(offset=1.0).center(x, fc)
+                                 .slot2D(SLOT_L, SLOT_W, 90).extrude(-(T + 2.0))))
     # cable: teardrop through the back, apex down in use = up in the upside-down print
     body = body.cut(rz(teardrop_x(y1 - T - 1, T + 2, 0, 16.0, 3.0, apex=(0, -1)), 90))
 
@@ -59,12 +61,12 @@ def slant_speaker():
         plate = plate.cut(cyl(5.1, -0.01, 1.01, x, y))   # rubber foot, which also covers the screw head
         plate = plate.cut(cyl(2.2, -0.01, 2.6, x, y)).cut(cyl(1.2, -1, T + 2, x, y))
 
-    driver = front_plane(-T).center(0, fc).circle(DRIVER_D / 2).extrude(-FRAME_T)
-    driver = driver.union(front_plane(-T - FRAME_T).center(0, fc).circle(MAG_D / 2).extrude(-MAG_T))
+    driver = cyl(DRIVER_D / 2, -T - FRAME_T, FRAME_T, 0, fc).union(cyl(MAG_D / 2, -T - FRAME_T - MAG_T, MAG_T, 0, fc))
+    driver = on_front(driver)
     return {
         "body": Part(body, rx(body, 180), OFF),
         "bottom_plate": Part(plate, plate, OFF),
-        "driver_ref": Part(driver, rx(driver, 0), DARK),
+        "driver_ref": Part(driver, None, DARK, ref=True),
     }
 
 

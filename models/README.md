@@ -79,11 +79,31 @@ Three sections, in this order:
 | `summary` | string | One sentence |
 | `based_on` | list of strings | Sample names from the skill (`05_catalog.md`) whose form or mechanism this builds on. May be empty |
 | `size_mm` | 3 numbers | Bounding box of the assembled model, width × depth × height (X, Y, Z), in mm. Checked against `design.py` to ±0.5 mm |
-| `parts` | list of objects | One per part in `design.py`, same names and quantities. `orientation` and `material` are free text |
+| `parts` | list of objects | One per part in `design.py`, same names and quantities. `orientation` and `material` are free text; the 3D viewer shows `orientation` as the print orientation. A bought part (`Part(..., ref=True)` in `design.py`) has `"ref": true` |
 | `mechanisms` | list of strings | Mechanisms used, in the words of the mechanism table in `05_catalog.md` (for example "Pin hinge"). May be empty |
 | `tags` | list of strings | Free keywords for search and filtering. May be empty |
 | `printed` | boolean | `true` only after the model has been printed and checked on a real printer |
 | `license` | string | Always `"CC-BY-4.0"` (the model and its images; `design.py` itself is MIT) |
+| `view` | object, optional | The camera of `render.py` and of the 3D viewer: `{"direction": [x, y, z], "zoom": 1.1}`, the direction from the object to the camera. Without `zoom` the model is framed to fill the image. Without `view` the direction is (-0.6, -1, 0.6) |
+| `motions` | list, optional | Moving parts to sweep on every check, each with what its positions must give. See below |
+
+### motions
+
+```json
+"motions": [
+  {"part": "leg", "against": "base", "hinge": [[0, 24, 12], [1, 24, 12]], "free": [0, 10, 20, 30, 40, 50], "stop": [-1]},
+  {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 100], "stop": [-0.3],
+   "snap": {"at": [1, 30, 60], "max_mm3": 1.0}}
+]
+```
+
+`part` moves against `against` from the assembled pose, either about a `hinge` axis (two points, assembly frame;
+positions in degrees) or along a `slide` direction (positions in mm). `free`: no overlap there. `stop`: the parts must
+overlap there, which proves the stop or end wall catches the part. `snap`: an overlap of at most `max_mm3` (a snap or
+detent being pushed over). `verify.py` reports the overlap at every position.
+
+A bought part is not printed: it is in the STEP assembly and checked for interference, but has no print STL and no
+place in the print layout of the viewer.
 
 Colours are not repeated here: they are part of `design.py` and are written to `_colors.json` when the model is exported.
 
@@ -94,6 +114,8 @@ python skills/fdm-minimal-design/scripts/render.py 001_pen_cup --module models/0
 mv models/001_pen_cup/001_pen_cup.png models/001_pen_cup/preview.png
 ```
 
+The camera comes from `view` in `model.json`. To try one first: `--view -0.6 -1 0.4` (and an optional zoom as a fourth number).
+
 ## Generated files
 
 ```bash
@@ -103,7 +125,7 @@ python tools/models.py export --out build/models 001_pen_cup
 
 writes, under `build/models/001_pen_cup/`:
 
-- `print_<part>.stl` (`print_<part>_x<qty>.stl` when qty > 1): each part in print orientation, on z = 0
+- `print_<part>.stl` (`print_<part>_x<qty>.stl` when qty > 1): each printed part in print orientation, on z = 0 (none for bought parts)
 - `_asm_<part>.stl`: each part in the assembled position (for viewers)
 - `001_pen_cup_assembly.step`: the coloured assembly
 
@@ -116,6 +138,6 @@ python tools/models.py check            # every model
 python tools/models.py check 001_pen_cup
 ```
 
-checks the files above against each other (id, required fields, part names and quantities, size, licence,
-the three sections of `rationale.md`) and runs `verify.py` on the design. CI runs it on every pull request;
+checks the files above against each other (id, required fields, part names, quantities and bought parts, size,
+licence, `view`, `motions`, the three sections of `rationale.md`) and runs `verify.py` on the design, with its motions. CI runs it on every pull request;
 a model that does not pass is not merged.
