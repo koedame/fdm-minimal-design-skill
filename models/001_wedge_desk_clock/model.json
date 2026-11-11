@@ -1,0 +1,20 @@
+{
+  "id": "001_wedge_desk_clock",
+  "title": "Wedge desk clock",
+  "summary": "A square clock face leaning back on a 7:24:25 wedge, with a back plate on magnets.",
+  "based_on": ["01_clock", "06_radio"],
+  "size_mm": [100, 48, 96],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Face down", "material": "PLA, matte"},
+    {"name": "back_plate", "qty": 1, "orientation": "Outer face down", "material": "PLA, matte"},
+    {"name": "dial", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"},
+    {"name": "dial_marks_inlay", "qty": 1, "orientation": "Layers 1-2 of the dial", "material": "PLA, matte"},
+    {"name": "hand_hour", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "hand_minute", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "movement_ref", "qty": 1, "orientation": "Reference only, do not print", "material": "Quartz clock movement (bought)"}
+  ],
+  "mechanisms": ["Location", "Magnets"],
+  "tags": ["clock", "desk", "battery"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
