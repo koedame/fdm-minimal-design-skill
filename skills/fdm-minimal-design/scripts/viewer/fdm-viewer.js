@@ -289,6 +289,7 @@
         observer.disconnect();
         controls.dispose();
         renderer.dispose();
+        renderer.forceContextLoss(); // free the WebGL context now; browsers allow only a few at a time
         el.remove();
       },
     };

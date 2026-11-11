@@ -76,13 +76,27 @@ python tools/build_skill.py --no-step    # without STEP (no CadQuery needed)
 
 CI builds the same file on every pull request and keeps it as a workflow artifact.
 
+## Building the website
+
+```bash
+python tools/build_site.py --out build/site                       # every model in models/ and the 12 samples
+python tools/build_site.py --out build/site 001_pen_cup 06_radio  # only these
+```
+
+writes one static page that introduces the skill and lists the models and samples; selecting one shows it in 3D
+with the viewer of `viewer.py`, with its STEP, print STLs (zip) and viewer HTML to download. The list is built from
+`models/`, so a new model needs no change to the site. The page reads nothing from other servers. Serve the folder
+from any static host; to look at it locally, `python -m http.server -d build/site` (opening `index.html` as a file
+does not load the 3D view). CI builds it on every pull request and keeps it as a workflow artifact.
+
 ## Repository layout
 
 ```
 skills/fdm-minimal-design/   the skill (SKILL.md, references, scripts, assets)
 models/                      models designed with the skill, one directory each (format: models/README.md)
+site/                        the page of the website and its script (built by tools/build_site.py)
 tools/                       build_skill.py (the .skill bundle), models.py (check and export models/),
-                             build_three.sh (the three.js bundle of the viewer)
+                             build_site.py (the website), build_three.sh (the three.js bundle of the viewer)
 tests/                       tests for the tools (pytest) and for the viewer's input handling (node --test tests/js/*.test.mjs)
 ```
 
@@ -91,7 +105,7 @@ Generated 3D files (STEP, STL) are not committed. They are regenerated from the 
 
 ## Licence
 
-- **Code and skill documents — [MIT](LICENSE).** Python files (`*.py`), the viewer (`scripts/viewer/`), `SKILL.md`,
+- **Code and skill documents — [MIT](LICENSE).** Python files (`*.py`), the viewer (`scripts/viewer/`), the website (`site/`), `SKILL.md`,
   `references/`, the READMEs and other documentation.
 - **3D models and images — [CC BY 4.0](LICENSE-CC-BY-4.0.txt).** STEP, STL and other model files published from this
   repository (including those generated from the samples and from `models/`), and all images (PNG, SVG).
