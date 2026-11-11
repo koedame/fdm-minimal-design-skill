@@ -1,12 +1,13 @@
 ---
 name: fdm-minimal-design
-description: Design, review and 3D-model minimal, refined products for FDM 3D printing, in a design language inspired by 1960s-70s Braun products (Dieter Rams); not affiliated with Braun or its trademark owners. Includes design principles, numeric design rules, Dos and Don'ts, a review procedure, 12 sample objects (STEP) and CadQuery scripts to generate, verify and render models. Use this skill whenever someone wants to make an enclosure, case, small object, stand, clock, lamp, container or similar with 3D CAD or a 3D printer in a style described as "Braun-like", "Rams-like", "like a minimal appliance" or "simple but not cheap-looking", and whenever they ask why their own shape looks lazy or amateurish, even if the word Braun never comes up.
+description: Design, review, and model minimalist, refined objects for FDM 3D printing (enclosures, stands, clocks, lamps, containers, desk items). Use this skill when the user asks for a minimalist or "simple but not cheap-looking" design, or describes the look as "Braun-like" or "Dieter Rams-style", even if those words are not used. Also use it when someone asks why their own shape looks lazy or amateurish. Includes design principles, numeric design rules, Dos and Don'ts, a review procedure, 12 sample objects (STEP) and CadQuery scripts to generate, verify and render models.
 ---
 
 # FDM minimal design
 
 A skill for designing objects in a specific design language and fitting it to the constraints of FDM 3D printing.
 The language: large radii in plan with sharp edges, a grid, achromatic colours plus a single accent, and repetition of one shape.
+The rules describe a design language seen in mid-century German consumer products, especially Braun's 1960s–70s line designed under Dieter Rams. They are distilled into original, measurable rules for FDM printing; they are not taken from any official Braun or Rams document.
 
 The goal is a form that is "simple, but does not look lazy". The fewer the elements, the more precision and justification they demand, so the skill is built around two habits: **give every dimension a reason, and always review the design after making it**.
 
@@ -73,7 +74,7 @@ Check it with the procedure in `04_review.md` and return the problems in a table
 ## Honesty
 
 - The numbers (clearances, snaps, threads, hole diameters) are rules of thumb, not values confirmed on real prints. Always say so when handing them over, and tell the user to settle them with a test piece of the mating features.
-- Do not reproduce the form of a specific Braun product, or any trademark or logo. Make original forms by applying the principles.
+- Do not reproduce any specific Braun product, logo, or trade dress, and do not name products or model numbers as the model for a design. Make original forms by applying the principles.
 - Do not vouch for quality based on how it looks on screen. Tell the user to judge gaps and edges on the real print.
 - Printed parts are not certified for anything. For objects that hold batteries or LEDs, get hot, or touch food, do not claim the printed part is safe; tell the user to use certified electronic components and to check the material and the electrical design themselves.
 
@@ -81,3 +82,7 @@ Check it with the procedure in `04_review.md` and return the problems in a table
 
 - **What the scripts need:** Python 3.11 or later and `cadquery`. `trimesh` and `vtk` are optional and are used for mesh checks and rendering. Install with `pip install cadquery trimesh` (vtk comes with cadquery). The repository this skill comes from pins tested versions in `requirements.txt`.
 - **If CadQuery is not available:** give advice in the style of A and point to the STEP files of the samples as reference shapes. STEP opens in common CAD software, which can export STL from it.
+
+## Independent project
+
+This is an independent project. It is not affiliated with, endorsed by, or sponsored by Braun, The Procter & Gamble Company, De'Longhi, Vitsœ, or Dieter Rams. "Braun" is a trademark of its respective owner and is used here only to describe a historical design style. The skill and the models do not reproduce any specific Braun product, logo, or trade dress.

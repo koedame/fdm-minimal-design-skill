@@ -21,9 +21,11 @@ gets hot, or touches food, the safety of the printed parts is not guaranteed;
 use certified electronic components and check the materials and the electrical
 design yourself.
 
-The design language is inspired by 1960s-70s Braun products (Dieter Rams).
-This project is not affiliated with, endorsed by or sponsored by Braun or its
-trademark owners.
+This is an independent project. It is not affiliated with, endorsed by, or
+sponsored by Braun, The Procter & Gamble Company, De'Longhi, Vitsœ, or Dieter
+Rams. "Braun" is a trademark of its respective owner and is used here only to
+describe a historical design style. The skill and the models do not reproduce
+any specific Braun product, logo, or trade dress.
 
 -------------------------------------------------------------------------------
 
