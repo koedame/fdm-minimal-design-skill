@@ -1,0 +1,14 @@
+{
+  "id": "009_key_hook_rail",
+  "title": "Key rail",
+  "summary": "A plain wall bar that holds keys by their rings on hidden magnets, hung on keyholes for countersunk screws.",
+  "based_on": ["09_wall_unit"],
+  "size_mm": [160, 12, 32],
+  "parts": [
+    {"name": "rail", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Wall mounting (keyholes)", "Magnets"],
+  "tags": ["wall", "entryway", "keys"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
