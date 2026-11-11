@@ -1,0 +1,14 @@
+{
+  "id": "006_coin_tray_stack",
+  "title": "Coin tray stack",
+  "summary": "Round shallow trays that stack, each seated by a 45 degree cone on the rim chamfer below.",
+  "based_on": ["03_tray"],
+  "size_mm": [80, 80, 54],
+  "parts": [
+    {"name": "tray", "qty": 3, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Location", "Stacking"],
+  "tags": ["tray", "desk", "entryway"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
