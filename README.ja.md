@@ -120,3 +120,5 @@ tests/                       道具のテスト（pytest）とビューワーの
 このプロジェクトは独立したもので、Braun、The Procter & Gamble Company、De'Longhi、Vitsœ、Dieter Rams のいずれとも関係がなく、
 承認や後援も受けていない。「Braun」はその権利者の商標で、歴史的な様式を説明するためにだけ名前を出している。
 スキルとモデルは、特定の Braun 製品・ロゴ・外観を再現していない。
+
+FDM は Stratasys の登録商標で、ここでは造形方式の一般的な呼び名としてだけ使っている。
