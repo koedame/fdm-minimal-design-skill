@@ -130,3 +130,5 @@ This is an independent project. It is not affiliated with, endorsed by, or spons
 Company, De'Longhi, Vitsœ, or Dieter Rams. "Braun" is a trademark of its respective owner and is used here only to
 describe a historical design style. The skill and the models do not reproduce any specific Braun product, logo, or
 trade dress.
+
+FDM is a registered trademark of Stratasys; here it is used only as the common name of the printing process.
