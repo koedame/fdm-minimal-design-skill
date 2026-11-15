@@ -1,0 +1,16 @@
+{
+  "id": "017_puck_speaker",
+  "title": "Puck speaker",
+  "summary": "A low cylinder speaker whose screw-on lid is a dense field of holes over a 50 mm driver.",
+  "based_on": ["12_threaded_jar", "04_cylinder_speaker"],
+  "size_mm": [96, 96, 48],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "driver_ref", "qty": 1, "orientation": "Bought part", "material": "50 mm full-range driver", "ref": true}
+  ],
+  "mechanisms": ["Screw lid"],
+  "tags": ["speaker", "audio", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
