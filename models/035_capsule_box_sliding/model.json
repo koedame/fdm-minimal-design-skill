@@ -1,0 +1,23 @@
+{
+  "id": "035_capsule_box_sliding",
+  "title": "Capsule box",
+  "summary": "A small box round at both ends, with three cells and a lid that slides out in a dovetail and clicks shut.",
+  "based_on": ["08_power_bank", "03_tray"],
+  "size_mm": [120, 40, 20],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Bottom down (as used)", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Sliding lid"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 0.5, 120], "stop": [-0.3],
+     "snap": {"at": [1, 30, 60], "max_mm3": 1.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "free": [0.2], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0.3], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["box", "storage", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
