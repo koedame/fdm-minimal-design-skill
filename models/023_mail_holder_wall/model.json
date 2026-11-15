@@ -1,0 +1,15 @@
+{
+  "id": "023_mail_holder_wall",
+  "title": "Wall mail holder",
+  "summary": "A back plate on the wall with a pocket half its height for letters, hung on two keyholes hidden inside the pocket.",
+  "based_on": ["09_wall_unit", "03_tray"],
+  "size_mm": [128, 32, 160],
+  "parts": [
+    {"name": "holder", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Wall mounting"],
+  "view": {"direction": [-0.7, -1, 0.45]},
+  "tags": ["wall", "letters", "entrance", "storage"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
