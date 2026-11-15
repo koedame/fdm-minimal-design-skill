@@ -1,0 +1,20 @@
+{
+  "id": "077_seed_box_hinged",
+  "title": "Seed sorting box",
+  "summary": "A 128 x 80 x 32 box of twelve coved cells for loose seeds, its solid lid on a pin hinge closing every cell and held shut by two magnets.",
+  "based_on": ["07_hinged_case", "03_tray"],
+  "size_mm": [128, 84, 32],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PLA, matte"},
+    {"name": "magnets_ref", "qty": 4, "orientation": "Bought: 6 x 3 disc magnets", "material": "Neodymium", "ref": true}
+  ],
+  "mechanisms": ["Pin hinge", "Magnets", "Location"],
+  "motions": [
+    {"part": "lid", "against": "base", "hinge": [[0, 40, 24], [1, 40, 24]], "free": [0, -5, -15, -30, -60, -90, -120, -150], "stop": [1, -170]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["garden", "storage", "seeds"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
