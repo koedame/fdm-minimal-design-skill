@@ -1,0 +1,20 @@
+{
+  "id": "015_wall_clock_disc",
+  "title": "Wall clock disc",
+  "summary": "A thin disc on the wall whose face is the dial, standing off the wall on a shadow line and hung on one keyhole.",
+  "based_on": ["01_clock", "09_wall_unit"],
+  "size_mm": [192, 22.8, 192],
+  "parts": [
+    {"name": "disc", "qty": 1, "orientation": "Face down (layer 1-2 in other colours)", "material": "PLA, matte"},
+    {"name": "dial_marks_inlay", "qty": 1, "orientation": "Inlaid in the face, first two layers", "material": "PLA, matte"},
+    {"name": "dial_top_mark_inlay", "qty": 1, "orientation": "Inlaid in the face, first two layers", "material": "PLA, matte"},
+    {"name": "hand_hour", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "hand_minute", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "movement_ref", "qty": 1, "orientation": "Bought part", "material": "Quartz clock movement", "ref": true}
+  ],
+  "mechanisms": ["Wall mounting"],
+  "view": {"direction": [-0.35, -1, 0.25]},
+  "tags": ["clock", "wall", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
