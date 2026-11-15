@@ -1,0 +1,26 @@
+{
+  "id": "029_column_clock",
+  "title": "Column clock",
+  "summary": "A short column lying on its side whose round end is the dial, closed at the back by a flush lid that screws in.",
+  "based_on": ["12_threaded_jar"],
+  "size_mm": [96, 67, 95],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Dial face down", "material": "PLA, matte"},
+    {"name": "dial_marks_inlay", "qty": 1, "orientation": "Inlaid in the dial (multi-material)", "material": "PLA, matte, dark"},
+    {"name": "dial_top_mark_inlay", "qty": 1, "orientation": "Inlaid in the dial (multi-material)", "material": "PLA, matte, accent"},
+    {"name": "lid", "qty": 1, "orientation": "Outer face down", "material": "PLA, matte"},
+    {"name": "hand_hour", "qty": 1, "orientation": "Flat", "material": "PLA, matte, dark"},
+    {"name": "hand_minute", "qty": 1, "orientation": "Flat", "material": "PLA, matte, dark"},
+    {"name": "movement_ref", "qty": 1, "orientation": "Bought part", "material": "Quartz clock movement 56 × 56 × 16, one AA cell", "ref": true}
+  ],
+  "mechanisms": ["Screw lid"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0, 0.5], "stop": [1.5]},
+    {"part": "lid", "against": "body", "slide": [0, -1, 0], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.6]}
+  ],
+  "view": {"direction": [-0.5, -1, 0.3]},
+  "tags": ["clock", "desk", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
