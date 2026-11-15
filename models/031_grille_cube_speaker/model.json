@@ -1,0 +1,23 @@
+{
+  "id": "031_grille_cube_speaker",
+  "title": "Grille cube speaker",
+  "summary": "A 96 mm cube for one 2-inch driver, with vertical slots on the upper half of all four faces and a top cap that snaps on with hooks.",
+  "based_on": ["04_cylinder_speaker", "09_wall_unit"],
+  "size_mm": [96, 96, 96],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "baffle", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte, dark grey"},
+    {"name": "cap", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"},
+    {"name": "driver_ref", "qty": 1, "orientation": "Bought part", "material": "2-inch (50 mm) full-range driver, square 53 mm frame", "ref": true}
+  ],
+  "mechanisms": ["Snap (hook)"],
+  "motions": [
+    {"part": "cap", "against": "body", "slide": [0, 0, 1], "free": [0, 0.4, 20], "stop": [0.6],
+     "snap": {"at": [3, 8, 12], "max_mm3": 20.0}},
+    {"part": "cap", "against": "body", "slide": [0, 0, -1], "free": [0], "stop": [0.2]},
+    {"part": "cap", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.8]}
+  ],
+  "tags": ["speaker", "audio", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
