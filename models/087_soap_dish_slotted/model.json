@@ -1,0 +1,15 @@
+{
+  "id": "087_soap_dish_slotted",
+  "title": "Slotted soap dish",
+  "summary": "A 112 x 80 soap dish whose bar rests on round-topped ribs over a sloping floor that drains through slots in the front wall.",
+  "based_on": ["03_tray", "04_cylinder_speaker"],
+  "size_mm": [112, 80, 24],
+  "parts": [
+    {"name": "dish", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.5, -1, 0.9]},
+  "tags": ["bathroom", "kitchen", "tray"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
