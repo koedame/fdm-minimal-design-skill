@@ -1,0 +1,23 @@
+{
+  "id": "036_earbud_case",
+  "title": "Earbud case",
+  "summary": "A small rounded case with a lift-off lid, located by a lip and held by two pairs of magnets on the divider, one cell per earbud.",
+  "based_on": ["07_hinged_case", "06_radio"],
+  "size_mm": [68, 48, 28],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Magnets", "Location"],
+  "motions": [
+    {"part": "lid", "against": "base", "slide": [0, 0, 1], "free": [0, 1, 4, 20]},
+    {"part": "lid", "against": "base", "slide": [0, 0, -1], "stop": [0.2]},
+    {"part": "lid", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "base", "slide": [-1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "base", "slide": [0, -1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "tags": ["case", "earbuds", "bag"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
