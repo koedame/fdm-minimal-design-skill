@@ -1,0 +1,31 @@
+{
+  "id": "057_slab_timer_case",
+  "title": "Slab timer case",
+  "summary": "A 92 x 52 x 20 kitchen-timer slab: a four-digit LED window and one dial of the same width, on a rotary encoder; the bottom plate snaps in with two hooks.",
+  "based_on": ["02_remote", "01_clock"],
+  "size_mm": [92, 52, 32.4],
+  "parts": [
+    {"name": "shell", "qty": 1, "orientation": "Top down", "material": "PLA or PETG, matte"},
+    {"name": "bottom_plate", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "dial", "qty": 1, "orientation": "Front face up", "material": "PLA or PETG, matte"},
+    {"name": "display_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "0.36 in four-digit LED module, 42 x 24 board"},
+    {"name": "encoder_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "12 mm rotary encoder (EC11), M7 bushing, D shaft cut to 14.5"},
+    {"name": "controller_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "21 x 17.8 controller board with USB-C"},
+    {"name": "buzzer_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "12 mm buzzer"}
+  ],
+  "mechanisms": ["Dial", "Snap (hook)"],
+  "motions": [
+    {"part": "dial", "against": "shell", "hinge": [[20, 0, 0], [20, 0, 1]], "free": [0, 45, 90, 180, 270]},
+    {"part": "dial", "against": "shell", "slide": [0, 0, -1], "free": [0.2], "stop": [0.6]},
+    {"part": "dial", "against": "shell", "slide": [0, 0, 1], "free": [0, 2, 20]},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 0, -1], "free": [0, 0.2, 14], "stop": [0.8],
+     "snap": {"at": [2, 4, 8], "max_mm3": 24.0}},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 0, 1], "stop": [0.8]},
+    {"part": "bottom_plate", "against": "shell", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.5, -1, 0.9]},
+  "tags": ["kitchen", "timer", "electronics"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
