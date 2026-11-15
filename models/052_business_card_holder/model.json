@@ -1,0 +1,15 @@
+{
+  "id": "052_business_card_holder",
+  "title": "Business card holder",
+  "summary": "A low 104 x 32 block on a floating plinth with one slot that holds about forty cards leaning back at 1:4.",
+  "based_on": ["03_tray", "05_stand"],
+  "size_mm": [104, 32, 24],
+  "parts": [
+    {"name": "holder", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.3, -1, 0.7]},
+  "tags": ["desk", "stationery", "office"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
