@@ -1,0 +1,25 @@
+{
+  "id": "038_clip_bowl_magnetic",
+  "title": "Magnetic clip bowl",
+  "summary": "A small bowl for paper clips with a disc magnet sealed in its floor under a dark cover, so the clips gather in the middle and stay in.",
+  "based_on": ["03_tray"],
+  "size_mm": [72, 72, 36],
+  "parts": [
+    {"name": "bowl", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "cover", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "magnet_ref", "qty": 1, "ref": true, "orientation": "Reference only, do not print", "material": "Ø20 × 3 neodymium disc magnet (bought)"}
+  ],
+  "mechanisms": ["Magnets"],
+  "motions": [
+    {"part": "cover", "against": "bowl", "slide": [0, 0, 1], "free": [0, 1, 40]},
+    {"part": "cover", "against": "bowl", "slide": [0, 0, -1], "stop": [0.2]},
+    {"part": "cover", "against": "magnet_ref", "slide": [0, 0, -1], "free": [0.1], "stop": [0.4]},
+    {"part": "cover", "against": "bowl", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "magnet_ref", "against": "bowl", "slide": [1, 0, 0], "free": [0.05], "stop": [0.4]},
+    {"part": "magnet_ref", "against": "bowl", "slide": [0, 0, -1], "stop": [0.1]}
+  ],
+  "view": {"direction": [-0.6, -1, 1.6]},
+  "tags": ["desk", "stationery", "bowl"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
