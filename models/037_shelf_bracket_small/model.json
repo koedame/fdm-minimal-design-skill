@@ -1,0 +1,23 @@
+{
+  "id": "037_shelf_bracket_small",
+  "title": "Small shelf bracket",
+  "summary": "An L-shaped shelf bracket that slides down onto a dovetail wall plate, so the wall screws sit hidden behind it.",
+  "based_on": ["02_remote"],
+  "size_mm": [28, 80, 80],
+  "parts": [
+    {"name": "bracket", "qty": 1, "orientation": "On its side", "material": "PETG, matte"},
+    {"name": "wall_plate", "qty": 1, "orientation": "Wall side down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "motions": [
+    {"part": "bracket", "against": "wall_plate", "slide": [0, 0, 1], "free": [0, 10, 40, 70]},
+    {"part": "bracket", "against": "wall_plate", "slide": [0, 0, -1], "free": [0.2], "stop": [0.5]},
+    {"part": "bracket", "against": "wall_plate", "slide": [0, 1, 0], "free": [0.2], "stop": [0.5]},
+    {"part": "bracket", "against": "wall_plate", "slide": [1, 0, 0], "free": [0.2], "stop": [0.5]},
+    {"part": "bracket", "against": "wall_plate", "slide": [-1, 0, 0], "free": [0.2], "stop": [0.5]}
+  ],
+  "view": {"direction": [1, 0.8, 0.5]},
+  "tags": ["wall", "shelf", "bracket"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
