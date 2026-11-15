@@ -1,0 +1,23 @@
+{
+  "id": "040_desk_hook_bag",
+  "title": "Desk bag hook",
+  "summary": "A J hook for a bag that slides onto a dovetail plate under the desk edge, so its screws stay out of sight.",
+  "based_on": ["02_remote"],
+  "size_mm": [32, 56, 60],
+  "parts": [
+    {"name": "hook", "qty": 1, "orientation": "On its side", "material": "PETG, matte"},
+    {"name": "desk_plate", "qty": 1, "orientation": "Desk side down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "motions": [
+    {"part": "hook", "against": "desk_plate", "slide": [0, 1, 0], "free": [0, 10, 40, 70]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, -1, 0], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, 0, -1], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, 0, 1], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [1, 0, 0], "free": [0.2], "stop": [0.5]}
+  ],
+  "view": {"direction": [1, 0.9, -0.3]},
+  "tags": ["desk", "hook", "bag"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
