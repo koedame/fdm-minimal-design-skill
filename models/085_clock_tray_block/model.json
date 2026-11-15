@@ -1,0 +1,28 @@
+{
+  "id": "085_clock_tray_block",
+  "title": "Clock tray block",
+  "summary": "A desk clock 96 square in plan whose front half is a shallow tray for keys and rings, the dial facing the room over it.",
+  "based_on": ["01_clock", "03_tray", "06_radio"],
+  "size_mm": [96, 96, 82.4],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "dial", "qty": 1, "orientation": "Front face down (layers 1–2 in other colours)", "material": "PLA, matte"},
+    {"name": "dial_marks_inlay", "qty": 1, "orientation": "Front face down, first two layers of the dial", "material": "PLA, matte"},
+    {"name": "dial_top_mark_inlay", "qty": 1, "orientation": "Front face down, first two layers of the dial", "material": "PLA, matte"},
+    {"name": "hand_hour", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "hand_minute", "qty": 1, "orientation": "Flat", "material": "PLA, matte"},
+    {"name": "movement_ref", "qty": 1, "orientation": "Bought: quartz clock movement, 56 × 56 × 16", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 2, 5, 10]},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.6]},
+  "tags": ["clock", "desk", "tray"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
