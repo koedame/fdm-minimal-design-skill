@@ -1,0 +1,23 @@
+{
+  "id": "083_charger_cord_wrap",
+  "title": "Charger cord wrap",
+  "summary": "A flat stadium bobbin for winding a charger's cord, in two halves that click together on hidden snap tabs.",
+  "based_on": ["08_power_bank", "03_tray"],
+  "size_mm": [96, 48, 16],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "cap", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Snap (tab)"],
+  "motions": [
+    {"part": "cap", "against": "base", "slide": [0, 0, 1], "free": [0, 9, 14],
+     "snap": {"at": [1, 3, 5, 7], "max_mm3": 5.0}},
+    {"part": "cap", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "cap", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cap", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["cable", "travel", "charger"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
