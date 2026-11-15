@@ -70,7 +70,7 @@ What it checks:
   ]
   ```
   `free`: no overlap. `stop`: overlap, so the stop or end wall really catches the part there. `snap`: an overlap of at most `max_mm3`, a snap or detent being pushed over. Positions are degrees (hinge) or mm (slide) from the assembled pose.
-  The sweep moves rigid shapes: a snap hook does not flex, so past the catch the overlap is the barbs' own volume. Set `max_mm3` to that volume (about 21 mm³ for two 10 wide hooks with 0.8 barbs; models 055, 057).
+  The sweep moves rigid shapes: a snap hook does not flex, so past the catch the overlap is the barbs' own volume. Set `max_mm3` to that volume (about 21 mm³ for two 10 wide hooks with 0.8 barbs; models 055, 057). With the usual 0.25 clearance round the barb only its engaged tip overlaps, about engagement² per mm of hook width (5.5 mm³ for four 12 wide hooks engaging 0.35, model 079).
 
 ## Step 5 Look at the whole in a rendering
 

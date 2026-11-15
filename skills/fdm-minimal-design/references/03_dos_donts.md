@@ -25,6 +25,7 @@ The numbers are rules of thumb, not an official standard of any manufacturer.
 | Plate ends nearly full round (R ≈ plate thickness / 2) | A half-hearted small radius on the ends |
 | **Ends and faces that touch the ground stay flat** (chamfer only) | A full round even on the ground end, so it stands on a line |
 | Keep recesses (finger grips etc.) inside the face they belong to | A recess cutting into the rim or chamfer of the neighbouring face |
+| Cells, pockets and posts at a rounded corner follow the wall's concentric inside radius (R − T) | A small cell radius or a square post in a large outer corner: it cuts through the wall, and `verify.py` still reports a valid, watertight part (models 064, 077) |
 | Forms made from extrusions, cuts and revolutions | Freeform surfaces, organic shapes |
 
 ## 3. Details
