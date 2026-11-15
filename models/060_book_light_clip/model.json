@@ -1,0 +1,25 @@
+{
+  "id": "060_book_light_clip",
+  "title": "Book light clip",
+  "summary": "A clip for the top edge of a book cover with a lamp head on a pin hinge; the head rests 29.5 deg down on the clip and swings back for carrying.",
+  "based_on": ["07_hinged_case", "10_lantern"],
+  "size_mm": [30, 64.8, 49],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Upright (jaws down)", "material": "PETG, matte (the front jaw flexes)"},
+    {"name": "head", "qty": 1, "orientation": "Floor down", "material": "PLA or PETG, matte"},
+    {"name": "head_cover", "qty": 1, "orientation": "Outer face down", "material": "PLA or PETG, matte"},
+    {"name": "diffuser_translucent", "qty": 1, "orientation": "Flange down", "material": "PETG, natural (translucent)"},
+    {"name": "led_board_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "20 x 8 white LED board with its resistor"},
+    {"name": "battery_holder_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "CR2032 holder with switch, 26 x 7.5 x 22"},
+    {"name": "pin_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "1.75 mm filament, 29.4 long"}
+  ],
+  "mechanisms": ["Pin hinge", "Light, windows"],
+  "motions": [
+    {"part": "head", "against": "body", "hinge": [[0, 9, 44], [1, 9, 44]], "free": [0, -30, -90, -150, -200, -229], "stop": [1, -241]},
+    {"part": "head", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.6]}
+  ],
+  "view": {"direction": [-1, -0.8, 0.6]},
+  "tags": ["light", "reading", "clip"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
