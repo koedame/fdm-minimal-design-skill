@@ -45,9 +45,11 @@ def earbud_case():
         lid = lid.union(box(-POST / 2, POST / 2, y - POST / 2, y + POST / 2, HB, HB + HL - TOP + .1))
         lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, 0, y))
 
-    # the lip runs all round; the divider steps down under it
+    # the lip runs all round; the divider steps down under it. The lid's wall is thickened inside down to the rim,
+    # so the lip is part of the wall
     lid = lid.union(rrect(L - 2 * (T + c), W - 2 * (T + c), ri - c, HB - LIP_H, LIP_H + 0.01)
-                    .cut(rrect(L - 2 * (T + c + DIV), W - 2 * (T + c + DIV), ri - c - DIV, HB - LIP_H - 1, LIP_H + 2)))
+                    .union(rrect(L - 2 * T + 1, W - 2 * T + 1, ri + 0.5, HB, HL - TOP + 0.01))
+                    .cut(rrect(L - 2 * (T + c + DIV), W - 2 * (T + c + DIV), ri - c - DIV, HB - LIP_H - 1, LIP_H + HL + 2)))
 
     scoop = plane_xz(-W / 2 + 1.2).center(0, HB).circle(SCOOP_R).extrude(3)
     base, lid = base.cut(scoop), lid.cut(scoop)

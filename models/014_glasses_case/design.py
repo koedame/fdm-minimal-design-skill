@@ -49,9 +49,10 @@ def glasses_case():
 
     c = GAP                                       # lid lip along the front half only: the back must swing
     lip = stadium(L - 2 * (T + c), W - 2 * (T + c), HB - 3, 3.01) \
-        .cut(stadium(L - 2 * (T + c + DIV), W - 2 * (T + c + DIV), HB - 4, 5)).cut(box(-L, L, 0, W, 0, 100))
-    for sx in (-1, 1):
-        lip = lip.cut(box(sx * MAG_X - POST / 2 - c - 4, sx * MAG_X + POST / 2 + 4, -POST / 2 - c, POST / 2 + c, 0, 100))
+        .union(stadium(L - 2 * T + 1, W - 2 * T + 1, HB, HL - TOP + 0.01)) \
+        .cut(stadium(L - 2 * (T + c + DIV), W - 2 * (T + c + DIV), HB - 4, HL + 5)).cut(box(-L, L, 0, W, 0, 100))
+    for sx in (-1, 1):                            # the wall is thickened inside down to the rim, so the lip is part of it
+        lip = lip.cut(box(sx * MAG_X - POST / 2 - c - 4, sx * MAG_X + POST / 2 + 4, -POST / 2 - c, POST / 2 + c, 0, HB))
     lid = lid.union(lip)
 
     def knuckle(xa, xb, sign):

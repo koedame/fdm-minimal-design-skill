@@ -29,7 +29,9 @@ the front seam is the one worked-out detail.
 
 ## Review
 
-No defects or violations found.
+| Target | Problem | Kind | Fix |
+|---|---|---|---|
+| lid | Found later by a new check in verify.py: the lip, offset inward by the clearance, touched the lid nowhere and would have printed as a loose piece | Defect | The lid wall is thickened on the inside down to the rim and the lip hangs from it |
 
 Use cases:
 - **Open, close:** the lid swings free from 0 to 150° and comes to rest at about 158°, where the lid knuckles meet the base webs
