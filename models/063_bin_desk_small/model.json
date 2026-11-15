@@ -1,0 +1,15 @@
+{
+  "id": "063_bin_desk_small",
+  "title": "Small desk bin",
+  "summary": "A 96 x 96 x 128 square bin for paper scraps on a floating plinth, with a V groove under the rim that seats a rubber band holding a bag.",
+  "based_on": ["03_tray", "04_cylinder_speaker"],
+  "size_mm": [96, 96, 128],
+  "parts": [
+    {"name": "bin", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.6, -1, 0.5]},
+  "tags": ["desk", "office", "container"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
