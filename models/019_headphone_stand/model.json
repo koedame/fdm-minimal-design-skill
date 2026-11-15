@@ -1,0 +1,17 @@
+{
+  "id": "019_headphone_stand",
+  "title": "Headphone stand",
+  "summary": "A bevelled plate column with an arched top on a slab base, joined by two steel dowels and glue so that the column prints on its side.",
+  "based_on": ["11_split_riser"],
+  "size_mm": [128, 96, 240],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG"},
+    {"name": "column", "qty": 1, "orientation": "On its side, front face down", "material": "PLA or PETG"},
+    {"name": "dowels_steel_ref", "qty": 2, "orientation": "Bought part, not printed", "material": "Steel dowel pin Ø4 × 20", "ref": true}
+  ],
+  "mechanisms": ["Split joint"],
+  "view": {"direction": [-0.6, -1, 0.4]},
+  "tags": ["desk", "audio", "stand"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
