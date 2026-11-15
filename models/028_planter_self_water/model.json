@@ -1,0 +1,22 @@
+{
+  "id": "028_planter_self_water",
+  "title": "Self-watering planter",
+  "summary": "A round planter in two parts: a pot that hangs in a water reservoir on a 45-degree seat and drinks through a soil wick in a slotted tube.",
+  "based_on": ["03_tray", "04_cylinder_speaker"],
+  "size_mm": [96, 96, 120],
+  "parts": [
+    {"name": "pot", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "reservoir", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "pot", "against": "reservoir", "slide": [0, 0, 1], "free": [0, 10, 40]},
+    {"part": "pot", "against": "reservoir", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "pot", "against": "reservoir", "slide": [1, 0, 0], "free": [0.05], "stop": [0.4]},
+    {"part": "pot", "against": "reservoir", "slide": [0, 1, 0], "free": [0.05], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["plant", "container", "home", "watering"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
