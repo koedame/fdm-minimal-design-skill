@@ -1,0 +1,22 @@
+{
+  "id": "074_led_strip_channel",
+  "title": "LED strip channel",
+  "summary": "A 192 long, 20 x 20 channel for LED tape, open at both ends so lengths butt together, closed by a translucent diffuser on eight snap hooks.",
+  "based_on": ["09_wall_unit", "10_lantern"],
+  "size_mm": [192, 20, 20],
+  "parts": [
+    {"name": "channel", "qty": 1, "orientation": "Floor down", "material": "PLA, matte"},
+    {"name": "diffuser", "qty": 1, "orientation": "Top face down", "material": "PLA, natural (translucent)"},
+    {"name": "tape_ref", "qty": 1, "orientation": "Bought: LED tape up to 12 wide", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Snap (hook)", "Light, windows"],
+  "motions": [
+    {"part": "diffuser", "against": "channel", "slide": [0, 0, 1], "free": [0, 15], "stop": [-0.5], "snap": {"at": [1, 2, 4], "max_mm3": 20.0}},
+    {"part": "diffuser", "against": "channel", "slide": [1, 0, 0], "free": [0, 10, 50]},
+    {"part": "diffuser", "against": "tape_ref", "slide": [0, 0, 1], "free": [0, -3]}
+  ],
+  "view": {"direction": [-0.5, -1, 0.7]},
+  "tags": ["lighting", "led", "wall"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
