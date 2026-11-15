@@ -1,0 +1,100 @@
+{
+  "id": "018_wall_sconce_half",
+  "title": "Half-cylinder wall sconce",
+  "summary": "A half cylinder on the wall in three tiers, base, translucent diffuser and cap, with a slide switch in the curved front.",
+  "based_on": [
+    "10_lantern",
+    "09_wall_unit"
+  ],
+  "size_mm": [
+    96,
+    50.65,
+    128
+  ],
+  "parts": [
+    {
+      "name": "base",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "diffuser_translucent",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PETG or PLA, translucent white"
+    },
+    {
+      "name": "cap",
+      "qty": 1,
+      "orientation": "Top face down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "slider_carrier",
+      "qty": 1,
+      "orientation": "Plate down, neck up",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "slider_knob",
+      "qty": 1,
+      "orientation": "Front face down",
+      "material": "PLA, matte"
+    }
+  ],
+  "mechanisms": [
+    "Wall mounting",
+    "Light, windows",
+    "Slide switch",
+    "Location"
+  ],
+  "view": {
+    "direction": [
+      -0.5,
+      -1,
+      0.35
+    ]
+  },
+  "motions": [
+    {
+      "part": "slider_carrier",
+      "against": "base",
+      "slide": [
+        0,
+        0,
+        1
+      ],
+      "free": [
+        0,
+        4,
+        8
+      ],
+      "stop": [
+        -0.5,
+        8.5
+      ]
+    },
+    {
+      "part": "slider_knob",
+      "against": "base",
+      "slide": [
+        0,
+        0,
+        1
+      ],
+      "free": [
+        0,
+        4,
+        8
+      ]
+    }
+  ],
+  "tags": [
+    "light",
+    "LED",
+    "wall"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
