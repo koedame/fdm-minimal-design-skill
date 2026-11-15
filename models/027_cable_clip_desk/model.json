@@ -1,0 +1,16 @@
+{
+  "id": "027_cable_clip_desk",
+  "title": "Desk edge cable clip",
+  "summary": "A C-shaped clip that pushes onto the edge of a 20 mm desk and holds cables in a U-hook behind it, gripping by its sprung jaws.",
+  "based_on": ["03_tray"],
+  "size_mm": [43, 40, 27],
+  "parts": [
+    {"name": "clip", "qty": 1, "orientation": "On its side", "material": "PETG, matte"},
+    {"name": "cables_ref", "qty": 2, "orientation": "Reference (Ø5 cables), not printed", "material": "Cable up to Ø5", "ref": true}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.8, -1, 0.5]},
+  "tags": ["desk", "cables", "organiser"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
