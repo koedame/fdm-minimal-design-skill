@@ -1,0 +1,22 @@
+{
+  "id": "079_label_holder_shelf",
+  "title": "Shelf label holder",
+  "summary": "A 64 long label holder that clips onto the front edge of an 18 shelf board; a paper label slides in behind a clear cover held by four snap hooks.",
+  "based_on": ["09_wall_unit"],
+  "size_mm": [64, 24.52, 28],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "On its end, the profile down", "material": "PLA or PETG, matte"},
+    {"name": "cover", "qty": 1, "orientation": "Front face down", "material": "PETG, clear"},
+    {"name": "label_ref", "qty": 1, "orientation": "Paper, 60 x 16", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Snap (hook)"],
+  "motions": [
+    {"part": "cover", "against": "body", "slide": [0, -1, 0], "free": [0, 13], "stop": [-1.0], "snap": {"at": [1, 2, 4], "max_mm3": 6.0}},
+    {"part": "cover", "against": "body", "slide": [1, 0, 0], "free": [0, 10, 40]},
+    {"part": "label_ref", "against": "body", "slide": [1, 0, 0], "free": [0, 20, 70]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.5]},
+  "tags": ["storage", "shelf", "label"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
