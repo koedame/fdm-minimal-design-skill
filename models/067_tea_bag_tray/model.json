@@ -1,0 +1,15 @@
+{
+  "id": "067_tea_bag_tray",
+  "title": "Tea bag tray",
+  "summary": "A 96 x 64 x 12 dish for a used tea bag on a floating plinth, with seven low ribs that keep the bag out of its drips and a rim notch for the string.",
+  "based_on": ["03_tray"],
+  "size_mm": [96, 64, 12],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [0.5, -1, 0.9]},
+  "tags": ["kitchen", "tea", "tray"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
