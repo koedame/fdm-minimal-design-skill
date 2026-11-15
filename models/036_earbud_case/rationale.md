@@ -31,6 +31,7 @@ V line; a shallow scoop at the front of the seam is the only place to put a fing
 | Target | Problem | Kind | Fix |
 |---|---|---|---|
 | case | First built 24 high: 19.2 inside, lower than a common earbud lying down (about 22) | Defect | 28 high (base 16 → 20) |
+| lid | Found later by a new check in verify.py: the lip, offset inward by the clearance, touched the lid nowhere and would have printed as a loose piece | Defect | The lid wall is thickened on the inside down to the rim and the lip hangs from it |
 | base, lid | The magnet posts stood on the short ends, where they took 8 of each cell's length exactly where an earbud lies, and broke the lip at both ends | Defect | Posts moved onto the divider; the lip now runs unbroken |
 | case | With the posts on the divider, a 24 wide earbud ran 0.95 into the lip at the end wall (`bud()` against the lid: 62.9 mm³) | Defect | 64 → 68 long |
 | base | The divider, raised to the seam, ran into the lid's lip at both walls (verify.py: 16.9 mm³ interference) | Defect | Stepped down under the lip |
