@@ -1,0 +1,18 @@
+{
+  "id": "014_glasses_case",
+  "title": "Glasses case",
+  "summary": "A stadium-shaped glasses case whose lid turns on a pin hinge along the back and is held shut by two magnets.",
+  "based_on": ["07_hinged_case"],
+  "size_mm": [168, 68, 48],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Pin hinge", "Magnets"],
+  "motions": [
+    {"part": "lid", "against": "base", "hinge": [[0, 32, 36], [1, 32, 36]], "free": [0, -30, -60, -90, -120, -150], "stop": [1, -170]}
+  ],
+  "tags": ["case", "glasses", "bag"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
