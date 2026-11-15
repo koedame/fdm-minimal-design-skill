@@ -1,0 +1,16 @@
+{
+  "id": "034_key_tray_round",
+  "title": "Round key tray",
+  "summary": "A round dish for keys that floats on a plinth, with a cove for picking keys up and a soft liner that keeps them quiet.",
+  "based_on": ["03_tray"],
+  "size_mm": [120, 120, 24],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "liner_tpu", "qty": 1, "orientation": "Bottom down", "material": "TPU 95A, dark grey"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.6, -1, 0.9]},
+  "tags": ["tray", "keys", "entrance", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
