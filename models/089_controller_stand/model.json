@@ -1,0 +1,22 @@
+{
+  "id": "089_controller_stand",
+  "title": "Controller stand",
+  "summary": "A wedge on which a game controller lies face up at 30 degrees against a lip, with a small store for its cable or dongle behind a magnet-held cover.",
+  "based_on": ["05_stand", "07_hinged_case"],
+  "size_mm": [72, 100, 67.4],
+  "parts": [
+    {"name": "stand", "qty": 1, "orientation": "On its left side (profile on the bed)", "material": "PETG, matte"},
+    {"name": "cover", "qty": 1, "orientation": "Outer face down", "material": "PETG, matte"},
+    {"name": "magnet_ref", "qty": 4, "ref": true, "orientation": "Bought: Ø6 × 3 neodymium disc magnets, glued", "material": "—"}
+  ],
+  "mechanisms": ["Magnets"],
+  "motions": [
+    {"part": "cover", "against": "stand", "slide": [1, 0, 0], "free": [0, 10], "stop": [-0.3]},
+    {"part": "cover", "against": "stand", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cover", "against": "stand", "slide": [0, 0, 1], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [1, -0.9, 0.6]},
+  "tags": ["stand", "gaming", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
