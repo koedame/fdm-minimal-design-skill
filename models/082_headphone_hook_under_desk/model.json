@@ -1,0 +1,23 @@
+{
+  "id": "082_headphone_hook_under_desk",
+  "title": "Under-desk headphone hook",
+  "summary": "A C-shaped hook under the desk top for a pair of headphones, held by two screws from below that the stem hides from the chair.",
+  "based_on": ["02_remote", "05_stand"],
+  "size_mm": [40, 72, 72],
+  "parts": [
+    {"name": "hook", "qty": 1, "orientation": "On its side", "material": "PETG, matte"},
+    {"name": "desk_plate", "qty": 1, "orientation": "Desk side down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "motions": [
+    {"part": "hook", "against": "desk_plate", "slide": [0, 0, -1], "free": [0, 5, 12, 30]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, 0, 1], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [1, 0, 0], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, 1, 0], "free": [0.2], "stop": [0.5]},
+    {"part": "hook", "against": "desk_plate", "slide": [0, -1, 0], "free": [0.2], "stop": [0.5]}
+  ],
+  "view": {"direction": [1, 0.5, 0.25]},
+  "tags": ["desk", "hook", "headphones"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
