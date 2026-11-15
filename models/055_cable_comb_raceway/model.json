@@ -1,0 +1,22 @@
+{
+  "id": "055_cable_comb_raceway",
+  "title": "Cable comb raceway",
+  "summary": "A 128 mm open-ended raceway with two combs that keep four cables in order, and a lid that snaps on with four hooks.",
+  "based_on": ["09_wall_unit", "03_tray"],
+  "size_mm": [128, 40, 16],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Mounting face down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Outer face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Snap (hook)"],
+  "motions": [
+    {"part": "lid", "against": "base", "slide": [0, 0, 1], "free": [0, 0.2, 12], "stop": [0.6],
+     "snap": {"at": [2, 4, 8], "max_mm3": 5.0}},
+    {"part": "lid", "against": "base", "slide": [0, 0, -1], "stop": [0.2]},
+    {"part": "lid", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "tags": ["cable", "desk", "wall"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
