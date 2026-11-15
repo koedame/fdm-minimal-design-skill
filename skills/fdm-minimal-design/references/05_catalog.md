@@ -126,7 +126,7 @@ Preview images are in `assets/samples/<name>/`, with the STEP files next to them
 | Part | Orientation | Colour |
 |---|---|---|
 | stand | Side down | Off-white |
-| grip_pad_tpu | Flat | Accent (TPU) |
+| grip_pad_tpu × 2 (one each side of the groove) | Flat | Accent (TPU) |
 
 ## 06 radio — box-shaped electronics
 
@@ -204,7 +204,7 @@ Preview images are in `assets/samples/<name>/`, with the STEP files next to them
   - The large flat plate is printed standing vertically, so it does not warp.
 - **Joint:** three Ø4 steel dowels and glue. The dowel holes are horizontal, so they are teardrops.
 - **Details:** with C0.5 on both sides, the seam becomes a V line and reads as one intended line running through the centre.
-- `print_dowels_steel_ref.stl` is for checking positions; **do not print it**.
+- `dowels_steel_ref` (× 3) are bought steel dowels, shown for fit only: they have no print STL.
 
 ## 12 threaded_jar — screw-on lid
 

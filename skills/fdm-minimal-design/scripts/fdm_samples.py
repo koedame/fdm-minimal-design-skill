@@ -380,12 +380,12 @@ def stand():
     gpl = cq.Plane(origin=(x0, 0, 0), xDir=(0, 1, 0), normal=(1, 0, 0))
     body = body.cut(cq.Workplane(gpl).polyline([(-0.1, 33), (4, 37), (4, 43), (-0.1, 47)]).close().extrude(100))
     body = body.cut(box(x0, x1, t - 1.0, t + 0.5, 4, WID - 4))
-    pad = box(x0 + 0.1, x1 - 0.1, t - 1.0, t + 0.6, 4.1, WID - 4.1).cut(box(0, 30, 0, 20, 36, 44))
+    pads = [box(x0 + 0.1, x1 - 0.1, t - 1.0, t + 0.6, z0, z0 + 31.9) for z0 in (4.1, 44.0)]   # either side of the groove
 
     disp = lambda wp: rx(wp, 90)
     return {
         "stand": Part(disp(body), body, OFF),
-        "grip_pad_tpu": Part(disp(pad), pad.rotate((0, 0, 0), (1, 0, 0), -90), ACC),
+        "grip_pad_tpu": Part(disp(copies(pads)), pads[0].rotate((0, 0, 0), (1, 0, 0), -90), ACC, qty=2),
     }
 
 
@@ -594,14 +594,16 @@ def hinged_case():
         lid = lid.union(box(x - POST / 2, x + POST / 2, fy - POST / 2, fy + POST / 2, HB + 0.0, HB + HL - TOP + .1))
         lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, x, fy))
 
-    # lid lip on front and sides only (the back must swing freely)
+    # lid lip on front and sides only (the back must swing freely). The lid's wall is thickened inside down to
+    # the rim along it, so the lip is part of the wall: a lip only below the rim would touch nothing and print loose
     c = GAP
     lip = rrect(W - 2 * (T + c), Dp - 2 * (T + c), R - T - c, HB - 3, 3.01) \
-        .cut(rrect(W - 2 * (T + c + DIV), Dp - 2 * (T + c + DIV), R - T - c - DIV, HB - 4, 5)) \
+        .union(rrect(W - 2 * T + 1, Dp - 2 * T + 1, R - T + 0.5, HB, HL - TOP + 0.01)) \
+        .cut(rrect(W - 2 * (T + c + DIV), Dp - 2 * (T + c + DIV), R - T - c - DIV, HB - 4, HL + 5)) \
         .cut(box(-W, W, 0, Dp, 0, 100))
     for sx in (-1, 1):
         x = sx * MAG_X
-        lip = lip.cut(box(x - POST / 2 - c, x + POST / 2 + c, fy - POST / 2 - c, fy + POST / 2 + c, 0, 100))
+        lip = lip.cut(box(x - POST / 2 - c, x + POST / 2 + c, fy - POST / 2 - c, fy + POST / 2 + c, 0, HB))
     lid = lid.union(lip)
 
     # knuckles: circle + 45-deg web down to the wall (base) / up to the wall (lid)
@@ -832,14 +834,11 @@ def split_riser():
         a = a.cut(cyl(5.1, -0.01, 1.01, -half + t / 2, y))
     b = a.mirror("YZ")
     prn = a.rotate((0, 0, 0), (1, 0, 0), 90)      # profile face (y = -Dp/2) on the bed
-    pins = None
-    for y in (-60.0, 0.0, 60.0):
-        p = plane_yz(-PIN_L + 1).center(y, Hh - t / 2).circle(2.0).extrude(2 * PIN_L - 2)
-        pins = p if pins is None else pins.union(p)
+    pins = copies([plane_yz(-PIN_L + 1).center(y, Hh - t / 2).circle(2.0).extrude(2 * PIN_L - 2) for y in (-60.0, 0.0, 60.0)])
     return {
         "half_left": Part(a, prn, OFF),
         "half_right": Part(b, b.rotate((0, 0, 0), (1, 0, 0), 90), OFF),
-        "dowels_steel_ref": Part(pins, pins.rotate((0, 0, 0), (0, 1, 0), 90), DARK),
+        "dowels_steel_ref": Part(pins, None, DARK, qty=3, ref=True),
     }
 
 

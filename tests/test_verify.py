@@ -46,6 +46,34 @@ def test_when_a_hinge_turns_a_flap_into_the_base_the_overlap_is_found():
     assert results(parts, motion) == {-90: ("free", True), 90: ("stop", True)}
 
 
+class _Vol:
+    """A shape that knows only its volume and what intersect and cut return."""
+    def __init__(self, vol, inter=None, rest=None):
+        self.vol, self.inter, self.rest = vol, inter, rest
+
+    def Volume(self):
+        return self.vol
+
+    def intersect(self, other):
+        return self.inter
+
+    def cut(self, other):
+        return self.rest
+
+
+def test_when_intersect_returns_nothing_for_shapes_that_overlap_the_cut_still_finds_the_overlap():
+    # what OCCT did on a lid turned 1 deg into its base: intersect empty, but the cut took 519 mm3 off the base
+    base = _Vol(1000.0, rest=_Vol(481.0))
+    lid = _Vol(800.0, inter=_Vol(0.0))
+    assert verify.overlap(lid, base) == 519.0
+
+
+def test_when_intersect_finds_an_overlap_it_is_taken_as_it_is():
+    base = _Vol(1000.0, rest=_Vol(0.0))           # a cut that failed would claim everything
+    lid = _Vol(800.0, inter=_Vol(20.0))
+    assert verify.overlap(lid, base) == 20.0
+
+
 def test_when_copies_of_a_part_touch_and_are_unioned_verify_reports_them_fused(capsys):
     one = fs.box(0, 10, 0, 10, 0, 5)
     fused = one.union(one.translate((0, 0, 5)))
@@ -57,6 +85,19 @@ def test_when_copies_of_a_part_touch_and_are_unioned_verify_reports_them_fused(c
         assert verify.check("_test_copies", 256) is True
     finally:
         del fs.SAMPLES["_test_fused"], fs.SAMPLES["_test_copies"]
+
+
+def test_when_a_feature_of_a_part_does_not_touch_it_verify_reports_a_loose_piece(capsys):
+    block = fs.box(0, 10, 0, 10, 0, 5)
+    loose = block.union(fs.box(10.5, 14, 0, 10, 0, 5))    # a ledge 0.5 short of the block
+    fs.SAMPLES["_test_loose"] = lambda: {"rail": fs.Part(loose, loose, fs.OFF)}
+    fs.SAMPLES["_test_joined"] = lambda: {"rail": fs.Part(block.union(fs.box(9.5, 14, 0, 10, 0, 5)), block, fs.OFF)}
+    try:
+        assert verify.check("_test_loose", 256) is False
+        assert "2 separate solids" in capsys.readouterr().out
+        assert verify.check("_test_joined", 256) is True
+    finally:
+        del fs.SAMPLES["_test_loose"], fs.SAMPLES["_test_joined"]
 
 
 def test_when_a_part_is_bought_it_is_checked_for_interference_but_not_as_a_print(capsys):
