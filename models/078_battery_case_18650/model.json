@@ -1,0 +1,23 @@
+{
+  "id": "078_battery_case_18650",
+  "title": "18650 battery case",
+  "summary": "A Ø64 x 80 round case under a flush screw lid; four 18650 cells stand apart in their own bores in a solid rack.",
+  "based_on": ["12_threaded_jar"],
+  "size_mm": [64, 64, 80],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PETG, matte"},
+    {"name": "cells_ref", "qty": 4, "orientation": "Bought: 18650 lithium-ion cells, up to 70 long", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Screw lid"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0], "stop": [1.0]},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [1.0]},
+    {"part": "cells_ref", "against": "lid", "slide": [0, 0, 1], "free": [0.5], "stop": [1.0]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.5]},
+  "tags": ["electronics", "storage", "battery"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
