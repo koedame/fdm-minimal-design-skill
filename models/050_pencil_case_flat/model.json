@@ -1,0 +1,19 @@
+{
+  "id": "050_pencil_case_flat",
+  "title": "Flat pencil case",
+  "summary": "A 200 x 64 x 24 case for pencils and pens up to 190 long, its lid on a pin hinge along the back and held shut by two magnets.",
+  "based_on": ["07_hinged_case"],
+  "size_mm": [200, 68, 24],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Pin hinge"],
+  "motions": [
+    {"part": "lid", "against": "base", "hinge": [[0, 32, 16], [1, 32, 16]], "free": [0, -30, -60, -90, -120, -150], "stop": [1, -175]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["desk", "stationery", "storage"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
