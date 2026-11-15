@@ -24,7 +24,6 @@ its front edge sits against a 6 lip square to the slope. The stands print lying 
 | Part | Orientation | Colour |
 |---|---|---|
 | stand × 2 | On its side (the profile on the bed) | Off-white |
-| laptop_ref (example laptop 300 × 215 × 16) | — | — |
 
 ## Review
 
@@ -32,7 +31,7 @@ its front edge sits against a 6 lip square to the slope. The stands print lying 
 |---|---|---|---|
 | stand | The lip's root was filleted R2 with the other corners: the fillet lifted the laptop's square front edge out of the corner (an interference with the laptop) | Defect | The root stays square; only the convex corners are rounded |
 | stand | 24 wide, a stand tipped sideways at about 0.33 × its load, close to the friction (about 0.3) that a sideways push on the laptop passes on | Defect | 32 wide: about 0.44 |
-| preview | From above, the laptop hid both stands | Defect | The view looks along the side, under the laptop |
+| design | The example laptop was returned as a ref part, so `size_mm` and the catalogue showed the laptop's size (300 × 220), not the stands' | Defect | `laptop()` builds it without returning it; the review checked it against the stands (below) |
 
 Use cases:
 - **Set up:** stand the two stands on the desk, slope rising toward the back, about two thirds of the laptop's width apart; lay the
@@ -42,7 +41,9 @@ Use cases:
 - **Carry:** the two stands lie side by side, 192 × 60 × 64.
 - **Print:** each on its side; no supports, no bridges (the window is a hole through the part lying flat).
 
-verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
+verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed. The example laptop from `laptop()`
+(300 × 215 × 16) against the two stands with `verify.motion_check`: no overlap at rest, lifting 0 / 5 / 30 and sliding up the
+slope 0 / 20 / 100 free, 0.3 down the slope 97 mm³ (the lips stop it).
 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a stand. Laptop stands
 of two wedges are a common kind of object; no product was used as a model.
