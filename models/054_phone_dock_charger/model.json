@@ -1,0 +1,21 @@
+{
+  "id": "054_phone_dock_charger",
+  "title": "Phone charging dock",
+  "summary": "A 64 mm block with a slot that holds a phone leaning back on an ordinary USB-C cable plug held in a pocket under the slot floor.",
+  "based_on": ["05_stand", "08_power_bank"],
+  "size_mm": [64, 64, 40],
+  "parts": [
+    {"name": "dock", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "usb_c_plug_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "USB-C cable plug"}
+  ],
+  "mechanisms": ["Connectors"],
+  "motions": [
+    {"part": "usb_c_plug_ref", "against": "dock", "slide": [0, 0.25, 1], "free": [0, 5, 20]},
+    {"part": "usb_c_plug_ref", "against": "dock", "slide": [0, -0.25, -1], "stop": [0.3]},
+    {"part": "usb_c_plug_ref", "against": "dock", "slide": [1, 0, 0], "free": [0.1], "stop": [0.5]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["desk", "phone", "charging"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
