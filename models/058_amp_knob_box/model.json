@@ -1,0 +1,30 @@
+{
+  "id": "058_amp_knob_box",
+  "title": "Amp knob box",
+  "summary": "A 96 x 72 x 44.8 headphone-amplifier box with one volume knob on the front; the cover sits on four magnets and is located by a lip.",
+  "based_on": ["06_radio", "07_hinged_case"],
+  "size_mm": [96, 84.4, 44.8],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Floor down", "material": "PLA or PETG, matte"},
+    {"name": "cover", "qty": 1, "orientation": "Top down", "material": "PLA or PETG, matte"},
+    {"name": "knob", "qty": 1, "orientation": "Front face up", "material": "PLA or PETG, matte"},
+    {"name": "magnet_ref", "qty": 8, "ref": true, "orientation": "Bought", "material": "6 x 3 mm neodymium magnet"},
+    {"name": "board_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "Headphone amplifier board, 50 x 40, holes at 44 x 34"},
+    {"name": "pot_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "16 mm potentiometer, M7 bushing, D shaft 15 from the mounting face"},
+    {"name": "jacks_ref", "qty": 3, "ref": true, "orientation": "Bought", "material": "Panel jacks: DC 5.5 x 2.1 (M8), two 3.5 mm (M6)"}
+  ],
+  "mechanisms": ["Dial", "Magnets", "Location"],
+  "motions": [
+    {"part": "knob", "against": "body", "hinge": [[0, -40, 20], [0, -41, 20]], "free": [0, 45, 90, 180, 270]},
+    {"part": "knob", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.6]},
+    {"part": "knob", "against": "body", "slide": [0, -1, 0], "free": [0, 2, 20]},
+    {"part": "cover", "against": "body", "slide": [0, 0, 1], "free": [0, 3, 20]},
+    {"part": "cover", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "cover", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cover", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["audio", "desk", "electronics"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
