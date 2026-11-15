@@ -1,0 +1,22 @@
+{
+  "id": "090_cotton_swab_holder",
+  "title": "Cotton swab holder",
+  "summary": "A 56 x 56 rounded-square jar in which cotton swabs stand on end, with a cap that locates on a lip at the rim.",
+  "based_on": ["04_cylinder_speaker", "07_hinged_case"],
+  "size_mm": [56, 56, 84],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "cap", "qty": 1, "orientation": "Top face down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "cap", "against": "body", "slide": [0, 0, 1], "free": [0, 2, 5, 30]},
+    {"part": "cap", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "cap", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cap", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [1, -0.8, 0.5]},
+  "tags": ["bathroom", "container", "jar"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
