@@ -117,7 +117,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 | Slide switch | A vertical slot. Two parts, an inner carrier and an outer knob, press-fitted or glued. **Make the neck that runs in the slot round** (its diameter = the slot width − 2 × clearance): a square neck catches its corners on the round ends of the slot before it reaches the end. **Make the knob cover the slot at both ends of the travel:** knob length along the slot ≥ slot length + travel + 1, and a blind neck hole in the knob (no dot on its face) | 10 |
 | Screw lid | Threads with 45° flanks (pitch 4, thread height 1.2). Offset the mating thread by half a pitch, with 0.4 radial clearance | 12 |
 | Split joint | Steel dowels (Ø4, hole Ø4.2, teardrop) + glue. C0.5 on both sides of the seam makes it a V line | 11 |
-| Wall mounting | Keyholes (head Ø8.4, slot width 4.2). Cut the head relief channel into the wall-side face (the build plate side) | 09 |
+| Wall mounting | Keyholes (head Ø8.4, slot width 4.2). Cut the head relief channel into the wall-side face (the build plate side). `keyhole_local(travel)` in `scripts/fdm_samples.py` is one closed cutting tool (slot, head pocket with a 45° seat, entry with a 45° roof) that prints face down or upright | 09 |
 | Light, windows | Give the window part a flange and fit it from behind. Make the diffuser layer a separate part with a 1.68 wall | 09, 10 |
 | Connectors | USB-C: a horizontal stadium window (about 12 × 6.4; match the outline of the connector you use). **The receptacle face sits within about 2 mm of the outside:** a plug's moulding is larger than a window sized to the receptacle and stops at the wall, so set the board 0.25 behind the wall and thin the wall to 1.68 from the inside around the windows; a receptacle further back needs a window that admits the moulding | 08 |
 
@@ -148,5 +148,10 @@ Things the code does without saying so, found while building models with `script
   `verify.py` reports it.
 - **Bought parts** (a movement, a driver, steel dowels) shown for fit: `Part(asm, None, colour, ref=True)`. They are checked
   for interference with the printed parts, but get no print STL and no place in the print layout.
+- **A sphere cut into a part: turn its poles away from the cut surface.** `makeSphere` and a `sphere()` on the "XY" plane put
+  a pole on the Z axis; a pole inside the cut face (the bottom of an egg cup's seat) meshes open and `verify.py` reports the
+  part as not watertight. Build the sphere on the "XZ" plane so the poles sit sideways, outside the cut.
+- **Many slot edges in one face do not chamfer.** `faces(">Z").edges().chamfer()` on a block with a row of slots often fails
+  (`StdFail_NotDone`). Cut a 45° prism along each slot edge instead (a lead-in), as in model 022.
 - **Features on a sloped face:** build them in the XY frame with the usual helpers (local y up the slope, +Z out of the
   face) and move them with `on_slope(shape, tilt, origin)`; `tilt` is the angle of the face from the desk.
