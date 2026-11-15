@@ -1,0 +1,15 @@
+{
+  "id": "081_spoon_rest",
+  "title": "Spoon rest",
+  "summary": "A 144 x 72 tray on a floating plinth whose well keeps the drips of a cooking spoon while its handle rests in a notch in one end.",
+  "based_on": ["03_tray"],
+  "size_mm": [144, 72, 16],
+  "parts": [
+    {"name": "rest", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [1, -0.5, 0.6]},
+  "tags": ["kitchen"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
