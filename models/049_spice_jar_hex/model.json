@@ -1,0 +1,21 @@
+{
+  "id": "049_spice_jar_hex",
+  "title": "Hexagonal spice jar",
+  "summary": "A hexagonal jar 48 across the flats and 96 high, about 110 ml, under a round screw lid as wide as the flats.",
+  "based_on": ["12_threaded_jar"],
+  "size_mm": [54.2, 48, 96],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG, food-contact grade"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PETG, food-contact grade"}
+  ],
+  "mechanisms": ["Screw lid"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0], "stop": [1.0]},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [1.0]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.5]},
+  "tags": ["kitchen", "storage", "food"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
