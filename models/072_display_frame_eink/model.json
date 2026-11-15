@@ -1,0 +1,98 @@
+{
+  "id": "072_display_frame_eink",
+  "title": "E-paper display frame",
+  "summary": "A 120 x 100 standing frame for a bare 4.2-inch e-paper panel behind a clear window, closed by a back cover on two snap hooks.",
+  "based_on": [
+    "09_wall_unit",
+    "06_radio"
+  ],
+  "size_mm": [
+    120,
+    32,
+    100
+  ],
+  "parts": [
+    {
+      "name": "body",
+      "qty": 1,
+      "orientation": "Front face down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "window_clear",
+      "qty": 1,
+      "orientation": "Front face down",
+      "material": "PETG, clear"
+    },
+    {
+      "name": "back_cover",
+      "qty": 1,
+      "orientation": "Outer face down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "panel_ref",
+      "qty": 1,
+      "orientation": "Bought: 4.2-inch e-paper panel, 91 x 77 x 1.2",
+      "material": "—",
+      "ref": true
+    }
+  ],
+  "mechanisms": [
+    "Light, windows",
+    "Snap (hook)"
+  ],
+  "motions": [
+    {
+      "part": "back_cover",
+      "against": "body",
+      "slide": [
+        0,
+        1,
+        0
+      ],
+      "free": [
+        0,
+        20
+      ],
+      "snap": {
+        "at": [
+          1.5,
+          3,
+          5
+        ],
+        "max_mm3": 16.0
+      }
+    },
+    {
+      "part": "back_cover",
+      "against": "panel_ref",
+      "slide": [
+        0,
+        1,
+        0
+      ],
+      "free": [
+        0,
+        5
+      ],
+      "stop": [
+        -0.5
+      ]
+    }
+  ],
+  "tags": [
+    "desk",
+    "display",
+    "electronics"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0",
+  "view": {
+    "direction": [
+      -0.6,
+      -1,
+      0.4
+    ]
+  }
+}
