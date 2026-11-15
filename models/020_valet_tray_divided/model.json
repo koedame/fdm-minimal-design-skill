@@ -1,0 +1,15 @@
+{
+  "id": "020_valet_tray_divided",
+  "title": "Divided valet tray",
+  "summary": "A low tray for the things emptied from pockets: a long front cell for a phone and a wallet, a back row of three small cells for keys, coins and a watch.",
+  "based_on": ["03_tray"],
+  "size_mm": [192, 128, 24],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "Bottom down, as used", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.5, -1, 1.1]},
+  "tags": ["desk", "tray", "storage"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
