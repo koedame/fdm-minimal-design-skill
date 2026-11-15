@@ -1,4 +1,5 @@
 import json
+import shutil
 
 import models
 
@@ -181,3 +182,16 @@ def test_when_a_model_with_a_bought_part_is_exported_the_bought_part_gets_no_pri
     files = sorted(p.name for p in (out / "001_pen_cup").iterdir())
     assert files == ["001_pen_cup_assembly.step", "_asm_cup.stl", "_asm_lid.stl", "_asm_pen_ref.stl",
                      "print_cup.stl", "print_lid.stl"]
+
+
+def test_when_several_models_are_checked_side_by_side_each_verdict_is_printed_in_directory_order(models_dir, capsys):
+    second = models_dir / "002_pen_cup"
+    shutil.copytree(models_dir / "001_pen_cup", second)
+    design = second / "design.py"
+    design.write_text(design.read_text().replace("001_pen_cup", "002_pen_cup"))
+    edit_json(second / "model.json", id="002_pen_cup")
+    (models_dir / "001_pen_cup" / "rationale.md").unlink()
+    assert models.main(["--models-dir", str(models_dir), "check", "--workers", "2"]) == 1
+    out = capsys.readouterr().out
+    assert out.index("001_pen_cup: FAILED") < out.index("  - missing file: rationale.md") < out.index("002_pen_cup: OK")
+    assert "1 of 2 models passed" in out

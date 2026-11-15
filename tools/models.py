@@ -8,10 +8,14 @@ Check and export the models in models/ (the directory format is described in mod
 `check` exits with 1 if any model has a problem, and prints every problem it found.
 """
 import argparse
+import contextlib
 import importlib.util
+import io
 import json
+import multiprocessing
 import re
 import sys
+from concurrent.futures import ProcessPoolExecutor
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -208,17 +212,40 @@ def check_model(model_dir, bed=256.0):
     return problems
 
 
+def check_quietly(args):
+    """check_model in a worker process: returns verify.py's output with the problems, to be printed in order."""
+    model_dir, bed = args
+    out = io.StringIO()
+    with contextlib.redirect_stdout(out):
+        problems = check_model(Path(model_dir), bed)
+    return out.getvalue(), problems
+
+
 def cmd_check(a):
     failed = 0
     dirs = model_dirs(a.models_dir, a.ids)
-    for d in dirs:
-        problems = check_model(d, a.bed)
-        print(f"{d.name}: {'OK' if not problems else 'FAILED'}")
+    jobs = [(str(d), a.bed) for d in dirs]
+    if len(dirs) > 1 and a.workers != 1:
+        # each model builds its own geometry, so they check side by side; spawn, not fork (OCC and VTK run threads)
+        with ProcessPoolExecutor(max_workers=a.workers, mp_context=multiprocessing.get_context("spawn")) as pool:
+            results = pool.map(check_quietly, jobs)
+            failed = report(dirs, results)
+    else:
+        failed = report(dirs, map(check_quietly, jobs))
+    print(f"{len(dirs) - failed} of {len(dirs)} models passed")
+    return 1 if failed else 0
+
+
+def report(dirs, results):
+    """Print each model's output and verdict in directory order as the results come in; return the number that failed."""
+    failed = 0
+    for d, (output, problems) in zip(dirs, results):
+        print(output, end="")
+        print(f"{d.name}: {'OK' if not problems else 'FAILED'}", flush=True)
         for p in problems:
             print(f"  - {p}")
         failed += bool(problems)
-    print(f"{len(dirs) - failed} of {len(dirs)} models passed")
-    return 1 if failed else 0
+    return failed
 
 
 def cmd_export(a):
@@ -237,6 +264,7 @@ def main(argv=None):
     c = sub.add_parser("check", help="check model directories and run verify.py on each")
     c.add_argument("ids", nargs="*")
     c.add_argument("--bed", type=float, default=256.0, help="bed size in mm (cube)")
+    c.add_argument("--workers", type=int, default=None, help="processes (default: one per CPU)")
     e = sub.add_parser("export", help="write STL, STEP and _colors.json for each model")
     e.add_argument("ids", nargs="*")
     e.add_argument("--out", default=str(ROOT / "build" / "models"))
