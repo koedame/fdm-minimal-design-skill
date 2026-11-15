@@ -1,0 +1,15 @@
+{
+  "id": "051_remote_holder_wall",
+  "title": "Wall remote holder",
+  "summary": "An open 64 x 36 x 96 cup that hangs on two hidden keyholes and holds a remote upright, with a U opening down the front.",
+  "based_on": ["09_wall_unit", "03_tray"],
+  "size_mm": [64, 36, 96],
+  "parts": [
+    {"name": "cup", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Wall mounting"],
+  "view": {"direction": [-0.5, -1, 0.8]},
+  "tags": ["wall", "living room", "remote"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
