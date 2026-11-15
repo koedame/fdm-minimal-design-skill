@@ -1,0 +1,15 @@
+{
+  "id": "062_sorting_tray_handle",
+  "title": "Sorting tray with handle notches",
+  "summary": "A 144 x 96 x 32 tray of six equal cells for screws and small parts, lifted by a U notch in the middle of each long wall.",
+  "based_on": ["03_tray"],
+  "size_mm": [144, 96, 32],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.5, -1, 0.9]},
+  "tags": ["workshop", "desk", "organiser"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
