@@ -1,0 +1,16 @@
+{
+  "id": "071_desk_gauge_stand",
+  "title": "Desk gauge stand",
+  "summary": "An upright frame, open at the back, that holds a round panel gauge on a dark floating base joined by hidden screws.",
+  "based_on": ["01_clock", "02_remote"],
+  "size_mm": [76, 56, 100],
+  "parts": [
+    {"name": "frame", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"},
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "gauge_ref", "qty": 1, "orientation": "Bought: round panel gauge, Ø52 body, Ø60 bezel", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "tags": ["desk", "instrument", "clock"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
