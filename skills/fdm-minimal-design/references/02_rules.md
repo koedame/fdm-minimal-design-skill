@@ -119,7 +119,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 | Mechanism | How to make it | Samples |
 |---|---|---|
 | Location | A lip (a step on the inside of the wall, `DIV` thick) on one part fits inside the other. Clearance 0.25. **Join the lip to its part:** a lip offset inward by the clearance stands clear of the wall above it, so thicken the wall on the inside down to the rim (from T − 0.5 to T + 0.25 + `DIV`) and let the lip hang from that; `verify.py` reports a lip that touches nothing as a loose piece (models 048, 050) | 06, 07, 10 |
-| Magnets | A Ø6.2 × 3.2 deep pocket in a vertical post (for 6 × 3 mm magnets). **Open the pocket upward in the print orientation:** a pocket entered from the bed side has a flat ceiling over the magnet, a bridge. A magnet that must not be exposed goes in from above under a separate cover disc glued flush (model 038). **Put the posts where they take no room from the contents** (on a divider, in a corner that nothing fills), not in the middle of a cell (model 036) | 06, 07 |
+| Magnets | A Ø6.2 × 3.2 deep pocket in a vertical post (for 6 × 3 mm magnets). **Open the pocket upward in the print orientation:** a pocket entered from the bed side has a flat ceiling over the magnet, a bridge. A magnet that must not be exposed goes in from above under a separate cover disc glued flush (model 038). **Put the posts where they take no room from the contents** (on a divider, in a corner that nothing fills), not in the middle of a cell (model 036). **Cut the pockets after every union on that part:** a lip or a thickened wall joined later refills the side of a pocket near the wall (about 10 mm³ of a 97 mm³ pocket in sample 07, model 064) | 06, 07 |
 | Hidden screws | A counterbored hole through the bottom, into a pilot hole (Ø1.8 for M2) in a vertical boss of the other part | 02 |
 | Pin hinge | Put the axis on the line where the back face meets the parting line. Knuckles are a circle + 45° web. The pin is 1.75 mm filament (hole Ø1.9). Check interference at each opening angle. **Place the stop where the load is:** a stop that touches only near the axis multiplies the load on it by (loaded arm ÷ distance of the stop from the axis), tens of times for a leg loaded at its far end, and the pin and knuckles take it. Let the moving part bear on the stop at a distance from the axis comparable to the loaded arm (a heel or a ledge it leans on). **A lid is the exception:** its open stop can only be near the axis (knuckle against web), so it is fit for the lid's own weight only; say so in the use cases ("do not lean on the open lid"), or let the open lid rest on the table | 07 |
 | Sliding lid | A dovetail of about 45° on both sides. Add a rail to the inside of the wall and cut the groove into it. **The dovetail only keeps the lid from lifting:** give the lid a seat from below as well (a ring inside the walls with a 45° underside, so it prints without supports), or the lid drops into the box | 08 |
@@ -179,5 +179,13 @@ Things the code does without saying so, found while building models with `script
   `solid.fillet(r, edges)`, not `.edges("|Z").fillet()` on all of them (a laptop's edge sitting at the root of a lip, model 047).
 - **One printed part is one solid.** A feature that only touches the part at a face (a lip offset by the clearance, a pad
   placed beside it) stays a separate solid after the union and prints loose; `verify.py` reports it. Make it overlap the part.
+- **`plane_xz(y0)` and `cq.Workplane("XZ")` face −Y:** a positive `extrude()` and a positive `workplane(offset=)` go toward
+  −Y. Start a cut or a rib at its +Y end and extrude a positive length; a cut started at the other end, or extruded with a
+  negative length, ends up outside the part and cuts nothing (or a union raises "at least one solid"). Check every
+  feature built on these planes in the render or a section (models 066, 067, 068).
+- **`rrect()` cannot round a side fully:** a radius of half the side fails. Use `slot2D()` for a fully round end (model 065).
+- **A section that changes along its length is one ruled loft through all its sections** (`Solid.makeLoft(wires, True)`),
+  not overlapping extrusions and lofts unioned together: those leave seams that mesh open (`verify.py`: not watertight)
+  and kinks in the outline (model 065).
 - **Features on a sloped face:** build them in the XY frame with the usual helpers (local y up the slope, +Z out of the
   face) and move them with `on_slope(shape, tilt, origin)`; `tilt` is the angle of the face from the desk.
