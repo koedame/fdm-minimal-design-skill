@@ -1,0 +1,23 @@
+{
+  "id": "086_dev_board_tray",
+  "title": "Dev board tray",
+  "summary": "A low tray whose interchangeable deck holds a single-board computer on standoffs, the deck screwed in from below.",
+  "based_on": ["02_remote", "03_tray"],
+  "size_mm": [108, 80, 14],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "deck", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "board_ref", "qty": 1, "orientation": "Bought: Raspberry Pi 4 or 5 (85 × 56)", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "motions": [
+    {"part": "deck", "against": "base", "slide": [0, 0, 1], "free": [0, 3, 8, 12]},
+    {"part": "deck", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "deck", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "deck", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["electronics", "desk", "raspberry-pi"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
