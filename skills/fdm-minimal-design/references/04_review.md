@@ -38,7 +38,7 @@ Imagine each situation in which the object is actually used, one at a time, and 
 | **Place** | Is the contact face flat and wide enough (not a line contact)? Is the centre of gravity inside the contact area? Do the rubber feet fit? |
 | **Hold** | Are the edges the hand touches too sharp? Is the place to hold left free? |
 | **Open, close** | Do the hinge and lid stay clear over the whole opening range? Is the closed state held (magnets, snaps)? |
-| **Remove, fit** | Is the slide path free of obstacles? Are the snap's catch position and release direction right? |
+| **Remove, fit** | Is the slide path free of obstacles? Are the snap's catch position and release direction right? Is the catch (barb or bump minus the clearance) enough to feel? |
 | **Assemble** | Can the parts go in in the actual order (e.g. buttons must go in before the front plate; the carrier goes in from inside)? |
 | **Hang, attach** | Which way do the keyhole slots run (does it catch when slid down)? Is there a shadow line against the wall? |
 | **Print** | Does it fit the bed? In the print orientation, are there ceilings, horizontal holes or 90° overhangs? |
