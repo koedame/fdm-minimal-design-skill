@@ -98,6 +98,9 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 - **Make horizontal holes teardrops** (apex pointing up in the print). Small holes (Ø2 or less) may stay round.
 - **Give the underside of projections (flanges and the like) 45°.**
 - **Join steps on the inside of walls with a 45° cone** (the neck of a container, for example).
+- **A part printed lying on its end (a profile run through its length): keep the profile the same from end to end.** Any
+  feature inset at the ends (a plinth stopping short of the end face, for example) leaves a downward face a few layers above
+  the bed, printed in the air (model 039).
 - **Split anything larger than the bed.** Place the seam as a design line (in the centre, on a reference line and so on).
 - **A bottom plate between walls that lean inward toward the top** (a front that leans back): the opening narrows over the
   plate's thickness, so a plate cut to the outline at the bottom runs into the leaning wall at its top edge. Make it shorter
@@ -108,7 +111,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 | Mechanism | How to make it | Samples |
 |---|---|---|
 | Location | A lip (a step on the inside of the wall, `DIV` thick) on one part fits inside the other. Clearance 0.25 | 06, 07, 10 |
-| Magnets | A Ø6.2 × 3.2 deep pocket in a vertical post (for 6 × 3 mm magnets) | 06, 07 |
+| Magnets | A Ø6.2 × 3.2 deep pocket in a vertical post (for 6 × 3 mm magnets). **Open the pocket upward in the print orientation:** a pocket entered from the bed side has a flat ceiling over the magnet, a bridge. A magnet that must not be exposed goes in from above under a separate cover disc glued flush (model 038). **Put the posts where they take no room from the contents** (on a divider, in a corner that nothing fills), not in the middle of a cell (model 036) | 06, 07 |
 | Hidden screws | A counterbored hole through the bottom, into a pilot hole (Ø1.8 for M2) in a vertical boss of the other part | 02 |
 | Pin hinge | Put the axis on the line where the back face meets the parting line. Knuckles are a circle + 45° web. The pin is 1.75 mm filament (hole Ø1.9). Check interference at each opening angle. **Place the stop where the load is:** a stop that touches only near the axis multiplies the load on it by (loaded arm ÷ distance of the stop from the axis), tens of times for a leg loaded at its far end, and the pin and knuckles take it. Let the moving part bear on the stop at a distance from the axis comparable to the loaded arm (a heel or a ledge it leans on). **A lid is the exception:** its open stop can only be near the axis (knuckle against web), so it is fit for the lid's own weight only; say so in the use cases ("do not lean on the open lid"), or let the open lid rest on the table | 07 |
 | Sliding lid | A dovetail of about 45° on both sides. Add a rail to the inside of the wall and cut the groove into it. **The dovetail only keeps the lid from lifting:** give the lid a seat from below as well (a ring inside the walls with a 45° underside, so it prints without supports), or the lid drops into the box | 08 |
@@ -153,5 +156,11 @@ Things the code does without saying so, found while building models with `script
   part as not watertight. Build the sphere on the "XZ" plane so the poles sit sideways, outside the cut.
 - **Many slot edges in one face do not chamfer.** `faces(">Z").edges().chamfer()` on a block with a row of slots often fails
   (`StdFail_NotDone`). Cut a 45° prism along each slot edge instead (a lead-in), as in model 022.
+- **The outline where a through cut leaves a face does not chamfer either.** `.chamfer()` on the end edges of a slot cut
+  right through a block raised `StdFail_NotDone`. Loft the cut's profile to its `offset2D(CH, "intersection")` over the last
+  CH at each end and cut that (a flare), as in model 033.
+- **A held device larger than the object (a tablet in a stand) is not a `ref` part:** `size_mm` in `model.json` counts ref
+  parts, so it would become the object's size. Write a function in `design.py` that builds the device (or an envelope of the
+  contents, as `bud()` in model 036) and check it against the parts during the review; it is not returned as a part.
 - **Features on a sloped face:** build them in the XY frame with the usual helpers (local y up the slope, +Z out of the
   face) and move them with `on_slope(shape, tilt, origin)`; `tilt` is the angle of the face from the desk.
