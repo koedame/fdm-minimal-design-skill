@@ -1,0 +1,24 @@
+{
+  "id": "069_cable_weight_block",
+  "title": "Cable weight block",
+  "summary": "A 96 x 48 x 36 desk block weighted with two stacks of coins, with three snap-in seats across its cap that hold cable ends; the cap is located by a lip and lifts off.",
+  "based_on": ["06_radio", "03_tray"],
+  "size_mm": [96, 48, 36],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "cap", "qty": 1, "orientation": "Top down", "material": "PETG, matte"},
+    {"name": "coins_ref", "qty": 2, "orientation": "Bought: stack of 12 coins, 26.5 x 21.5", "material": "—", "ref": true},
+    {"name": "cables_ref", "qty": 3, "orientation": "Bought: cable, 4 across", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "cap", "against": "body", "slide": [0, 0, 1], "free": [0, 0.5, 20], "stop": [-0.3]},
+    {"part": "cap", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cap", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cap", "against": "coins_ref", "slide": [0, 0, -1], "free": [0.1]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["desk", "cable", "weight"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
