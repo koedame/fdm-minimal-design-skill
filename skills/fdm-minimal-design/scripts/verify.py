@@ -13,6 +13,7 @@ Checks
   * print-oriented mesh is closed (watertight) and sits on z=0
   * part fits the bed (X/Y/Z extents)
   * a part with qty > 1 holds qty separate solids (copies that touch must not fuse)
+  * one copy of a printed part is one solid (a feature that does not reach the part prints loose)
   * ground contact in the assembled state: width and area of the slice at z=0
   * motions: a hinge (rotation) or a slide (translation) of one part against another, overlap at
     each position. --hinge and --slide expect no overlap anywhere; the motions in a model.json next to
@@ -68,6 +69,16 @@ def ground_contact(parts, thickness=0.05):
 CLASH = 1e-3   # mm3: more overlap than this is a collision
 
 
+def overlap(a, b):
+    """Volume shared by the shapes a and b. OCCT's intersect sometimes returns nothing for shapes that do
+    overlap (seen on a lid turned 1 deg into its base: intersect 0, cut 519 mm3), so a result of zero is
+    checked once more as what a cut removes from b. A failed cut can only report too much, never too little."""
+    vol = a.intersect(b).Volume()
+    if vol <= CLASH:
+        vol = max(vol, b.Volume() - b.cut(a).Volume())
+    return vol
+
+
 def parse_motion(kind, spec):
     """--hinge "moving:fixed:x1,y1,z1:x2,y2,z2:ang,..." / --slide "moving:fixed:dx,dy,dz:mm,..." as a motion."""
     f = spec.split(":")
@@ -103,7 +114,7 @@ def motion_check(parts, motion):
              + [(p, "snap") for p in snap.get("at", [])])
     out = []
     for pos, want in sorted(steps):
-        vol = moved(a, motion, pos).val().intersect(b).Volume()
+        vol = overlap(moved(a, motion, pos).val(), b)
         ok = {"free": vol <= CLASH, "stop": vol > CLASH,
               "snap": CLASH < vol <= snap.get("max_mm3", 0)}[want]
         out.append((pos, vol, want, ok))
@@ -126,18 +137,24 @@ def check(name, bed, motions=()):
         fits = ext is None or all(e <= bed + 1e-6 for e in ext)
         # copies that touch fuse in a union: then the tools cannot tell them apart
         fused = p.qty > 1 and len(v.Solids()) != p.qty * len(p.prn.val().Solids())
-        flag = "" if (valid and wt in (True, None) and fits and not fused) else "  <-- CHECK"
+        # one printed part is one solid: a second solid is a piece that a union did not join (it prints loose);
+        # an inlay (anchored to its parent) is printed into the parent and may be many dots
+        loose = p.anchor is None and len(p.prn.val().Solids()) > 1
+        flag = "" if (valid and wt in (True, None) and fits and not fused and not loose) else "  <-- CHECK"
         ok &= flag == ""
         ext_s = "x".join(f"{e:.1f}" for e in ext) if ext is not None else "n/a"
         print(f"  {n:22s} valid={valid} watertight={wt} print_extent={ext_s} fits_bed({bed})={fits}{flag}")
         if fused:
             print(f"    qty {p.qty} but the assembled shape has {len(v.Solids())} solid(s): copies fused in a union;"
                   " build them with fdm_samples.copies()")
+        if loose:
+            print(f"    the print shape has {len(p.prn.val().Solids())} separate solids: a feature does not touch the part"
+                  " (it would print as a loose piece)")
     clash = []
     for a, b in itertools.combinations(parts, 2):
         if parts[a].anchor == b or parts[b].anchor == a:
             continue                       # inlay touches its parent by design
-        vol = parts[a].asm.val().intersect(parts[b].asm.val()).Volume()
+        vol = overlap(parts[a].asm.val(), parts[b].asm.val())
         if vol > CLASH:
             clash.append(f"{a} x {b}: {vol:.3f} mm3")
     print("  interference:", "none" if not clash else "")
