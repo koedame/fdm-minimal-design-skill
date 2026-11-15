@@ -1,0 +1,15 @@
+{
+  "id": "013_planter_square_saucer",
+  "title": "Square planter on a saucer",
+  "summary": "A square pot that drops inside the rim of its saucer and stands on posts above the drained water.",
+  "based_on": ["03_tray", "10_lantern"],
+  "size_mm": [96, 96, 96],
+  "parts": [
+    {"name": "pot", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "saucer", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "tags": ["plant", "container", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
