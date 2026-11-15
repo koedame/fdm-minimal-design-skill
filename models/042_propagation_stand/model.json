@@ -1,0 +1,21 @@
+{
+  "id": "042_propagation_stand",
+  "title": "Propagation stand",
+  "summary": "Three 16 mm test tubes of water for cuttings, held by an inverted U bridge that locates in a floating base.",
+  "based_on": ["05_stand", "03_tray"],
+  "size_mm": [128, 64, 108],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "bridge", "qty": 1, "orientation": "On its front face", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "bridge", "against": "base", "slide": [0, 0, 1], "free": [0, 2, 4.5, 20]},
+    {"part": "bridge", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "bridge", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "bridge", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "tags": ["plant", "propagation", "home", "kitchen"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
