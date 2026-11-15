@@ -1,0 +1,15 @@
+{
+  "id": "075_card_stand_photo",
+  "title": "Photo and card stand",
+  "summary": "A 64 wide ramp-profile block, printed on its side, with one slot that holds a photo or a card leaning back at 1 : 3.",
+  "based_on": ["05_stand"],
+  "size_mm": [64, 48, 24],
+  "parts": [
+    {"name": "stand", "qty": 1, "orientation": "Side down", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-1, -0.8, 0.5]},
+  "tags": ["desk", "photo", "stand"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
