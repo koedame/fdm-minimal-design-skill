@@ -110,7 +110,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 
 | Mechanism | How to make it | Samples |
 |---|---|---|
-| Location | A lip (a step on the inside of the wall, `DIV` thick) on one part fits inside the other. Clearance 0.25 | 06, 07, 10 |
+| Location | A lip (a step on the inside of the wall, `DIV` thick) on one part fits inside the other. Clearance 0.25. **Join the lip to its part:** a lip offset inward by the clearance stands clear of the wall above it, so thicken the wall on the inside down to the rim (from T − 0.5 to T + 0.25 + `DIV`) and let the lip hang from that; `verify.py` reports a lip that touches nothing as a loose piece (models 048, 050) | 06, 07, 10 |
 | Magnets | A Ø6.2 × 3.2 deep pocket in a vertical post (for 6 × 3 mm magnets). **Open the pocket upward in the print orientation:** a pocket entered from the bed side has a flat ceiling over the magnet, a bridge. A magnet that must not be exposed goes in from above under a separate cover disc glued flush (model 038). **Put the posts where they take no room from the contents** (on a divider, in a corner that nothing fills), not in the middle of a cell (model 036) | 06, 07 |
 | Hidden screws | A counterbored hole through the bottom, into a pilot hole (Ø1.8 for M2) in a vertical boss of the other part | 02 |
 | Pin hinge | Put the axis on the line where the back face meets the parting line. Knuckles are a circle + 45° web. The pin is 1.75 mm filament (hole Ø1.9). Check interference at each opening angle. **Place the stop where the load is:** a stop that touches only near the axis multiplies the load on it by (loaded arm ÷ distance of the stop from the axis), tens of times for a leg loaded at its far end, and the pin and knuckles take it. Let the moving part bear on the stop at a distance from the axis comparable to the loaded arm (a heel or a ledge it leans on). **A lid is the exception:** its open stop can only be near the axis (knuckle against web), so it is fit for the lid's own weight only; say so in the use cases ("do not lean on the open lid"), or let the open lid rest on the table | 07 |
@@ -118,7 +118,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 | Snap (tab) | A U-shaped slit frees a cantilever tab; a 45° bump drops into a groove in the other part. Put that groove where it does not become a bridge (at the end of a full-height wall) | 08 |
 | Snap (hook) | A vertical hook (`DIV` thick) with 45° barbs above and below. Being 45°, it comes off when pulled (for battery changes) | 09 |
 | Slide switch | A vertical slot. Two parts, an inner carrier and an outer knob, press-fitted or glued. **Make the neck that runs in the slot round** (its diameter = the slot width − 2 × clearance): a square neck catches its corners on the round ends of the slot before it reaches the end. **Make the knob cover the slot at both ends of the travel:** knob length along the slot ≥ slot length + travel + 1, and a blind neck hole in the knob (no dot on its face) | 10 |
-| Screw lid | Threads with 45° flanks (pitch 4, thread height 1.2). Offset the mating thread by half a pitch, with 0.4 radial clearance | 12 |
+| Screw lid | Threads with 45° flanks (pitch 4, thread height 1.2). Offset the mating thread by half a pitch, with 0.4 radial clearance. **Make the lid round** even on a polygonal body: where a thread stops turning depends on the seal and the wear, so a polygonal lid never lines up with the body's faces (model 049) | 12 |
 | Split joint | Steel dowels (Ø4, hole Ø4.2, teardrop) + glue. C0.5 on both sides of the seam makes it a V line | 11 |
 | Wall mounting | Keyholes (head Ø8.4, slot width 4.2). Cut the head relief channel into the wall-side face (the build plate side). `keyhole_local(travel)` in `scripts/fdm_samples.py` is one closed cutting tool (slot, head pocket with a 45° seat, entry with a 45° roof) that prints face down or upright | 09 |
 | Light, windows | Give the window part a flange and fit it from behind. Make the diffuser layer a separate part with a 1.68 wall | 09, 10 |
@@ -162,5 +162,14 @@ Things the code does without saying so, found while building models with `script
 - **A held device larger than the object (a tablet in a stand) is not a `ref` part:** `size_mm` in `model.json` counts ref
   parts, so it would become the object's size. Write a function in `design.py` that builds the device (or an envelope of the
   contents, as `bud()` in model 036) and check it against the parts during the review; it is not returned as a part.
+- **Rings and steps added to a turned part: one solid of revolution that reaches 0.5 into the wall.** A ring that touches
+  the wall face only (or overlaps it by 0.01), or a separate cone unioned on, often meshes open (`verify.py`: not watertight).
+  Draw the whole profile, ring and its root in the wall, as one polyline and `revolve()` it (models 045, 046).
+- **The floor edge of a cavity with rounded polygon corners (a hexagonal jar): intersect the cavity with a 45° cone** instead of
+  a fillet or chamfer on its bottom edges. The fillet meshed open and the chamfer gave an invalid solid (model 049).
+- **A corner that another part must sit in stays square:** fillet only the convex edges, passing them to
+  `solid.fillet(r, edges)`, not `.edges("|Z").fillet()` on all of them (a laptop's edge sitting at the root of a lip, model 047).
+- **One printed part is one solid.** A feature that only touches the part at a face (a lip offset by the clearance, a pad
+  placed beside it) stays a separate solid after the union and prints loose; `verify.py` reports it. Make it overlap the part.
 - **Features on a sloped face:** build them in the XY frame with the usual helpers (local y up the slope, +Z out of the
   face) and move them with `on_slope(shape, tilt, origin)`; `tilt` is the angle of the face from the desk.
