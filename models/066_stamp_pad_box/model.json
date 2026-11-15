@@ -1,0 +1,24 @@
+{
+  "id": "066_stamp_pad_box",
+  "title": "Stamp and pad box",
+  "summary": "A 96 x 76 x 28 box that keeps a seal and a round ink pad together, the lid a lift-off cap located by a lip on the base.",
+  "based_on": ["06_radio", "03_tray"],
+  "size_mm": [96, 76, 28],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PLA, matte"},
+    {"name": "pad_ref", "qty": 1, "orientation": "Bought: round ink pad, 57 x 16", "material": "—", "ref": true},
+    {"name": "seal_ref", "qty": 1, "orientation": "Bought: seal, 15 x 60", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "lid", "against": "base", "slide": [0, 0, 1], "free": [0, 2, 3.5, 20]},
+    {"part": "lid", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["desk", "stationery", "office"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
