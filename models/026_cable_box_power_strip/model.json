@@ -1,0 +1,23 @@
+{
+  "id": "026_cable_box_power_strip",
+  "title": "Cable box for a power strip",
+  "summary": "A long box that hides a power strip and its plugs: a cover with cord slots at both ends, located on a base plate by a lip.",
+  "based_on": ["06_radio", "03_tray"],
+  "size_mm": [245, 96, 96],
+  "parts": [
+    {"name": "cover", "qty": 1, "orientation": "Top face down", "material": "PETG or ASA, matte"},
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PETG or ASA, matte"},
+    {"name": "power_strip_ref", "qty": 1, "orientation": "Bought part", "material": "Power strip, up to 210 × 48 × 36", "ref": true}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "cover", "against": "base", "slide": [0, 0, 1], "free": [0, 5, 10]},
+    {"part": "cover", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "cover", "against": "base", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cover", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.7]},
+  "tags": ["desk", "cables", "power", "storage"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
