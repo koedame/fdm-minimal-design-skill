@@ -1,0 +1,21 @@
+{
+  "id": "053_coaster_set_holder",
+  "title": "Coaster set with holder",
+  "summary": "Four square dark-grey coasters with drip recesses that stack in a low 96 mm square holder on a floating plinth.",
+  "based_on": ["03_tray", "06_radio"],
+  "size_mm": [96, 96, 20],
+  "parts": [
+    {"name": "holder", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "coaster", "qty": 4, "orientation": "Top face up", "material": "PETG or PLA, matte, dark grey"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "coaster", "against": "holder", "slide": [0, 0, 1], "free": [0, 10, 30]},
+    {"part": "coaster", "against": "holder", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "coaster", "against": "holder", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "coaster", "against": "holder", "slide": [0, 0, -1], "stop": [0.2]}
+  ],
+  "tags": ["kitchen", "table", "set"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
