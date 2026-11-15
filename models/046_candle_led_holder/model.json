@@ -1,0 +1,24 @@
+{
+  "id": "046_candle_led_holder",
+  "title": "LED candle tube",
+  "summary": "A Ø56 x 144 column: a translucent shade screwed onto a short dark base that holds a bought LED tea light.",
+  "based_on": ["12_threaded_jar", "10_lantern"],
+  "size_mm": [56, 56, 144],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "shade", "qty": 1, "orientation": "Top down", "material": "PETG, natural or white translucent"},
+    {"name": "tea_light_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "LED tea light"}
+  ],
+  "mechanisms": ["Screw lid", "Light, windows"],
+  "motions": [
+    {"part": "shade", "against": "base", "slide": [0, 0, 1], "free": [0], "stop": [1.0]},
+    {"part": "shade", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "shade", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [1.0]},
+    {"part": "tea_light_ref", "against": "base", "slide": [0, 0, 1], "free": [0, 10, 40]},
+    {"part": "tea_light_ref", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.5]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.35]},
+  "tags": ["light", "LED", "living room"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
