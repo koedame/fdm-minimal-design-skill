@@ -1,0 +1,16 @@
+{
+  "id": "080_sticky_note_holder",
+  "title": "Sticky note holder",
+  "summary": "An 88 square block, 22 high, with a pocket for a 75 or 76 square pad of sticky notes and a half-round notch to reach the last notes.",
+  "based_on": ["03_tray"],
+  "size_mm": [88, 88, 22],
+  "parts": [
+    {"name": "holder", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "pad_ref", "qty": 1, "orientation": "Bought: sticky note pad, 75 or 76 square", "material": "—", "ref": true}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.6, -1, 0.9]},
+  "tags": ["desk", "stationery"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
