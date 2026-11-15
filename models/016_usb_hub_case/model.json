@@ -1,0 +1,16 @@
+{
+  "id": "016_usb_hub_case",
+  "title": "USB hub case",
+  "summary": "A case for a bare 4-port USB hub board, closed by four screws from below that also clamp the board.",
+  "based_on": ["02_remote", "08_power_bank"],
+  "size_mm": [84, 40, 20],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"},
+    {"name": "bottom_plate", "qty": 1, "orientation": "Outer face down", "material": "PLA or PETG, matte"},
+    {"name": "hub_board_ref", "qty": 1, "orientation": "Bought part", "material": "USB hub board", "ref": true}
+  ],
+  "mechanisms": ["Hidden screws", "Connectors"],
+  "tags": ["electronics", "usb", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
