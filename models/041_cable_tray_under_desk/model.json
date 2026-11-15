@@ -1,0 +1,25 @@
+{
+  "id": "041_cable_tray_under_desk",
+  "title": "Under-desk cable tray",
+  "summary": "A 200 long hopper for cables that hangs from two C rails under the desk top, the rail screws hidden above its hook arms.",
+  "based_on": ["03_tray", "02_remote"],
+  "size_mm": [225, 79.6, 70],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "On its back", "material": "PETG, matte"},
+    {"name": "rail_left", "qty": 1, "orientation": "Outer face down", "material": "PETG, matte"},
+    {"name": "rail_right", "qty": 1, "orientation": "Outer face down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Hidden screws"],
+  "motions": [
+    {"part": "tray", "against": "rail_left", "slide": [0, 0, 1], "free": [0, 1.6, 1.9], "stop": [2.5]},
+    {"part": "tray", "against": "rail_left", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "tray", "against": "rail_left", "slide": [0, -1, 0], "stop": [1.0]},
+    {"part": "tray", "against": "rail_left", "slide": [0, 1, 0], "stop": [1.0]},
+    {"part": "tray", "against": "rail_left", "slide": [-1, 0, 0], "free": [0.3], "stop": [0.8]},
+    {"part": "tray", "against": "rail_right", "slide": [1, 0, 0], "free": [0.3], "stop": [0.8]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.5]},
+  "tags": ["desk", "cable", "under-desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
