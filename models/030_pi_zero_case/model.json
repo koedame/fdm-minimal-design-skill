@@ -1,0 +1,24 @@
+{
+  "id": "030_pi_zero_case",
+  "title": "Pi Zero case",
+  "summary": "A small case for a Raspberry Pi Zero-size board, closed by a lid that slides out in a dovetail, its ports looking out through windows in the front and the end.",
+  "based_on": ["08_power_bank", "02_remote"],
+  "size_mm": [72, 40, 16],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Bottom down (as used)", "material": "PLA or PETG, matte"},
+    {"name": "board_ref", "qty": 1, "orientation": "Bought part", "material": "Raspberry Pi Zero, Zero W or Zero 2 W without a GPIO header", "ref": true}
+  ],
+  "mechanisms": ["Sliding lid", "Connectors"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 0.5, 80], "stop": [-0.3],
+     "snap": {"at": [1, 30, 60], "max_mm3": 1.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "free": [0.25], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0.3], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.7, -1, 0.8]},
+  "tags": ["case", "electronics", "raspberry-pi", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
