@@ -1,0 +1,14 @@
+{
+  "id": "039_napkin_holder",
+  "title": "Napkin holder",
+  "summary": "An upright napkin holder: two walls on a floating base, one U profile, printed lying on its end.",
+  "based_on": ["03_tray"],
+  "size_mm": [48, 128, 96],
+  "parts": [
+    {"name": "holder", "qty": 1, "orientation": "Lying on one end", "material": "PETG or PLA, matte"}
+  ],
+  "mechanisms": [],
+  "tags": ["kitchen", "table", "napkins"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
