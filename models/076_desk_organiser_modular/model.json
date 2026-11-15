@@ -1,0 +1,16 @@
+{
+  "id": "076_desk_organiser_modular",
+  "title": "Modular desk organiser",
+  "summary": "Open trays on a 64 grid, 64 x 64 and 128 x 64, that cling to each other side by side by magnets standing in slots in their walls.",
+  "based_on": ["03_tray", "06_radio"],
+  "size_mm": [128, 128, 48],
+  "parts": [
+    {"name": "tray_square", "qty": 2, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "tray_long", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "magnet_ref", "qty": 28, "orientation": "Bought: 6 x 3 disc magnets", "material": "Neodymium", "ref": true}
+  ],
+  "mechanisms": ["Magnets"],
+  "tags": ["desk", "storage", "modular"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
