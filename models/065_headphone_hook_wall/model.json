@@ -1,0 +1,15 @@
+{
+  "id": "065_headphone_hook_wall",
+  "title": "Wall headphone hook",
+  "summary": "A 48 x 96 wall plate on two hidden keyholes with one 32 x 16 arm reaching 80 forward, its end rising on a 45-degree ramp so a headband stays on.",
+  "based_on": ["09_wall_unit", "05_stand"],
+  "size_mm": [48, 86.4, 96],
+  "parts": [
+    {"name": "hook", "qty": 1, "orientation": "Wall face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Wall mounting"],
+  "view": {"direction": [-0.9, -1, 0.5]},
+  "tags": ["wall", "audio", "headphones"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
