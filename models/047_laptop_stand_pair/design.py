@@ -11,7 +11,7 @@ import cadquery as cq
 
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
-from fdm_samples import (Part, SAMPLES, CH, CH_BED, OFF, DARK,  # noqa: E402
+from fdm_samples import (Part, SAMPLES, CH, CH_BED, OFF,  # noqa: E402
                          box, rx, rz, copies)
 
 DEP, HB, WID = 192.0, 60.0, 32.0         # depth, height at the back, width (the print height): 4 members
@@ -40,20 +40,20 @@ def stand_profile():
     return p.faces(">Z").chamfer(CH)
 
 
+def laptop():
+    """The example laptop lying on the stands, its front bottom edge on the lip roots. It is larger than the stands, so it
+    is not returned as a ref part (size_mm would become its size); the review checks it against the stands."""
+    import math
+    lw, ld, lt = LAPTOP
+    lap = box(-lw / 2, lw / 2, 0, ld, 0, lt)
+    return rx(lap, math.degrees(math.atan(K))).translate((0, YF - DEP / 2, ZF))
+
+
 def laptop_stand_pair():
     p = stand_profile()                                      # print frame: profile on the bed, x = depth, y = height
     disp = lambda wp, x0: rz(rx(wp, 90), 90).translate((x0 - WID / 2, -DEP / 2, 0))   # noqa: E731
     stands = copies([disp(p, -X_STAND), disp(p, X_STAND)])
-
-    import math
-    ang = math.degrees(math.atan(K))
-    lw, ld, lt = LAPTOP
-    lap = box(-lw / 2, lw / 2, 0, ld, 0, lt)                 # front bottom edge on the lip root, lying on the slope
-    lap = rx(lap, ang).translate((0, YF - DEP / 2, ZF))
-    return {
-        "stand": Part(stands, p, OFF, qty=2),
-        "laptop_ref": Part(lap, None, DARK, ref=True),
-    }
+    return {"stand": Part(stands, p, OFF, qty=2)}
 
 
 SAMPLES["047_laptop_stand_pair"] = laptop_stand_pair

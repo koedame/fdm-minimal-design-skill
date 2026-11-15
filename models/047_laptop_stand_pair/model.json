@@ -1,20 +1,15 @@
 {
   "id": "047_laptop_stand_pair",
   "title": "Laptop stand, set of two",
-  "summary": "Two flat triangular frames, 192 deep and 60 high, that tilt a laptop 15 degrees; a lip at the front catches its edge (shown with an example laptop).",
+  "summary": "Two flat triangular frames, 192 deep and 60 high, that tilt a laptop 15 degrees; a lip at the front catches its edge.",
   "based_on": ["05_stand"],
-  "size_mm": [300, 219.7, 82.9],
+  "size_mm": [232, 192, 59.4],
   "parts": [
-    {"name": "stand", "qty": 2, "orientation": "On its side", "material": "PLA or PETG, matte"},
-    {"name": "laptop_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "Laptop (example: 300 x 215 x 16)"}
+    {"name": "stand", "qty": 2, "orientation": "On its side", "material": "PLA or PETG, matte"}
   ],
   "mechanisms": [],
-  "motions": [
-    {"part": "laptop_ref", "against": "stand", "slide": [0, 0, 1], "free": [0, 5, 30]},
-    {"part": "laptop_ref", "against": "stand", "slide": [0, 0.96, 0.28], "free": [0, 20, 100]},
-    {"part": "laptop_ref", "against": "stand", "slide": [0, -0.966, -0.257], "stop": [0.3]}
-  ],
-  "view": {"direction": [-1, -0.45, 0.12]},
+  "motions": [],
+  "view": {"direction": [-1, -0.7, 0.45]},
   "tags": ["desk", "laptop", "ergonomics"],
   "printed": false,
   "license": "CC-BY-4.0"
