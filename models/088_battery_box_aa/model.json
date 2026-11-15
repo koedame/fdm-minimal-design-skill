@@ -1,0 +1,24 @@
+{
+  "id": "088_battery_box_aa",
+  "title": "AA battery box",
+  "summary": "A 76 x 68 x 24 enclosure for a bought 4 x AA holder; the lid slides in a dovetail and clicks shut with a printed snap tab.",
+  "based_on": ["08_power_bank"],
+  "size_mm": [76, 68, 24],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PETG, matte"},
+    {"name": "holder_ref", "qty": 1, "ref": true, "orientation": "Bought: 4 x AA flat holder with leads", "material": "—"}
+  ],
+  "mechanisms": ["Sliding lid", "Snap (tab)"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0, 8, 80], "stop": [-0.3],
+     "snap": {"at": [0.5, 1.0, 3.0, 5.0], "max_mm3": 5.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0.4], "stop": [0.8]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [1, -0.8, 0.9]},
+  "tags": ["battery", "electronics", "case"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
