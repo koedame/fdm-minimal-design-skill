@@ -1,0 +1,22 @@
+{
+  "id": "061_watch_stand",
+  "title": "Watch stand",
+  "summary": "A buckled watch drops over a 56 x 32 post that stands in a pocket of an 80 x 64 base, dial forward, the case standing on the base.",
+  "based_on": ["03_tray", "06_radio"],
+  "size_mm": [80, 64, 52],
+  "parts": [
+    {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "post", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "post", "against": "base", "slide": [0, 0, 1], "free": [0, 3, 6.5, 30]},
+    {"part": "post", "against": "base", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "post", "against": "base", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "post", "against": "base", "slide": [0, -1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.55]},
+  "tags": ["desk", "bedroom", "watch"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
