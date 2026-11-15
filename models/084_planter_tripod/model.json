@@ -1,0 +1,17 @@
+{
+  "id": "084_planter_tripod",
+  "title": "Planter on a tripod",
+  "summary": "A round cache pot for a 9 cm nursery pot on three tapered legs, each joined with two steel dowels so the legs print on their side.",
+  "based_on": ["11_split_riser", "04_cylinder_speaker"],
+  "size_mm": [116.1, 115.9, 144],
+  "parts": [
+    {"name": "pot", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "leg", "qty": 3, "orientation": "On its side", "material": "PETG, matte"},
+    {"name": "dowels_steel_ref", "qty": 6, "orientation": "Bought part, not printed", "material": "Steel dowel pin Ø4 × 12", "ref": true}
+  ],
+  "mechanisms": ["Split joint"],
+  "view": {"direction": [-0.6, -1, 0.35]},
+  "tags": ["plants", "planter", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
