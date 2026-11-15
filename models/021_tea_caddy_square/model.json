@@ -1,0 +1,21 @@
+{
+  "id": "021_tea_caddy_square",
+  "title": "Square tea caddy",
+  "summary": "A square caddy for loose tea whose flush lid slides over a neck on the body and closes on one V line.",
+  "based_on": ["12_threaded_jar", "03_tray"],
+  "size_mm": [72, 72, 120],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 6, 12, 13]},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "tags": ["kitchen", "container", "tea"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
