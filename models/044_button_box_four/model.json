@@ -1,0 +1,28 @@
+{
+  "id": "044_button_box_four",
+  "title": "Four-button control box",
+  "summary": "A 120 x 48 x 22 desk box with four round buttons in a row over tactile switches; the bottom plate is held by screws from below.",
+  "based_on": ["02_remote"],
+  "size_mm": [120, 48, 23.2],
+  "parts": [
+    {"name": "shell", "qty": 1, "orientation": "Top down", "material": "PLA, matte"},
+    {"name": "bottom_plate", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "button", "qty": 4, "orientation": "Top down", "material": "PLA, matte"},
+    {"name": "board_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "Board with four 12 x 12 tactile switches and USB-C"}
+  ],
+  "mechanisms": ["Buttons", "Hidden screws"],
+  "motions": [
+    {"part": "button", "against": "shell", "slide": [0, 0, 1], "free": [0.2], "stop": [0.5]},
+    {"part": "button", "against": "shell", "slide": [0, 0, -1], "free": [0, 0.5, 3]},
+    {"part": "button", "against": "shell", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "button", "against": "board_ref", "slide": [0, 0, -1], "free": [0], "stop": [0.3]},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 0, -1], "free": [0, 2, 10]},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 0, 1], "stop": [0.3]},
+    {"part": "bottom_plate", "against": "shell", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "bottom_plate", "against": "shell", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.8]},
+  "tags": ["desk", "electronics", "controller"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
