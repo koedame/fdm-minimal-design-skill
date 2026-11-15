@@ -70,6 +70,10 @@ The same values as the sample code (`scripts/fdm_samples.py`).
   - When made with a gap: 0.25 mm per side.
   - With C0.5 on both parts, it becomes a V-shaped line.
 - **Dials:** one step between the rim and the top face; one line or one dot as the indicator. Put grip ribs only on a band at the back side.
+- **Panel-mounted dials (potentiometer, rotary encoder):** clamp the bushing against a sleeve or boss under the plate, so the nut
+  clamps 2.5–5 of material, and sink the nut in a recess in the visible face where the knob covers it. Make the sleeve wider than
+  the recess, or the recess cuts the sleeve off the plate (model 057). Give the knob a counterbore for the bushing's end with a 45°
+  cone above it, so it prints face up without support (models 057, 058).
 - **Buttons:** repeat one shape; show differences with colour.
 - **Floating plinth:** set the bottom 1.2 mm inward and join it with 45°; the shadow line makes the object look as if it floats (trays, wall-mounted units).
 - **Keep recesses (finger grips and the like) inside the face they belong to.** Do not cut into the rim or chamfer of the neighbouring face.
@@ -101,6 +105,10 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 - **A part printed lying on its end (a profile run through its length): keep the profile the same from end to end.** Any
   feature inset at the ends (a plinth stopping short of the end face, for example) leaves a downward face a few layers above
   the bed, printed in the air (model 039).
+- **A profile open at both ends (a raceway, a channel) is square in plan at the open ends.** A plan radius curves the outline in
+  past the inside of the walls there and leaves a knife edge (model 055).
+- **A passage that cannot have 45° faces inside (a horn, a duct) can open at the bottom and let the table close it.** The part then
+  prints top down and every face of the passage faces up in the print (model 059).
 - **Split anything larger than the bed.** Place the seam as a design line (in the centre, on a reference line and so on).
 - **A bottom plate between walls that lean inward toward the top** (a front that leans back): the opening narrows over the
   plate's thickness, so a plate cut to the outline at the bottom runs into the leaning wall at its top edge. Make it shorter
@@ -122,7 +130,7 @@ The same values as the sample code (`scripts/fdm_samples.py`).
 | Split joint | Steel dowels (Ø4, hole Ø4.2, teardrop) + glue. C0.5 on both sides of the seam makes it a V line | 11 |
 | Wall mounting | Keyholes (head Ø8.4, slot width 4.2). Cut the head relief channel into the wall-side face (the build plate side). `keyhole_local(travel)` in `scripts/fdm_samples.py` is one closed cutting tool (slot, head pocket with a 45° seat, entry with a 45° roof) that prints face down or upright | 09 |
 | Light, windows | Give the window part a flange and fit it from behind. Make the diffuser layer a separate part with a 1.68 wall | 09, 10 |
-| Connectors | USB-C: a horizontal stadium window (about 12 × 6.4; match the outline of the connector you use). **The receptacle face sits within about 2 mm of the outside:** a plug's moulding is larger than a window sized to the receptacle and stops at the wall, so set the board 0.25 behind the wall and thin the wall to 1.68 from the inside around the windows; a receptacle further back needs a window that admits the moulding | 08 |
+| Connectors | USB-C: a horizontal stadium window (about 12 × 6.4; match the outline of the connector you use). **The receptacle face sits within about 2 mm of the outside:** a plug's moulding is larger than a window sized to the receptacle and stops at the wall, so set the board 0.25 behind the wall and thin the wall to 1.68 from the inside around the windows; a receptacle further back needs a window that admits the moulding. **A dock that holds a cable's plug for the device to mate with:** pulling a USB-C plug out takes about 8–20 N, more than a small dock weighs, so the device lifts the dock; glue the plug and expect a hand on the dock, or make the dock heavy (model 054) | 08 |
 
 ## 8. Dimension cheat sheet
 
