@@ -1,0 +1,22 @@
+{
+  "id": "073_bookshelf_speaker_box",
+  "title": "Bookshelf speaker box",
+  "summary": "A sealed 112 x 128 x 168 box for one 3-inch full-range driver, with a perforated grille that fills the front flush and is held by magnets.",
+  "based_on": ["06_radio", "04_cylinder_speaker"],
+  "size_mm": [112, 128, 168],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Back face down", "material": "PLA, matte"},
+    {"name": "baffle", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"},
+    {"name": "grille", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"},
+    {"name": "magnet_ref", "qty": 8, "orientation": "Bought: 6 x 3 disc magnets", "material": "Neodymium", "ref": true},
+    {"name": "driver_ref", "qty": 1, "orientation": "Bought: 3-inch full-range driver, Ø80 frame", "material": "—", "ref": true}
+  ],
+  "mechanisms": ["Location", "Magnets"],
+  "motions": [
+    {"part": "grille", "against": "body", "slide": [0, -1, 0], "free": [0, 5, 20]},
+    {"part": "grille", "against": "baffle", "slide": [0, -1, 0], "free": [0, 5], "stop": [-0.5]}
+  ],
+  "tags": ["audio", "speaker", "shelf"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
