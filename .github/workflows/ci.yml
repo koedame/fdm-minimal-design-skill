@@ -22,7 +22,9 @@ jobs:
   check:
     name: Samples, models and skill bundle
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    # The limit is there to stop a hung build. A normal run builds every model twice (check, website) and grows by
+    # about a minute per ten models; with 80 it took 19.5 of the old 20, so the limit leaves room for growth.
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@v7
 
