@@ -1,0 +1,17 @@
+{
+  "id": "070_herb_trough",
+  "title": "Herb trough",
+  "summary": "A 400 x 104 x 96 window-sill trough for four 9 cm nursery pots, in two halves joined by four steel dowels; each half is closed at the joint, so no water reaches the glued seam.",
+  "based_on": ["11_split_riser", "03_tray"],
+  "size_mm": [400, 104, 96],
+  "parts": [
+    {"name": "half_left", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "half_right", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "dowels_steel_ref", "qty": 4, "orientation": "Bought part, not printed", "material": "Steel dowel pin Ø4 × 10", "ref": true}
+  ],
+  "mechanisms": ["Split joint"],
+  "view": {"direction": [-0.3, -0.6, 1]},
+  "tags": ["plant", "kitchen", "window"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
