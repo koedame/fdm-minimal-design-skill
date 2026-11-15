@@ -1,0 +1,26 @@
+{
+  "id": "043_hygrometer_wall",
+  "title": "Wall hygrometer frame",
+  "summary": "A 64 x 96 wall frame for a small digital thermo-hygrometer, with a smoked window over the display and a field of air slots below it.",
+  "based_on": ["09_wall_unit", "01_clock"],
+  "size_mm": [64, 24, 96],
+  "parts": [
+    {"name": "housing", "qty": 1, "orientation": "Face down", "material": "PLA, matte"},
+    {"name": "window_smoke", "qty": 1, "orientation": "Face down", "material": "PETG, smoked translucent"},
+    {"name": "back_plate", "qty": 1, "orientation": "Wall side down", "material": "PLA, matte"},
+    {"name": "hygrometer_ref", "qty": 1, "ref": true, "orientation": "Bought", "material": "Digital thermo-hygrometer"}
+  ],
+  "mechanisms": ["Wall mounting", "Light, windows"],
+  "motions": [
+    {"part": "housing", "against": "back_plate", "slide": [0, -1, 0], "free": [0, 0.3], "stop": [1.0]},
+    {"part": "housing", "against": "back_plate", "slide": [0, 0, -1], "free": [0.2], "stop": [0.4]},
+    {"part": "housing", "against": "back_plate", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "window_smoke", "against": "housing", "slide": [0, 1, 0], "free": [0, 2, 10]},
+    {"part": "window_smoke", "against": "housing", "slide": [0, -1, 0], "stop": [0.3]},
+    {"part": "window_smoke", "against": "housing", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.5, -1, 0.3]},
+  "tags": ["wall", "weather", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
