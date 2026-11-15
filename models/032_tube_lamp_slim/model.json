@@ -1,0 +1,150 @@
+{
+  "id": "032_tube_lamp_slim",
+  "title": "Slim tube lamp",
+  "summary": "A translucent tube 40 across and 160 tall on a low disc, lit by LED strip on a flat spine and powered through USB-C in the back of the disc.",
+  "based_on": [
+    "10_lantern",
+    "04_cylinder_speaker"
+  ],
+  "size_mm": [
+    64,
+    64,
+    192
+  ],
+  "parts": [
+    {
+      "name": "base",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PLA or PETG, matte, 100 % infill (weight)"
+    },
+    {
+      "name": "tube",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "Translucent white PETG"
+    },
+    {
+      "name": "cap",
+      "qty": 1,
+      "orientation": "Top face down",
+      "material": "PLA or PETG, matte"
+    },
+    {
+      "name": "spine",
+      "qty": 1,
+      "orientation": "Flat",
+      "material": "PLA or PETG, matte"
+    },
+    {
+      "name": "led_strips_ref",
+      "qty": 1,
+      "orientation": "Bought part",
+      "material": "5 V LED strip, 8 mm wide, two runs of about 150 mm",
+      "ref": true
+    },
+    {
+      "name": "usb_board_ref",
+      "qty": 1,
+      "orientation": "Bought part",
+      "material": "USB-C power breakout board with 5.1 kOhm CC resistors",
+      "ref": true
+    }
+  ],
+  "mechanisms": [
+    "Location",
+    "Connectors"
+  ],
+  "motions": [
+    {
+      "part": "tube",
+      "against": "base",
+      "slide": [
+        1,
+        0,
+        0
+      ],
+      "free": [
+        0.2
+      ],
+      "stop": [
+        0.4
+      ]
+    },
+    {
+      "part": "cap",
+      "against": "tube",
+      "slide": [
+        1,
+        0,
+        0
+      ],
+      "free": [
+        0.2
+      ],
+      "stop": [
+        0.4
+      ]
+    },
+    {
+      "part": "cap",
+      "against": "tube",
+      "slide": [
+        0,
+        0,
+        -1
+      ],
+      "free": [
+        0
+      ],
+      "stop": [
+        0.2
+      ]
+    },
+    {
+      "part": "usb_board_ref",
+      "against": "base",
+      "slide": [
+        0,
+        -1,
+        0
+      ],
+      "free": [
+        0
+      ],
+      "stop": [
+        0.3
+      ]
+    },
+    {
+      "part": "usb_board_ref",
+      "against": "base",
+      "slide": [
+        0,
+        1,
+        0
+      ],
+      "free": [
+        0.2
+      ],
+      "stop": [
+        0.4
+      ]
+    }
+  ],
+  "view": {
+    "direction": [
+      -0.6,
+      -1,
+      0.35
+    ]
+  },
+  "tags": [
+    "lamp",
+    "light",
+    "usb-c",
+    "desk"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
