@@ -1,0 +1,37 @@
+{
+  "id": "033_tablet_stand_slot",
+  "title": "Tablet stand",
+  "summary": "A low block with one slot across it that holds a tablet leaning back at 3 : 1, in portrait or landscape.",
+  "based_on": [
+    "05_stand",
+    "03_tray"
+  ],
+  "size_mm": [
+    128,
+    96,
+    24
+  ],
+  "parts": [
+    {
+      "name": "stand",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PLA or PETG, matte, 25 % infill or more"
+    }
+  ],
+  "mechanisms": [],
+  "view": {
+    "direction": [
+      -0.7,
+      -1,
+      0.6
+    ]
+  },
+  "tags": [
+    "stand",
+    "tablet",
+    "desk"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
