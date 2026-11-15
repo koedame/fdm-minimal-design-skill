@@ -1,0 +1,14 @@
+{
+  "id": "011_utensil_crock",
+  "title": "Utensil crock",
+  "summary": "A square crock for kitchen utensils whose floor drains through slots into channels open at the bottom.",
+  "based_on": ["03_tray"],
+  "size_mm": [104, 104, 156],
+  "parts": [
+    {"name": "crock", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": [],
+  "tags": ["kitchen", "container", "food"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
