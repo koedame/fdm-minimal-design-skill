@@ -1,0 +1,16 @@
+{
+  "id": "025_egg_cup_pair",
+  "title": "Egg cup pair",
+  "summary": "Two low cylinders with a spherical seat on which a boiled egg rests by its side, each floating on a shadow line.",
+  "based_on": ["03_tray", "04_cylinder_speaker"],
+  "size_mm": [108, 48, 77],
+  "parts": [
+    {"name": "cup", "qty": 2, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "egg_ref", "qty": 1, "orientation": "Reference (a medium egg), not printed", "material": "Egg, about Ø43 × 57", "ref": true}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.5, -1, 0.75]},
+  "tags": ["kitchen", "breakfast", "tableware"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
