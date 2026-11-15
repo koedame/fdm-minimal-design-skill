@@ -1,0 +1,15 @@
+{
+  "id": "059_phone_horn_amplifier",
+  "title": "Phone horn amplifier",
+  "summary": "A 112 x 64 x 40 block that holds a phone leaning back and turns its bottom speaker into a horn that opens at the front; no electronics.",
+  "based_on": ["05_stand", "03_tray"],
+  "size_mm": [112, 64, 40],
+  "parts": [
+    {"name": "horn", "qty": 1, "orientation": "Top down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.5, -1, 0.6]},
+  "tags": ["phone", "audio", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
