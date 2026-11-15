@@ -1,0 +1,22 @@
+{
+  "id": "048_jewelry_tray_lid",
+  "title": "Jewelry tray with lid",
+  "summary": "A 120 x 80 tray with a row of ring slots and two cells, under an 8 high lid that locates with a lip.",
+  "based_on": ["03_tray", "07_hinged_case"],
+  "size_mm": [120, 80, 32],
+  "parts": [
+    {"name": "tray", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top down", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "lid", "against": "tray", "slide": [0, 0, 1], "free": [0, 2, 10]},
+    {"part": "lid", "against": "tray", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "tray", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "tray", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.9]},
+  "tags": ["bedroom", "storage", "jewelry"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
