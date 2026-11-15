@@ -1,0 +1,15 @@
+{
+  "id": "056_planter_cube_small",
+  "title": "Small cube planter",
+  "summary": "A 64 mm cube with a round bore for a succulent, a floor that falls to one drain and V channels in its floating plinth.",
+  "based_on": ["03_tray", "04_cylinder_speaker"],
+  "size_mm": [64, 64, 64],
+  "parts": [
+    {"name": "planter", "qty": 1, "orientation": "Bottom down", "material": "PETG or PLA, matte"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.6, -1, 0.9]},
+  "tags": ["planter", "plant", "home"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
