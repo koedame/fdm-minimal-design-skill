@@ -533,6 +533,37 @@ def teardrop_x(x0, length, yc, zc, r, apex=(0, 1)):
     return c.union(plane_yz(x0).polyline(tri).close().extrude(length))
 
 
+def keyhole_local(travel, ledge=2.0, pocket=3.0, head=8.4, shank=4.2):
+    """Cutting tool for a keyhole in a wall-side face: the wall face at z=0, the part at z > 0, the entry
+    centred on the origin and the slot rising `travel` toward +y (the part drops that far onto the screw).
+
+    The slot (shank wide) runs through the `ledge`; behind it a head pocket (head wide, `pocket` deep) with a
+    45-deg seat narrowing to the slot: a countersunk head seats on it, and the pocket prints without support
+    with the wall face up (the part printed face down). The entry hole and the top ends have 45-deg roofs
+    toward +y, so the tool also prints with the wall face vertical and +y up (the part printed bottom down).
+    Move it onto the face with rx/rz/translate or on_slope (rx(tool, 90) puts a wall face at y=0 for a part
+    in y < 0, +y up)."""
+    k = 0.70710678
+
+    def outline(w, z):                    # the slot or pocket in plan: a round bottom end, a 45-deg roof at the top
+        h = w / 2
+        return (cq.Workplane("XY").workplane(offset=z).moveTo(-h, 0).lineTo(-h, travel)
+                .threePointArc((-h * 0.92388, travel + h * 0.38268), (-h * k, travel + h * k))
+                .lineTo(0, travel + h * 1.41421356).lineTo(h * k, travel + h * k)
+                .threePointArc((h * 0.92388, travel + h * 0.38268), (h, travel)).lineTo(h, 0)
+                .threePointArc((0, -h), (-h, 0)).close())
+
+    zs = ledge + (head - shank) / 2
+    tool = outline(shank, -1).extrude(ledge + 1)
+    seat = cq.Solid.makeLoft([outline(shank, ledge).wires().val(), outline(head, zs).wires().val()], True)
+    tool = tool.union(cq.Workplane("XY").add(seat)).union(outline(head, zs).extrude(ledge + pocket - zs))
+    r = head / 2                          # entry: the head passes the ledge and the seat here
+    roof = [(-r * k, r * k), (0, r * 1.41421356), (r * k, r * k), (0, 0)]
+    entry = cyl(r, -1, ledge + pocket + 1).union(
+        cq.Workplane("XY").workplane(offset=-1).polyline(roof).close().extrude(ledge + pocket + 1))
+    return tool.union(entry)
+
+
 # ---------------- 07 hinged case ----------------
 def hinged_case():
     """Box with a lid on a pin hinge (1.75 mm filament as the pin) and magnet closure."""
