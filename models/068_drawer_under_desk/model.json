@@ -1,0 +1,23 @@
+{
+  "id": "068_drawer_under_desk",
+  "title": "Under-desk drawer",
+  "summary": "A shallow drawer that hangs under a desk top on two 45-degree dovetail ledges of a screwed-on housing, with a soft stop at 120 of travel and a finger notch.",
+  "based_on": ["08_power_bank", "03_tray"],
+  "size_mm": [140, 160, 52],
+  "parts": [
+    {"name": "housing", "qty": 1, "orientation": "Plate down (desk face on the bed)", "material": "PETG, matte"},
+    {"name": "drawer", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Sliding lid"],
+  "motions": [
+    {"part": "drawer", "against": "housing", "slide": [0, -1, 0], "free": [0, 0.5, 60, 119, 165], "stop": [-0.3],
+     "snap": {"at": [120.5, 125, 140], "max_mm3": 1.0}},
+    {"part": "drawer", "against": "housing", "slide": [0, 0, 1], "free": [0.2], "stop": [0.3]},
+    {"part": "drawer", "against": "housing", "slide": [0, 0, -1], "free": [0.3], "stop": [0.4]},
+    {"part": "drawer", "against": "housing", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, -0.2]},
+  "tags": ["desk", "office", "storage", "drawer"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
