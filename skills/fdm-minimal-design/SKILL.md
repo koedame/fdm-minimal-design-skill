@@ -47,7 +47,7 @@ Figures are in `assets/figures/` (SVG and PNG). Sample previews are in `assets/s
 
 1. **Write the dimension rationale table first** (`04_review.md` Step 1). A dimension you cannot justify becomes a spot that looks lazy.
 2. Copy `scripts/template_new_object.py` and write a function.
-   - Reuse the helpers in `scripts/fdm_samples.py` (`rrect`, `cyl`, `box`, `button_local`, `knob_local`, `feet`, `teardrop_x`, `stadium_x`, `thread_solid`, `fillet_at`, `chamfer_rim`, `on_slope`, `copies`) and its constants (`T`, `DIV`, `CH`, `CH_BED`, `GAP`).
+   - Reuse the helpers in `scripts/fdm_samples.py` (`rrect`, `cyl`, `box`, `button_local`, `knob_local`, `feet`, `teardrop_x`, `stadium_x`, `thread_solid`, `keyhole_local`, `fillet_at`, `chamfer_rim`, `on_slope`, `copies`) and its constants (`T`, `DIV`, `CH`, `CH_BED`, `GAP`).
    - Adapting the function of a nearby sample directly is fine too.
    - Read chapter 9 of `02_rules.md` (CadQuery notes) before modelling: shell before chamfering, `copies()` for several copies of a part, `on_slope()` for features on a sloped face.
 3. For each part, define the assembled shape (orientation in use, Z up) and the print-oriented shape with `Part(asm, prn, color)`. Choose the print orientation according to chapter 5 of `02_rules.md`. Several copies: `Part(copies(...), one_copy, color, qty=n)`. A bought part shown for fit (a movement, a driver, dowels): `Part(asm, None, color, ref=True)`.
