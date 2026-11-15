@@ -1,0 +1,114 @@
+{
+  "id": "064_tool_case_bits",
+  "title": "Bit case",
+  "summary": "An 88 x 48 x 32 case that holds twelve 1/4-inch hex bits upright in a rack, its lid on a pin hinge along the back and held shut by two magnets.",
+  "based_on": [
+    "07_hinged_case"
+  ],
+  "size_mm": [
+    88,
+    52,
+    32
+  ],
+  "parts": [
+    {
+      "name": "base",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "lid",
+      "qty": 1,
+      "orientation": "Top down",
+      "material": "PLA, matte"
+    },
+    {
+      "name": "bits_ref",
+      "qty": 12,
+      "orientation": "Bought: 1/4-inch hex bits, 25 long",
+      "material": "Steel",
+      "ref": true
+    },
+    {
+      "name": "magnets_ref",
+      "qty": 4,
+      "orientation": "Bought: 6 x 3 disc magnets",
+      "material": "Neodymium",
+      "ref": true
+    }
+  ],
+  "mechanisms": [
+    "Pin hinge",
+    "Magnets",
+    "Location"
+  ],
+  "motions": [
+    {
+      "part": "lid",
+      "against": "base",
+      "hinge": [
+        [
+          0,
+          24,
+          24
+        ],
+        [
+          1,
+          24,
+          24
+        ]
+      ],
+      "free": [
+        0,
+        -30,
+        -60,
+        -90,
+        -120,
+        -150
+      ],
+      "stop": [
+        1,
+        -170
+      ]
+    },
+    {
+      "part": "lid",
+      "against": "bits_ref",
+      "hinge": [
+        [
+          0,
+          24,
+          24
+        ],
+        [
+          1,
+          24,
+          24
+        ]
+      ],
+      "free": [
+        0,
+        -15,
+        -30,
+        -45,
+        -60,
+        -90
+      ]
+    }
+  ],
+  "view": {
+    "direction": [
+      -0.6,
+      -1,
+      0.8
+    ]
+  },
+  "tags": [
+    "workshop",
+    "tools",
+    "storage"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
