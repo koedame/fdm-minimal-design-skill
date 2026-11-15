@@ -1,0 +1,15 @@
+{
+  "id": "012_cable_spool_winder",
+  "title": "Cable spool winder",
+  "summary": "Two flanges on a hub for winding a spare cable; the cap flange locates on the hub with a lip and is glued.",
+  "based_on": ["10_lantern"],
+  "size_mm": [64, 64, 24],
+  "parts": [
+    {"name": "flange_hub", "qty": 1, "orientation": "Flange down, hub up", "material": "PLA, matte"},
+    {"name": "flange_cap", "qty": 1, "orientation": "Outer face down, lip up", "material": "PLA, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "tags": ["cable", "desk", "storage"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
