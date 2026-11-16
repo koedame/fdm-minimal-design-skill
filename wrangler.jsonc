@@ -1,0 +1,15 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "fdm-minimal-design",
+  "compatibility_date": "2026-11-13",
+  // Static assets only, no Worker script. The folder is written by `python tools/build_site.py --out build/site`;
+  // its _headers file sets the response headers.
+  "assets": {
+    "directory": "./build/site"
+  },
+  // The site's address. The first deploy sets up its DNS record and certificate.
+  "routes": [{ "pattern": "fdm-minimal-design.koeda.me", "custom_domain": true }],
+  // Served there and nowhere else: no *.workers.dev address, no preview addresses.
+  "workers_dev": false,
+  "preview_urls": false
+}

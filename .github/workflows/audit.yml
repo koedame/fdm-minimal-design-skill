@@ -1,7 +1,8 @@
 name: Audit
 
 # The pinned Python environment (requirements.txt, requirements-dev.txt) is
-# checked against the PyPI advisory database. A new advisory can appear without
+# checked against the PyPI advisory database, and the deploy tool of the website
+# (package-lock.json) against the npm one. A new advisory can appear without
 # any change to this repository, so besides pull requests that touch the
 # requirements and pushes, this runs every week; a failing scheduled run is how
 # a freshly published advisory reaches us. Every dependency is pinned, so the
@@ -11,6 +12,7 @@ on:
   pull_request:
     paths:
       - "requirements*.txt"
+      - "package-lock.json"
       - ".github/workflows/audit.yml"
   push:
     branches: [main]
@@ -27,9 +29,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@v7
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
 
@@ -41,3 +43,15 @@ jobs:
 
       - name: Audit the test tools
         run: pip-audit -r requirements-dev.txt --no-deps --disable-pip
+
+  npm-audit:
+    name: npm advisories (deploy tool)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Audit package-lock.json
+        run: npm audit --package-lock-only --audit-level=high

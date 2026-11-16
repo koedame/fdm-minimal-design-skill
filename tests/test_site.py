@@ -1,3 +1,6 @@
+import base64
+import datetime
+import hashlib
 import json
 import re
 import shutil
@@ -173,3 +176,64 @@ def test_when_the_site_is_built_again_into_the_same_folder_the_old_files_are_rep
     (out / "models" / "stale.txt").write_text("old", encoding="utf-8")
     site_tool.build(out, models_dir, ids=["001_pen_cup"], workers=1)
     assert not (out / "models" / "stale.txt").exists() and (out / "index.html").is_file()
+
+
+def response_headers(out):
+    """_headers as {path pattern: {header: value}}."""
+    rules, path = {}, None
+    for line in (out / "_headers").read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        if not line[0].isspace():
+            path = line.strip()
+            rules[path] = {}
+        else:
+            name, value = line.strip().split(":", 1)
+            rules[path][name] = value.strip()
+    return rules
+
+
+def csp(value):
+    return {d.split()[0]: d.split()[1:] for d in (p.strip() for p in value.split(";")) if d}
+
+
+def test_when_the_page_is_served_its_csp_allows_only_files_of_this_site_and_its_own_inline_style_and_script(built):
+    out, _, html = built
+    policy = csp(response_headers(out)["/*"]["Content-Security-Policy"])
+    inline = {tag: [f"'sha256-{base64.b64encode(hashlib.sha256(body.encode()).digest()).decode()}'"]
+              for tag, body in re.findall(r"<(script|style)>(.*?)</\1>", html, re.S)}
+    assert policy["default-src"] == ["'none'"]
+    assert policy["script-src"] == ["'self'"] + inline["script"]
+    assert policy["style-src"] == ["'self'"] + inline["style"]
+    for d in ("img-src", "connect-src"):
+        assert policy[d] == ["'self'"]
+    assert policy["base-uri"] == policy["form-action"] == policy["frame-ancestors"] == ["'none'"]
+    assert "__" not in (out / "_headers").read_text(encoding="utf-8")
+
+
+def test_when_the_page_is_served_it_asks_for_https_no_sniffing_no_referrer_and_no_device_access(built):
+    out, _, _ = built
+    h = response_headers(out)["/*"]
+    assert h["Strict-Transport-Security"] == "max-age=15552000"   # the same as the zone, which overrides it
+    assert h["X-Content-Type-Options"] == "nosniff" and h["Referrer-Policy"] == "no-referrer"
+    assert all(p.endswith("=()") for p in h["Permissions-Policy"].split(", "))
+
+
+def test_when_a_file_under_models_is_opened_it_is_saved_as_a_download_and_not_run_on_the_site(built):
+    out, _, _ = built
+    assert response_headers(out)["/models/*"] == {"Content-Disposition": "attachment"}
+    assert (out / "models" / "001_pen_cup" / "001_pen_cup_viewer.html").is_file()
+
+
+def test_when_the_site_is_built_security_txt_points_to_private_reporting_and_has_not_expired(built):
+    out, _, _ = built
+    fields = dict(line.split(": ", 1) for line in
+                  (out / ".well-known" / "security.txt").read_text(encoding="utf-8").splitlines())
+    assert fields["Contact"] == LINKS_OUT[0] + "/security/advisories/new"
+    expires = datetime.datetime.fromisoformat(fields["Expires"].replace("Z", "+00:00"))
+    now = datetime.datetime.now(datetime.timezone.utc)
+    assert now < expires < now + datetime.timedelta(days=366)
+    wrangler = (ROOT / "wrangler.jsonc").read_text(encoding="utf-8")
+    host = re.search(r'"pattern": "([^"]+)", "custom_domain": true', wrangler).group(1)
+    assert fields["Canonical"] == f"https://{host}/.well-known/security.txt"
+    assert '"directory": "./build/site"' in wrangler and '"workers_dev": false' in wrangler

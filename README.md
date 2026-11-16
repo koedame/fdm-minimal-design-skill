@@ -4,6 +4,8 @@ fdm-minimal-design is an agent skill for designing minimalist objects for FDM 3D
 inspired by the consumer products Braun made in the 1960s and 1970s, many of them designed by Dieter Rams. The
 repository also holds example models.
 
+**Website: https://fdm-minimal-design.koeda.me** — every model in 3D, with its STEP and print STLs to download.
+
 [日本語](README.ja.md)
 
 ![The 12 sample objects](skills/fdm-minimal-design/assets/samples/overview.png)
@@ -85,7 +87,9 @@ python tools/build_site.py --out build/site 001_pen_cup 06_radio  # only these
 
 writes one static page that introduces the skill and lists the models and samples; selecting one shows it in 3D
 with the viewer of `viewer.py`, with its STEP, print STLs (zip) and viewer HTML to download. The list is built from
-`models/`, so a new model needs no change to the site. The page reads nothing from other servers. Serve the folder
+`models/`, so a new model needs no change to the site. The page reads nothing from other servers; the folder also
+holds `_headers` (the response headers: a Content Security Policy that allows only the site's own files) and
+`.well-known/security.txt`. Serve the folder
 from any static host; to look at it locally, `python -m http.server -d build/site` (opening `index.html` as a file
 does not load the 3D view). CI builds it on every pull request and keeps it as a workflow artifact.
 
@@ -116,6 +120,9 @@ Generated 3D files (STEP, STL) are not committed. They are regenerated from the 
 
 ## No warranty and safety
 
+These models and tools are shared free of charge as a non-commercial project. Nothing here is sold, advertised or
+monetised.
+
 Everything here is provided as is, without warranty (see the licences). In particular:
 
 - The dimensions (clearances, snaps, threads, holes) are rules of thumb and **the samples have not been printed on a
@@ -123,6 +130,21 @@ Everything here is provided as is, without warranty (see the licences). In parti
 - **Printed parts are not certified for anything.** For objects that hold batteries or LEDs, get hot, or touch food,
   the safety of the printed parts is not guaranteed. Use certified electronic components (batteries, chargers, LED
   drivers, power supplies) and check the materials and the electrical design yourself.
+- Printed parts are not tested products. Strength, heat resistance and food safety depend on your printer, material
+  and settings. Do not rely on printed parts where failure could injure someone, and do not use them in contact with
+  food unless you have checked the material and process yourself. Use only certified batteries, chargers and LED
+  modules, and follow their manufacturers' instructions. Keep small parts away from young children.
+
+## Contributing
+
+Issues and pull requests are welcome. A contribution is published under the licence of the part it changes (MIT for
+code and documents, CC BY 4.0 for models and images); open a pull request only with work you made yourself and may
+publish that way. New models must be original designs: do not copy the shape, name or logo of a specific product.
+CI must pass (the same checks as `.github/workflows/ci.yml`).
+
+## Security
+
+Report vulnerabilities privately as described in [SECURITY.md](SECURITY.md), not in a public issue.
 
 ## Independent project
 
