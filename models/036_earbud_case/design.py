@@ -7,6 +7,8 @@ are clear out to the walls. A shallow scoop at the front of the seam gives a fin
 import os
 import sys
 
+import cadquery as cq
+
 sys.path.insert(0, os.environ.get("FDM_SCRIPTS", os.path.join(
     os.path.dirname(os.path.abspath(__file__)), "..", "..", "skills", "fdm-minimal-design", "scripts")))
 from fdm_samples import (Part, SAMPLES, T, DIV, CH, CH_BED, GAP, OFF, DARK,  # noqa: E402
@@ -53,9 +55,13 @@ def earbud_case():
 
     scoop = plane_xz(-W / 2 + 1.2).center(0, HB).circle(SCOOP_R).extrude(3)
     base, lid = base.cut(scoop), lid.cut(scoop)
+    mags = [cyl(3.0, HB - 3.15, 3.0, 0, sy * MAG_Y) for sy in (-1, 1)] + \
+           [cyl(3.0, HB + 0.15, 3.0, 0, sy * MAG_Y) for sy in (-1, 1)]
     return {
         "base": Part(base, base, OFF),
         "lid": Part(lid, rx(lid, 180), DARK),
+        "magnets_ref": Part(cq.Workplane("XY").add(cq.Compound.makeCompound([m.val() for m in mags])), None, (0.5, 0.5, 0.52),
+                            qty=4, ref=True),
     }
 
 

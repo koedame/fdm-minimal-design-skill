@@ -6,7 +6,8 @@
   "size_mm": [168, 68, 48],
   "parts": [
     {"name": "base", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
-    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"}
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA, matte"},
+    {"name": "magnets_ref", "qty": 4, "orientation": "Bought: 6 x 3 disc magnets", "material": "Neodymium", "ref": true}
   ],
   "mechanisms": ["Pin hinge", "Magnets"],
   "motions": [
