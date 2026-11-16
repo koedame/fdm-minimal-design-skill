@@ -84,10 +84,13 @@ python tools/build_site.py --out build/site                       # models/ の�
 python tools/build_site.py --out build/site 001_pen_cup 06_radio  # 指定したものだけ
 ```
 
-スキルの紹介と、モデル・サンプルの一覧を載せた静的なページを 1 枚書き出す。一覧から選ぶと `viewer.py` のビューワーで 3D で見られ、
-STEP・造形向きの STL（zip）・ビューワーの HTML をダウンロードできる。一覧は `models/` から組むので、モデルを足してもサイトの手直しは要らない。
-ページは外のサーバーから何も読まない。フォルダーには、応答ヘッダーを決める `_headers`（サイト自身のファイルだけを許す Content Security Policy）と `.well-known/security.txt` も入る。フォルダーをそのまま静的なホスティングに置く。手元で見るときは `python -m http.server -d build/site`
-（`index.html` をファイルとして開くと 3D 表示は読み込めない）。CI がプルリクエストごとに組み、ワークフローの成果物として残す。
+静的なサイトを書き出す。スキルを紹介してモデル・サンプルを並べるトップページと、1 つずつのページ（`/models/<id>/`）で、
+後者には部品・ダウンロード（STEP・造形向きの STL の zip・ビューワーの HTML）と、`viewer.py` のビューワーによる 3D 表示が載る。
+ページごとに検索エンジンと共有のリンク向けのタイトル・説明・プレビュー画像を持ち、JavaScript が無くても中身が読める。一覧は `sitemap.xml` にも出す。
+一覧は `models/` から組むので、モデルを足してもサイトの手直しは要らない。
+ページは外のサーバーから何も読まない。フォルダーには、応答ヘッダーを決める `_headers`（サイト自身のファイルだけを許す Content Security Policy と、`/downloads/` の下を添付として送る指定）・`404.html`・`.well-known/security.txt` も入る。
+`<dir>/` に `<dir>/index.html` を返す静的なホスティングにフォルダーをそのまま置く。手元で見るときは `python -m http.server -d build/site`
+（ファイルを直に開くと 3D 表示は読み込めない）。CI がプルリクエストごとに組み、ワークフローの成果物として残す。
 
 ## リポジトリの構成
 

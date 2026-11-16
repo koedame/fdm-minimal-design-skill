@@ -85,13 +85,15 @@ python tools/build_site.py --out build/site                       # every model 
 python tools/build_site.py --out build/site 001_pen_cup 06_radio  # only these
 ```
 
-writes one static page that introduces the skill and lists the models and samples; selecting one shows it in 3D
-with the viewer of `viewer.py`, with its STEP, print STLs (zip) and viewer HTML to download. The list is built from
-`models/`, so a new model needs no change to the site. The page reads nothing from other servers; the folder also
-holds `_headers` (the response headers: a Content Security Policy that allows only the site's own files) and
-`.well-known/security.txt`. Serve the folder
-from any static host; to look at it locally, `python -m http.server -d build/site` (opening `index.html` as a file
-does not load the 3D view). CI builds it on every pull request and keeps it as a workflow artifact.
+writes a static site: a home page that introduces the skill and lists the models and samples, and a page for each
+one at `/models/<id>/` with its parts, its STEP, print STLs (zip) and viewer HTML to download, and its 3D view (the
+viewer of `viewer.py`). Each page has its own title, description and preview image for search engines and shared
+links, and is complete without JavaScript; `sitemap.xml` lists them. The list is built from `models/`, so a new
+model needs no change to the site. The pages read nothing from other servers; the folder also holds `_headers` (the
+response headers: a Content Security Policy that allows only the site's own files, and the downloads under
+`/downloads/` sent as attachments), `404.html` and `.well-known/security.txt`. Serve the folder from any static host
+that serves `<dir>/index.html` for `<dir>/`; to look at it locally, `python -m http.server -d build/site` (opening
+the files directly does not load the 3D view). CI builds it on every pull request and keeps it as a workflow artifact.
 
 ## Repository layout
 
