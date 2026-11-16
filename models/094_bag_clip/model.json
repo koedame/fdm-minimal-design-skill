@@ -1,0 +1,20 @@
+{
+  "id": "094_bag_clip",
+  "title": "Bag clip",
+  "summary": "Two 120 x 20 jaws on a pin hinge, closed by a snap hook, with a ridge that presses a bag's folded top into a groove.",
+  "based_on": ["07_hinged_case", "09_wall_unit"],
+  "size_mm": [124, 20, 16],
+  "parts": [
+    {"name": "lower", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "upper", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Pin hinge", "Snap (hook)"],
+  "motions": [
+    {"part": "upper", "against": "lower", "hinge": [[-60, 0, 8], [-60, 1, 8]], "free": [0, -3, -10, -30, -60, -90, -110], "stop": [0.5],
+     "snap": {"at": [-1, -1.5, -2], "max_mm3": 6.0}}
+  ],
+  "view": {"direction": [-0.5, -1, 0.7]},
+  "tags": ["kitchen", "clip", "bag"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
