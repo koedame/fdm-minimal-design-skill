@@ -392,3 +392,13 @@ def test_when_a_rationale_has_safety_paragraphs_each_is_shown_with_the_model_as_
     assert site_tool.safety_notes(rationale) == ["Safety (food): not a food-safe container. Keep food in a bag.",
                                                  "Safety (magnets): keep away from children."]
     assert site_tool.safety_notes(tmp_path / "missing.md") == []
+
+
+def test_when_a_safety_paragraph_has_no_hazard_list_or_is_a_bulleted_list_it_is_shown_as_plain_text(tmp_path):
+    rationale = tmp_path / "rationale.md"
+    rationale.write_text("# Box\n\nSafety: a CR2032 cell. **Keep cells away from children.**\nUse a locking holder.\n\n"
+                         "Safety:\n- **Food contact:** dry salt only.\n- Not for the dishwasher.\n\n"
+                         "Safety factors were not calculated.\n", encoding="utf-8")
+    assert site_tool.safety_notes(rationale) == [
+        "Safety: a CR2032 cell. Keep cells away from children. Use a locking holder.",
+        "Safety: Food contact: dry salt only. Not for the dishwasher."]
