@@ -94,15 +94,18 @@ def model_entries(models_dir):
     return entries
 
 
-SAFETY = re.compile(r"^Safety \(.*?(?=\n\s*\n|\Z)", re.M | re.S)
+SAFETY = re.compile(r"^Safety(?: \([^)\n]*\))?:.*?(?=\n\s*\n|\Z)", re.M | re.S)
+LIST_ITEM = re.compile(r"^\s*- ", re.M)
 
 
 def safety_notes(rationale):
-    """The "Safety (...): ..." paragraphs of a model's rationale.md (batteries, heat, food, magnets, mounting), one
-    string each, so the page shows them next to the downloads."""
+    """The "Safety: ..." and "Safety (...): ..." paragraphs of a model's rationale.md (batteries, heat, food, magnets,
+    mounting), one plain-text string each (bold marks and list bullets dropped), so the page shows them next to the
+    downloads."""
     if not rationale.is_file():
         return []
-    return [" ".join(p.split()) for p in SAFETY.findall(rationale.read_text(encoding="utf-8"))]
+    return [" ".join(LIST_ITEM.sub("", p).replace("**", "").split())
+            for p in SAFETY.findall(rationale.read_text(encoding="utf-8"))]
 
 
 def thumbnail(png, out):

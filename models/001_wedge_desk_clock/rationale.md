@@ -52,8 +52,10 @@ Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2, and the BC and 
 or round cases with numerals and a coloured second hand; this is a 100 mm leaning slab with bar indices on a raised disc and
 no second hand. No product was used as a model.
 
-Safety: the clock runs on a battery-powered quartz movement. Use a certified movement and battery; the printed parts are not
-certified for anything.
+Safety (battery, magnets): the clock runs on a battery-powered quartz movement. Use a certified movement and battery; the printed
+parts are not certified for anything. The back plate holds on four neodymium magnets, which are dangerous if swallowed, above all two
+or more. Glue them in fully, keep the clock out of reach of small children, and do not use it if a magnet comes loose. Keep the clock
+away from cards with magnetic stripes and from pacemakers.
 
 Not verified:
 - Not printed on a real printer.
