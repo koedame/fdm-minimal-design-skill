@@ -39,9 +39,10 @@ verify.py: valid and watertight, fits a 256 bed. (The ground-contact line is not
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a wall rail; a plain bar with hidden magnets
 is not taken from any product. No product was used as a model.
 
-Safety (magnets): neodymium magnets are dangerous if swallowed, above all two or more. Glue them in fully, mount the bar out of
-reach of small children, and do not use it if a magnet comes loose. Keep the bar away from cards with magnetic stripes and from
-pacemakers.
+Safety (magnets, wall mounting): neodymium magnets are dangerous if swallowed, above all two or more. Glue them in fully, mount the
+bar out of reach of small children, and do not use it if a magnet comes loose. Keep the bar away from cards with magnetic stripes and
+from pacemakers. Hang it on screws in a stud, or in plugs or plasterboard anchors made for your wall; the hold of the printed keyholes
+has not been tested, so before use pull the bar down by hand, harder than your keys weigh.
 
 Not verified:
 - Not printed on a real printer.

@@ -55,7 +55,8 @@ Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them i
 Under-desk drawers on rails are a common kind of object; no product was used as a model.
 
 Safety: no batteries, LEDs, magnets, heat or food. Screw the housing into solid wood or a solid board with screws that suit it; do not
-hang it from a glass or thin-panel desk top. Keep the load light (stationery).
+hang it from a glass or thin-panel desk top. Keep the load light (stationery). The ledges' strength has not been calculated or tested:
+pull down on the filled drawer by hand before you leave it, and check from time to time that the housing screws are still tight.
 
 Not verified:
 - Not printed on a real printer.

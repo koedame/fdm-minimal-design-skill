@@ -56,9 +56,11 @@ slides +8 mm along the slot against the base with 0 overlap.
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a light. Half-cylinder wall lights are a common
 form; this one follows 10_lantern's tiers and was not modelled on a product.
 
-Safety (light and electronics): this sconce holds an LED module and a switch powered over USB. Use a certified USB power supply and
-LED module, use LEDs only (no filament or halogen bulbs: the parts are PLA/PETG and soften from about 60 °C), keep the LEDs at least
-10 mm from the diffuser, and do not run mains voltage inside it.
+Safety (light, electronics, wall mounting): this sconce holds an LED module and a switch powered over USB. Use a certified USB power
+supply and LED module, use LEDs only (no filament or halogen bulbs: the parts are PLA/PETG and soften from about 60 °C), keep the LEDs
+at least 10 mm from the diffuser, and do not run mains voltage inside it. Hang it on screws in a stud, or in plugs or plasterboard
+anchors made for your wall, not over a bed or a cot; the hold of the printed keyholes has not been tested, so pull the lamp down by
+hand before you leave it.
 
 Not verified:
 - Not printed on a real printer.

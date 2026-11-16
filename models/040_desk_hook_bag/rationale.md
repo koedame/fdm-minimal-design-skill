@@ -51,6 +51,12 @@ verify.py: hook and plate valid and watertight, no interference, fit a 256 bed.
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
 hook. Under-desk bag hooks are a common item; no product was used as a model.
 
+Safety (load): the hook's strength has not been calculated or tested, so it has no rated load. It depends on the material (PETG; PLA
+creeps under a bag left hanging for days), on printing the hook on its side as given, on the walls and infill, and on the desk: drive
+the wood screws into solid wood or a solid board thick enough for them, not into a glass, metal, hollow-core or thin-panel top. Before
+you hang a bag, pull down on the hook by hand, harder than the bag weighs; check from time to time that the plate screws are still
+tight.
+
 Not verified:
 - Not printed on a real printer.
 - The weight the hook takes before it bends; print in PETG and keep to an everyday bag (about 5 kg).

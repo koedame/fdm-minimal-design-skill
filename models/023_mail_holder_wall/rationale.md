@@ -46,6 +46,12 @@ verify.py: valid and watertight, fits a 256 bed (160 high), ground contact 3832 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a wall pocket. A wall pocket for mail is a common form; no
 product was used as a model.
 
+Safety (wall mounting): the holder is made for letters, postcards and flyers; its strength has not been calculated or tested, so it
+has no rated load and is not for books or tools. How well it holds depends on the material, the print (perimeters, infill) and above
+all on the screws and the wall: drive them into a stud, or into plugs or plasterboard anchors made for your wall. Do not hang it over
+a bed, a sofa or a cot. Before you fill it, push the empty holder down and pull it away from the wall by hand, harder than a full
+pocket would; if a keyhole slips or the plate cracks, remount it or do not use it.
+
 Not verified:
 - Not printed on a real printer.
 - Whether the keyholes hold on your screws (the head must fit the 8.4 entry and seat on the 45° cone; test on a piece of the pad).

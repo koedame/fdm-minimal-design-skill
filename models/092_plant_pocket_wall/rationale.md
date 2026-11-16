@@ -47,6 +47,12 @@ verify.py: valid, watertight; fits a 256 bed; the pot's envelope (rim Ø60, base
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none hangs on a
 wall or holds a plant. A cube planter is the common form; no product was used as a model.
 
+Safety (load, water): with a wet pot the pocket carries about 400 g, more with water standing in it; its strength has not been
+calculated or tested. How well it holds depends on the material (PETG; PLA breaks down when it stays wet for months), the print (three
+or more perimeters) and the wall: drive the screws into a stud, or into plugs or plasterboard anchors made for your wall. Do not hang
+it over a bed, a sofa, a cot or electrical equipment, where a falling pot or dripping water can hurt someone or damage something.
+Before you put the plant in, pull the empty pocket down and away from the wall by hand, harder than the watered plant weighs.
+
 Not verified:
 - Not printed on a real printer.
 - Whether the floor and walls hold water without seeping between layers (PETG with 3 or more perimeters, or a sealant inside, if it weeps).

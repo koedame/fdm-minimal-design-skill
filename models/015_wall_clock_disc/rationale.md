@@ -52,7 +52,9 @@ Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2) and Braun's BC 
 desk cases with a dial set into a frame; this is a wall disc whose face is the dial,
 with no bezel, no numerals, no second hand and inlaid bars. A round wall clock is a common form; no product was used as a model.
 
-Safety (battery): the movement takes an AA cell. Use a certified movement, and keep spare cells away from children.
+Safety (battery, wall mounting): the movement takes an AA cell. Use a certified movement, and keep spare cells away from children.
+Hang it on a screw in a stud, or in a plug or plasterboard anchor made for your wall, not over a bed or a cot; the hold of the printed
+keyhole has not been tested, so pull the clock down by hand before you leave it.
 
 Not verified:
 - Not printed on a real printer.

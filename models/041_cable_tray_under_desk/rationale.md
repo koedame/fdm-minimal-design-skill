@@ -56,8 +56,10 @@ verify.py: all parts valid and watertight, one solid each, no interference, fit 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
 tray or hangs under a desk. Under-desk cable trays are a common kind of object; no product was used as a model.
 
-Safety (electricity, heat): a power strip or adapters in the tray stay warm; leave room around them, print in PETG, and do not cover
-the tray. The printed parts are not certified for anything.
+Safety (electricity, heat, load): a power strip or adapters in the tray stay warm; leave room around them, print in PETG, and do not
+cover the tray. The printed parts are not certified for anything. The tray's strength has not been calculated or tested: keep it to
+cables, a power strip and small adapters, drive the rail screws into solid wood or a solid board (not a glass, metal, hollow-core or
+thin-panel top), and pull down on the filled tray by hand before you leave it.
 
 Not verified:
 - Not printed on a real printer.

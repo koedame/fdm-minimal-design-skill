@@ -59,7 +59,8 @@ closed housings with controls or perforation, and this has neither. Open wall po
 product was used as a model.
 
 Safety: the holder has no batteries, LEDs, magnets or heat of its own. Fix the screws into wall plugs suited to the wall; the cup is
-not made to carry more than a remote.
+not made to carry more than a remote. The hold of the printed keyhole seats has not been tested: before use, pull the cup down by
+hand, harder than a remote weighs, and remount it if a keyhole slips.
 
 Not verified:
 - Not printed on a real printer.
