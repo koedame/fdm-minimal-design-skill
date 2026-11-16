@@ -1,0 +1,15 @@
+{
+  "id": "100_bookend_pair",
+  "title": "Bookend pair",
+  "summary": "Two identical L-shaped bookends of one even thickness, held by the books standing on their bases.",
+  "based_on": ["05_stand"],
+  "size_mm": [120, 250.08, 144],
+  "parts": [
+    {"name": "bookend", "qty": 2, "orientation": "On its side", "material": "PETG or PLA, matte, 4 walls, 25 % infill or more"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-1, -0.5, 0.5]},
+  "tags": ["stationery", "books", "shelf"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
