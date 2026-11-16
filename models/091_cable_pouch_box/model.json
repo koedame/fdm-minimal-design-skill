@@ -1,0 +1,22 @@
+{
+  "id": "091_cable_pouch_box",
+  "title": "Cable pouch box",
+  "summary": "A 120 x 80 x 40 travel box with a cell for a charger and one for its cables, the lid held by four snap hooks.",
+  "based_on": ["07_hinged_case", "09_wall_unit", "03_tray"],
+  "size_mm": [120, 80, 40],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Snap (hook)"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 20], "snap": {"at": [1, 3, 6, 9], "max_mm3": 24.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.6]},
+  "tags": ["travel", "cable", "storage", "box"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
