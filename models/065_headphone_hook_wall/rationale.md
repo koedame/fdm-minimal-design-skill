@@ -55,7 +55,9 @@ verify.py: valid, watertight, one solid. (The ground-contact line is the arm's e
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a wall fitting; they are housings with controls,
 grilles or perforation. Wall hooks for headphones are a common kind of object; no product was used as a model.
 
-Safety: the hook has no batteries, LEDs, magnets or heat of its own. Fix the screws into wall plugs suited to the wall.
+Safety: the hook has no batteries, LEDs, magnets or heat of its own. Fix the screws into wall plugs suited to the wall. The arm is
+sized for 400 g of headphones (about 0.1 MPa at the root, see Load); the hold of the printed keyholes on your screws has not been
+tested, so before use pull down on the arm by hand, clearly harder than the headphones weigh, and do not hang a bag on it.
 
 Not verified:
 - Not printed on a real printer.

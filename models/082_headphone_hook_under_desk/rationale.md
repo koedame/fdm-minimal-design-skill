@@ -58,6 +58,11 @@ verify.py: hook and plate valid and watertight, one solid each; no interference;
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
 hook. Under-desk headphone hooks are a common item; no product was used as a model.
 
+Safety (load): the hook is made for one pair of headphones (200–400 g); its strength has not been calculated or tested, and it is not
+for bags or anything heavier. Its hold depends on the material, on printing it on its side as given, on the M3 screws in the printed
+bosses and on the desk: drive the wood screws into solid wood or a solid board, not into a glass, metal, hollow-core or thin-panel
+top. Before use, pull down on the arm by hand, clearly harder than the headphones weigh, and check that nothing moves.
+
 Not verified:
 - Not printed on a real printer.
 - How the M3 screws hold in printed bosses; drive them by hand and stop when snug.

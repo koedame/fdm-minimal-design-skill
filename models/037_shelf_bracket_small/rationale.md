@@ -50,6 +50,14 @@ verify.py: bracket and plate valid and watertight, no interference, fit a 256 be
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
 bracket. Plain L brackets with a corner web are a common form; no product was used as a model.
 
+Safety (load): a shelf can fall with everything on it. The bracket's strength has not been calculated or tested, so it has no rated
+load: keep to light things, nothing heavy, breakable or hot. The pull on the plate's top is about two-thirds of the weight on the
+middle of the arm (17 N for 25 N, see Load), and what the bracket takes before it lets go depends on the material (PETG; PLA creeps
+under a constant load), on printing it on its side as given (printed on its back, the layers would split at the corner), on the walls
+and infill, and on the wall: two screws per plate into a stud, or anchors rated for your wall (plasterboard anchors, plugs in
+masonry). Do not put the shelf over a bed, a sofa, a cot or a place where you sit. Before loading it, press down on the board's front
+edge by hand, harder than what you mean to put on it, and look again after a few days that the brackets have not tilted.
+
 Not verified:
 - Not printed on a real printer.
 - The load a bracket takes before it bends or the dovetail lets go; print in PETG and keep to light things (books, a plant, a few

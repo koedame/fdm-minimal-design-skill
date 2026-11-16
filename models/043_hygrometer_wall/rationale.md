@@ -61,8 +61,10 @@ square cases standing on a desk with a dial; the calculator has a display window
 slots, not keys, and the object hangs flat on a wall. Wall thermo-hygrometer cases with a window and vents are a common kind of object;
 no product was used as a model.
 
-Safety (battery): the bought hygrometer runs on a coin cell. Coin cells are dangerous if swallowed; the snap hooks are not a
-child-resistant lock, so hang it out of reach of small children and keep spare cells away from them.
+Safety (battery, wall mounting): the bought hygrometer runs on a coin cell. Coin cells are dangerous if swallowed; the snap hooks are
+not a child-resistant lock, so hang it out of reach of small children and keep spare cells away from them. Drive the screws into wall
+plugs or plasterboard anchors made for your wall; the hold of the printed keyholes has not been tested, so pull the frame down by hand
+before you leave it.
 
 Not verified:
 - Not printed on a real printer.
