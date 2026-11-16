@@ -1,0 +1,27 @@
+version: 2
+
+# Actions and the deploy tool (npm) get version updates once a week. The Python environment is a tested, pinned set
+# (requirements.txt from requirements.in), so it gets security updates only: open-pull-requests-limit 0 stops the
+# version updates, while each security alert still gets its own pull request.
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      # The init and analyze steps of CodeQL must run the same version, so a
+      # pull request that bumps only one of them fails the scan.
+      codeql-action:
+        patterns: ["github/codeql-action/*"]
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    groups:
+      npm-minor-patch:
+        update-types: ["minor", "patch"]
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 0
