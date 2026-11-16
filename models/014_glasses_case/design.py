@@ -45,7 +45,6 @@ def glasses_case():
         base = base.union(box(min(x - sx * POST / 2, xo), max(x - sx * POST / 2, xo), -POST / 2, POST / 2, FLOOR - .1, HB))
         base = base.cut(cyl(3.1, HB - 3.2, 3.3, x, 0))
         lid = lid.union(box(min(x - sx * POST / 2, xo), max(x - sx * POST / 2, xo), -POST / 2, POST / 2, HB, HB + HL - TOP + .1))
-        lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, x, 0))
 
     c = GAP                                       # lid lip along the front half only: the back must swing
     lip = stadium(L - 2 * (T + c), W - 2 * (T + c), HB - 3, 3.01) \
@@ -54,6 +53,8 @@ def glasses_case():
     for sx in (-1, 1):                            # the wall is thickened inside down to the rim, so the lip is part of it
         lip = lip.cut(box(sx * MAG_X - POST / 2 - c - 4, sx * MAG_X + POST / 2 + 4, -POST / 2 - c, POST / 2 + c, 0, HB))
     lid = lid.union(lip)
+    for sx in (-1, 1):                            # after the lip: its thickened wall would otherwise refill part of each pocket
+        lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, sx * MAG_X, 0))
 
     def knuckle(xa, xb, sign):
         k = 2.828427

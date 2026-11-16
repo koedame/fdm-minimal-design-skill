@@ -31,9 +31,12 @@ wall is thickened inside down to the rim, so the lip is part of the wall and not
 
 ## Review
 
-No defects or violations found. Checked: the lip is joined to the lid (one solid), it clears the magnet posts, the lid swings free from
-closed to 150° and stops at both ends (swept), the knuckles print on their 45° webs both ways up, and the case stays standing when
-open.
+| Target | Problem | Kind | Fix |
+|---|---|---|---|
+| lid | Found later: the lid's magnet pockets were cut before the lip was joined; the lip's wall, thickened inside down to the rim, filled 10.5 mm³ of each pocket and a Ø6 × 3 magnet did not fit | Defect | Pockets cut after the lip is joined; the lid and the magnet's Ø6.2 × 3.2 space no longer overlap |
+
+Checked: the lip is joined to the lid (one solid), it clears the magnet posts, the lid swings free from closed to 150° and stops at
+both ends (swept), the knuckles print on their 45° webs both ways up, and the case stays standing when open.
 
 Use cases:
 - **Assemble:** press the magnets into the posts, opposite poles facing; set the lid on the base and push the filament pin through the

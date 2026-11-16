@@ -32,6 +32,7 @@ the front seam is the one worked-out detail.
 | Target | Problem | Kind | Fix |
 |---|---|---|---|
 | lid | Found later by a new check in verify.py: the lip, offset inward by the clearance, touched the lid nowhere and would have printed as a loose piece | Defect | The lid wall is thickened on the inside down to the rim and the lip hangs from it |
+| lid | Found later: the lid's magnet pockets were cut before the lip was joined; the lip's wall, thickened inside down to the rim, filled 5.5 mm³ of each pocket and a Ø6 × 3 magnet did not fit | Defect | Pockets cut after the lip is joined; the lid and the magnet's Ø6.2 × 3.2 space no longer overlap |
 
 Use cases:
 - **Open, close:** the lid swings free from 0 to 150° and comes to rest at about 158°, where the lid knuckles meet the base webs
@@ -44,7 +45,7 @@ Use cases:
 - **Print:** body bottom down, lid top face down; the knuckles stand on 45° webs, no support.
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed, ground contact 9312 mm² over 166.9 × 62.9; hinge free
-at 0 to −150°, overlap 10.9 mm³ at −170° (stop) and 518.9 mm³ at +1° (closed stop).
+at 0 to −150°, overlap 10.9 mm³ at −170° (stop) and 519.3 mm³ at +1° (closed stop).
 
 Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a case. A stadium hard case with a dark lid is a
 common form for glasses cases; no product was used as a model.

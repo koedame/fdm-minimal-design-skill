@@ -41,7 +41,6 @@ def pencil_case_flat():
         base = base.union(box(x - POST / 2, x + POST / 2, fy - POST / 2, fy + POST / 2, FLOOR - .1, HB))
         base = base.cut(cyl(3.1, HB - 3.2, 3.3, x, fy))
         lid = lid.union(box(x - POST / 2, x + POST / 2, fy - POST / 2, fy + POST / 2, HB + 0.0, HB + HL - TOP + .1))
-        lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, x, fy))
 
     # lip on the front half: the lid's wall thickened inside to T + GAP + DIV down to the rim, continuing LIP below it
     c = GAP
@@ -52,6 +51,8 @@ def pencil_case_flat():
         x = sx * MAG_X
         lip = lip.cut(box(x - POST / 2 - c, x + POST / 2 + c, fy - POST / 2 - c, fy + POST / 2 + c, 0, HB))
     lid = lid.union(lip)
+    for sx in (-1, 1):                  # after the lip: its thickened wall would otherwise refill part of each pocket
+        lid = lid.cut(cyl(3.1, HB - 0.1, 3.3, sx * MAG_X, fy))
 
     def knuckle(xa, xb, sign):                               # circle + 45-deg web to the wall, as 07_hinged_case
         k = 2.828427
