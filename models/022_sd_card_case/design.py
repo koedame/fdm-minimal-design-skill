@@ -4,7 +4,7 @@ The body is low (12) and its wall steps in at the top into a neck that the lid (
 cantilever tabs are freed from the front and back of the neck by U-shaped slits; a 45-deg bump on each
 drops into a 45-deg groove inside the lid wall, so the lid clicks shut and pulls off without a button.
 The tabs and grooves are hidden inside the closed case. The cards stand in a slotted block, their tops
-11.6 above the neck, so they can be picked out by the edge.
+8.6 above the neck, so they can be picked out by the edge.
 """
 import os
 import sys
@@ -18,7 +18,7 @@ from fdm_samples import Part, SAMPLES, T, DIV, CH, CH_BED, GAP, OFF, box, rrect,
 S, R = 44.0, 6.0                  # plan 44 (grid 4), R = 13.6 % of 44
 HB, HL = 12.0, 24.0               # body : lid = 1 : 2, total 36
 FLOOR = TOP = 2.4
-NECK = 9.0                        # neck height: room for a tab long enough to flex 0.4 within 2 % strain
+NECK = 12.0                       # neck height: room for a tab long enough to flex the 0.85 bump within 2 % strain
 NO = S - 2 * (T + GAP)            # neck outside: the lid's inside less the clearance
 NI = NO - 2 * DIV                 # neck inside
 STEP = (S - 2 * T - NI) / 2
@@ -28,7 +28,7 @@ N, SLOT = 8, CARD[2] + 2 * GAP
 PITCH = SLOT + DIV                # 4.28
 Z_CARD = HB + HL - TOP - 1.0 - CARD[1]   # 8.6: card top 1.0 under the lid top
 Z_BLOCK = Z_CARD + 8.0            # cards held 8 deep
-TAB_W, SLIT, BUMP = 12.0, 1.0, 0.4
+TAB_W, SLIT, BUMP = 12.0, 1.0, 0.85   # catch = BUMP - GAP = 0.6, for a lid that is handled
 Z_BUMP = HB + NECK - 1.5          # bump centre 1.5 under the top of the tab
 
 
@@ -69,7 +69,7 @@ def sd_card_case():
 
     lid = rrect(S, S, R, HB, HL).faces("<Z").chamfer(CH).faces(">Z").chamfer(CH_BED)
     lid = lid.cut(rrect(S - 2 * T, S - 2 * T, R - T, HB - 1, HL - TOP + 1))
-    g = 2 * BUMP
+    g = BUMP + 0.1                                     # groove 0.35 deeper than the bump reaches in
     for s in (-1, 1):
         groove = prism_x(0, Z_BUMP, [(0, -g), (g, 0), (0, g)], TAB_W + 2)
         lid = lid.cut((groove if s > 0 else groove.mirror("XZ")).translate((0, s * (S / 2 - T - 0.01), 0)))

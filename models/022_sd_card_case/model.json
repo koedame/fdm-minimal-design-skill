@@ -10,8 +10,8 @@
   ],
   "mechanisms": ["Snap (tab)", "Location"],
   "motions": [
-    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 9, 12],
-     "snap": {"at": [1, 3, 5, 7], "max_mm3": 1.0}},
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 11.5, 14],
+     "snap": {"at": [1, 3, 5, 7, 9, 10], "max_mm3": 10.0}},
     {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
     {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]}
   ],
