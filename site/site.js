@@ -66,6 +66,12 @@
       return li;
     });
     $("m-downloads").replaceChildren(...items);
+    $("m-safety").hidden = !m.safety.length;
+    $("m-safety-notes").replaceChildren(...m.safety.map((text) => {
+      const p = document.createElement("p");
+      p.textContent = text;
+      return p;
+    }));
     $("m-credit").textContent = `${m.title} from fdm-minimal-design by koedame, CC BY 4.0`;
   }
 

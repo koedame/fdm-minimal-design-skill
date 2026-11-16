@@ -66,7 +66,7 @@ def sample_entries():
         raise SystemExit(f"{CATALOG.name} has no heading for {', '.join(missing)}")
     return [{"id": sid, "group": "samples", "number": sid[:2], **found[sid], "based_on": [], "mechanisms": [],
              "printed": False, "preview": SKILL_DIR / "assets" / "samples" / sid / "preview.png", "design": None,
-             "meta": None}
+             "meta": None, "safety": []}
             for sid in SAMPLE_IDS]
 
 
@@ -77,8 +77,19 @@ def model_entries(models_dir):
         entries.append({"id": d.name, "group": "models", "number": d.name[:3], "title": meta["title"],
                         "summary": meta["summary"], "based_on": meta["based_on"], "mechanisms": meta["mechanisms"],
                         "printed": meta["printed"], "preview": d / "preview.png", "design": d / "design.py",
-                        "meta": meta})
+                        "meta": meta, "safety": safety_notes(d / "rationale.md")})
     return entries
+
+
+SAFETY = re.compile(r"^Safety \(.*?(?=\n\s*\n|\Z)", re.M | re.S)
+
+
+def safety_notes(rationale):
+    """The "Safety (...): ..." paragraphs of a model's rationale.md (batteries, heat, food, magnets, mounting), one
+    string each, so the page shows them next to the downloads."""
+    if not rationale.is_file():
+        return []
+    return [" ".join(p.split()) for p in SAFETY.findall(rationale.read_text(encoding="utf-8"))]
 
 
 def thumbnail(png, out):
@@ -155,7 +166,7 @@ def section(group, entries, heading, lead, empty):
 
 def page_data(entries):
     keep = ("id", "group", "number", "title", "summary", "based_on", "mechanisms", "printed", "size", "view", "zoom",
-            "parts", "downloads")
+            "parts", "downloads", "safety")
     titles = {e["id"]: e["title"] for e in entries if e["group"] == "samples"}
     return {"models": [{k: e[k] for k in keep} for e in entries], "sample_titles": titles}
 

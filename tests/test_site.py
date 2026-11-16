@@ -237,3 +237,20 @@ def test_when_the_site_is_built_security_txt_points_to_private_reporting_and_has
     host = re.search(r'"pattern": "([^"]+)", "custom_domain": true', wrangler).group(1)
     assert fields["Canonical"] == f"https://{host}/.well-known/security.txt"
     assert '"directory": "./build/site"' in wrangler and '"workers_dev": false' in wrangler
+
+
+def test_when_a_rationale_has_safety_paragraphs_each_is_shown_with_the_model_as_one_line(tmp_path):
+    rationale = tmp_path / "rationale.md"
+    rationale.write_text("# Cup\n\nWhy the walls are 2 mm.\n\nSafety (food): not a food-safe container.\nKeep food in a bag.\n\n"
+                         "More reasoning.\n\nSafety (magnets): keep away from children.\n", encoding="utf-8")
+    assert site_tool.safety_notes(rationale) == ["Safety (food): not a food-safe container. Keep food in a bag.",
+                                                 "Safety (magnets): keep away from children."]
+    assert site_tool.safety_notes(tmp_path / "missing.md") == []
+
+
+def test_when_a_model_is_opened_its_safety_notes_are_set_as_text_and_the_section_hides_without_them(built):
+    _, _, html = built
+    assert [m["safety"] for m in site_data(html)["models"]] == [[], []]
+    assert 'id="m-safety" hidden' in html
+    code = (ROOT / "site" / "site.js").read_text(encoding="utf-8")
+    assert 'p.textContent = text;' in code and '$("m-safety").hidden = !m.safety.length;' in code
