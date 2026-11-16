@@ -1,0 +1,86 @@
+{
+  "id": "099_salt_cellar_swivel",
+  "title": "Salt cellar with swivel lid",
+  "summary": "A rounded-square salt pot whose flat lid swings aside about a vertical filament pin in one corner; a stud under the lid stops it closed and at about 40 degrees open.",
+  "based_on": [
+    "07_hinged_case",
+    "03_tray"
+  ],
+  "size_mm": [
+    72,
+    72,
+    48
+  ],
+  "parts": [
+    {
+      "name": "body",
+      "qty": 1,
+      "orientation": "Bottom down",
+      "material": "PETG, matte"
+    },
+    {
+      "name": "lid",
+      "qty": 1,
+      "orientation": "Top face down",
+      "material": "PETG, matte"
+    }
+  ],
+  "mechanisms": [
+    "Pin hinge"
+  ],
+  "motions": [
+    {
+      "part": "lid",
+      "against": "body",
+      "hinge": [
+        [
+          31,
+          31,
+          0
+        ],
+        [
+          31,
+          31,
+          1
+        ]
+      ],
+      "free": [
+        0,
+        10,
+        20,
+        30,
+        38
+      ],
+      "stop": [
+        -0.6,
+        42
+      ]
+    },
+    {
+      "part": "lid",
+      "against": "body",
+      "slide": [
+        0,
+        0,
+        -1
+      ],
+      "stop": [
+        0.3
+      ]
+    }
+  ],
+  "view": {
+    "direction": [
+      -0.7,
+      -1,
+      0.7
+    ]
+  },
+  "tags": [
+    "kitchen",
+    "salt",
+    "food"
+  ],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
