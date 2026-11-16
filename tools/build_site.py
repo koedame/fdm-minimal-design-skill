@@ -1,5 +1,6 @@
 """
-Build the website: one static page that introduces the skill and shows every model in 3D.
+Build the website: a home page that introduces the skill and lists every model, and a page for each model with
+its 3D view, parts and downloads.
 
   python tools/build_site.py --out build/site                      # the 12 samples and every model in models/
   python tools/build_site.py --out build/site 06_radio 001_pen_cup # only these (quick checks)
@@ -7,16 +8,26 @@ Build the website: one static page that introduces the skill and shows every mod
 The list is built from models/ (model.json, preview.png, design.py) and from the samples of the skill, so a
 new model needs no change here. The output is plain files for any static host:
 
-  index.html                 the page; the list is in the HTML, the data for the 3D view inline
-  site.js                    opens a model, loads the 3D view on first use
-  viewer/                    three.min.js, fdm-viewer.js (the 3D view of scripts/viewer.py), three.js licence
+  index.html                 the home page; the list links to the page of each model
+  models/<id>/index.html     the page of one model (/models/<id>/): its name, parts and downloads are in the HTML,
+                             so it reads without JavaScript; site.js adds the 3D view
   models/<id>/thumb.webp     list image
-  models/<id>/model.glb      meshes for the 3D view, read when the model is opened
-  models/<id>/<id>_assembly.step, <id>_print_stl.zip, <id>_viewer.html   downloads
-  _headers                   response headers for Cloudflare (CSP with the hashes of the inline style and script)
+  models/<id>/preview.png    the still shown until the 3D view is ready, and the image of a shared link (og:image)
+  models/<id>/model.glb      meshes for the 3D view
+  downloads/<id>/<id>_assembly.step, <id>_print_stl.zip, <id>_viewer.html
+                             downloads; _headers sends everything under /downloads/ as an attachment, so the viewer
+                             HTML is saved and never runs on this site. They are kept out of /models/ so that the
+                             rule cannot reach a page.
+  site.js                    the 3D view, the parts switches and the keys of a model page
+  viewer/                    three.min.js, fdm-viewer.js (the 3D view of scripts/viewer.py), three.js licence
+  404.html                   sent with status 404 for any other address (wrangler.jsonc: not_found_handling)
+  sitemap.xml, robots.txt    the home page and every model page, for search engines
+  _headers                   response headers for Cloudflare (CSP with the hash of the inline style)
   .well-known/security.txt   where to report a vulnerability
 
-Nothing on the page is read from another server: no fonts, scripts or analytics from outside.
+Every page has the same inline style (site/style.css) and no inline script (a model's data for the 3D view is a
+JSON data block, which is not run), so the CSP allows one style hash and scripts from this site only. Nothing on the
+pages is read from another server: no fonts, scripts or analytics from outside.
 """
 import argparse
 import base64
@@ -39,9 +50,11 @@ SCRIPTS = SKILL_DIR / "scripts"
 SITE_DIR = ROOT / "site"
 CATALOG = SKILL_DIR / "references" / "05_catalog.md"
 REPO_URL = "https://github.com/koedame/fdm-minimal-design-skill"
+SITE_URL = "https://fdm-minimal-design.koeda.me"   # the custom domain of wrangler.jsonc; canonical and shared links
+SITE_NAME = "fdm-minimal-design"
 THUMB_SIZE = (480, 384)        # 2x the widest list cell on a desktop, same 5:4 as preview.png
 ZIP_DATE = (1980, 1, 1, 0, 0, 0)
-MARK = "<!-- Written by tools/build_site.py"   # in every index.html it writes; --out is emptied only then
+MARK = "<!-- Written by tools/build_site.py"   # in every page it writes; --out is emptied only when index.html has it
 sys.path.insert(0, str(SCRIPTS))
 sys.path.insert(0, str(ROOT / "tools"))
 import fdm_samples      # noqa: E402
@@ -110,7 +123,8 @@ def stl_zip(export_dir, out):
 
 
 def build_model(job):
-    """Write the files of one design into out/models/<id>/ and return what the page needs to know about it.
+    """Write the files of one design into out/models/<id>/ (what its page shows) and out/downloads/<id>/, and return
+    what the pages need to know about it.
 
     Runs in a worker process, so a design from models/ is loaded here when the worker does not have it yet.
     """
@@ -118,16 +132,21 @@ def build_model(job):
     if entry["id"] not in fdm_samples.SAMPLES:
         models.load_design(Path(entry["design"]).parent)
     mid = entry["id"]
-    d = Path(out) / "models" / mid
+    page_dir = Path(out) / "models" / mid
+    d = Path(out) / "downloads" / mid
+    page_dir.mkdir(parents=True, exist_ok=True)
     d.mkdir(parents=True, exist_ok=True)
     data, glb = viewer.model(mid, entry["meta"])
-    (d / "model.glb").write_bytes(glb)
+    (page_dir / "model.glb").write_bytes(glb)
     (d / f"{mid}_viewer.html").write_text(viewer.page(data, glb), encoding="utf-8")
     with tempfile.TemporaryDirectory() as work:
         fdm_samples.export(work, [mid])
         shutil.copyfile(Path(work) / mid / f"{mid}_assembly.step", d / f"{mid}_assembly.step")
         stls = stl_zip(Path(work) / mid, d / f"{mid}_print_stl.zip")
-    thumbnail(entry["preview"], d / "thumb.webp")
+    thumbnail(entry["preview"], page_dir / "thumb.webp")
+    shutil.copyfile(entry["preview"], page_dir / "preview.png")
+    with Image.open(entry["preview"]) as im:
+        preview_size = im.size
     files = {
         "step": f"{mid}_assembly.step",
         "stl": f"{mid}_print_stl.zip",
@@ -137,7 +156,7 @@ def build_model(job):
         "size": data["size"], "view": data["view"], "zoom": data["zoom"], "parts": data["parts"],
         "stl_files": stls,
         "downloads": {k: {"file": f, "bytes": (d / f).stat().st_size} for k, f in files.items()},
-        "glb_bytes": len(glb),
+        "glb_bytes": len(glb), "preview_size": preview_size,
     }
 
 
@@ -145,12 +164,33 @@ def mm(v):
     return f"{v:g}"
 
 
+def mm1(v):
+    """A length to 0.1 mm with thousands separators: 1,234.5 / 72."""
+    return f"{round(v, 1):,.1f}".removesuffix(".0")
+
+
+def dims(size):
+    return " × ".join(mm1(v) for v in size)
+
+
+def nbytes(n):
+    return f"{n / 1e6:.1f} MB" if n >= 1e6 else f"{max(1, round(n / 1e3))} kB"
+
+
+def words(s):
+    return s.replace("_", " ")
+
+
+def page_path(mid):
+    return f"/models/{mid}/"
+
+
 def card(e):
     w, h = THUMB_SIZE
     eager = "eager" if e["index"] < 8 else "lazy"   # the first two rows on a desktop
     size = " × ".join(mm(v) for v in e["size"])
-    return (f'<li><a class="card" href="#{escape(e["id"])}" data-id="{escape(e["id"])}">'
-            f'<img src="models/{escape(e["id"])}/thumb.webp" width="{w // 2}" height="{h // 2}" alt="" '
+    return (f'<li><a class="card" href="{escape(page_path(e["id"]))}">'
+            f'<img src="/models/{escape(e["id"])}/thumb.webp" width="{w // 2}" height="{h // 2}" alt="" '
             f'loading="{eager}" decoding="async">'
             f'<span class="num">{escape(e["number"])}</span>'
             f'<span class="title">{escape(e["title"])}</span>'
@@ -164,45 +204,161 @@ def section(group, entries, heading, lead, empty):
             f'<p class="lead2">{lead}</p>\n<ul class="grid">\n{cards}\n</ul>\n</section>')
 
 
-def page_data(entries):
-    keep = ("id", "group", "number", "title", "summary", "based_on", "mechanisms", "printed", "size", "view", "zoom",
-            "parts", "downloads", "safety")
-    titles = {e["id"]: e["title"] for e in entries if e["group"] == "samples"}
-    return {"models": [{k: e[k] for k in keep} for e in entries], "sample_titles": titles}
+def head(title, description, path, image=None):
+    """<title>, description, canonical address and the tags of a shared link (Open Graph, X) of one page."""
+    url = SITE_URL + path
+    tags = [f"<title>{escape(title)}</title>",
+            f'<meta name="description" content="{escape(description)}">',
+            f'<link rel="canonical" href="{escape(url)}">',
+            f'<meta property="og:site_name" content="{SITE_NAME}">',
+            f'<meta property="og:type" content="website">',
+            f'<meta property="og:title" content="{escape(title)}">',
+            f'<meta property="og:description" content="{escape(description)}">',
+            f'<meta property="og:url" content="{escape(url)}">']
+    if image:
+        src, (w, h), alt = image
+        tags += [f'<meta property="og:image" content="{escape(SITE_URL + src)}">',
+                 f'<meta property="og:image:width" content="{w}">', f'<meta property="og:image:height" content="{h}">',
+                 f'<meta property="og:image:alt" content="{escape(alt)}">',
+                 '<meta name="twitter:card" content="summary_large_image">']
+    return "\n".join(tags)
+
+
+def fill(template, values):
+    """The template of site/ with each placeholder replaced; stops when the template lacks one."""
+    html = (SITE_DIR / template).read_text(encoding="utf-8")
+    values = {"<!--STYLE-->": f"<style>\n{(SITE_DIR / 'style.css').read_text(encoding='utf-8')}</style>",
+              "__REPO__": REPO_URL, **values}
+    missing = [k for k in values if k not in html]
+    if missing:
+        raise SystemExit(f"site/{template} has no {missing}")
+    return re.sub("|".join(map(re.escape, values)), lambda m: values[m.group(0)], html)
+
+
+def no_warranty():
+    return (SITE_DIR / "no-warranty.html").read_text(encoding="utf-8").strip()
 
 
 def page(entries):
-    html = (SITE_DIR / "index.html").read_text(encoding="utf-8")
     samples = [e for e in entries if e["group"] == "samples"]
     made = [e for e in entries if e["group"] == "models"]
-    fill = {
+    return fill("index.html", {
+        "<!--HEAD-->": head(f"{SITE_NAME} — an agent skill for minimal objects printed in FDM",
+                            "An agent skill that designs minimalist objects for FDM 3D printing, and the models designed "
+                            "with it, in 3D, with STEP and print-ready STL files to download.", "/"),
         "<!--MODELS-->": section("models", made, "Models", "Designed with the skill. Select one to turn it in 3D.",
                                  "None yet. The samples below show what the skill makes."),
         "<!--SAMPLES-->": section("samples", samples, "Samples",
                                   "The objects that come with the skill, as starting points for new designs.",
                                   "None in this build."),
-        '"__DATA__"': json.dumps(page_data(entries), separators=(",", ":")).replace("<", "\\u003c"),
-        "__REPO__": REPO_URL,
-    }
-    missing = [k for k in fill if k not in html]
-    if missing:
-        raise SystemExit(f"site/index.html has no {missing}")
-    return re.sub("|".join(map(re.escape, fill)), lambda m: fill[m.group(0)], html)
+        "<!--NO_WARRANTY-->": no_warranty(),
+    })
 
 
-INLINE = re.compile(r"<(script|style)>(.*?)</\1>", re.S)
+DOWNLOAD_LABELS = {"step": "STEP assembly", "stl": "STL for printing (zip)", "viewer": "3D viewer (HTML, works offline)"}
 
 
-def headers(html):
-    """site/_headers with the hashes of the inline <style> and <script> blocks of the page, so that the CSP allows
-    them and nothing else inline."""
-    hashes = {"script": [], "style": []}
-    for tag, body in INLINE.findall(html):
-        digest = base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode("ascii")
-        hashes[tag].append(f"'sha256-{digest}'")
-    text = (SITE_DIR / "_headers").read_text(encoding="utf-8")
-    return text.replace("__SCRIPT_HASHES__", " ".join(hashes["script"])).replace(
-        "__STYLE_HASHES__", " ".join(hashes["style"]))
+def facts(e, built_titles, sample_titles):
+    """The line under the summary: size, parts, the samples it is based on (linked when built), mechanisms, printed."""
+    n = len(e["parts"])
+    out = [escape(f"{dims(e['size'])} mm"), f"{n} part{'s' if n > 1 else ''}"]
+    if e["based_on"]:
+        names = [f'<a href="{page_path(s)}">{escape(built_titles[s])}</a>' if s in built_titles
+                 else escape(sample_titles.get(s, words(s))) for s in e["based_on"]]
+        out.append("based on " + ", ".join(names))
+    if e["mechanisms"]:
+        out.append(escape(", ".join(e["mechanisms"]).lower()))
+    out.append("printed and checked" if e["printed"] else "not printed yet")
+    return " · ".join(out)
+
+
+# two squares, the front one see-through: the button that makes a part transparent
+SEE_ICON = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="9" '
+            'height="9" rx="1.5" fill="none" stroke="currentColor"/><rect x="5.5" y="5.5" width="9" height="9" rx="1.5" '
+            'fill="currentColor" fill-opacity="0.25" stroke="currentColor"/></svg>')
+
+
+def part_row(p):
+    """One row of the parts table. Its checkbox shows or hides the part in the 3D view, its button makes it
+    transparent (site.js); both are hidden while the page has no script."""
+    how = f"{p['orientation']}, printed with {words(p['anchor'])}" if p["anchor"] else p["orientation"]
+    size = dims(p["print_size"]) if p["print_size"] else "—"   # a bought part is not printed
+    name = escape(words(p["name"]))
+    return (f'          <tr data-part="{escape(p["name"])}"><td><span class="part"><label>'
+            f'<input type="checkbox" checked aria-label="Show {name}">'
+            f'<svg class="sw" viewBox="0 0 1 1" aria-hidden="true"><rect width="1" height="1" fill="{escape(p["color"])}"/></svg>'
+            f'<span><b>{name}</b><br><span class="muted">{escape(how)}</span></span></label>'
+            f'<button type="button" class="see" aria-pressed="false" title="Transparent" aria-label="Transparent {name}">'
+            f'{SEE_ICON}</button></span></td>'
+            f'<td class="n">{p["qty"]}</td><td class="n">{escape(size)}</td></tr>')
+
+
+def description(e):
+    n = len(e["parts"])
+    return (f"{e['summary'].rstrip('.')}. A minimalist object for FDM 3D printing, {dims(e['size'])} mm in "
+            f"{n} part{'s' if n > 1 else ''}: view it in 3D and download the STEP assembly and print-ready STL files "
+            f"(CC BY 4.0).")
+
+
+def model_page(entries, i, sample_titles):
+    """The page of entries[i] (/models/<id>/)."""
+    e = entries[i]
+    mid = e["id"]
+    prev, nxt = entries[i - 1], entries[(i + 1) % len(entries)]
+    built_titles = {x["id"]: x["title"] for x in entries}
+    still = (f"/models/{mid}/preview.png", e["preview_size"], f"{e['title']}: a rendering of the assembled model")
+    downloads = "\n".join(
+        f'        <li><a href="/downloads/{escape(mid)}/{escape(d["file"])}" download="{escape(d["file"])}">{label}</a>'
+        f'<span class="muted">{nbytes(d["bytes"])}</span></li>'
+        for k, label in DOWNLOAD_LABELS.items() for d in [e["downloads"][k]])
+    safety = ""
+    if e["safety"]:
+        notes = "".join(f"<p>{escape(s)}</p>" for s in e["safety"])
+        safety = f'    <section class="notes" id="safety">\n      <h2>Safety</h2>\n      {notes}\n    </section>\n'
+    data = {"id": mid, "view": e["view"], "zoom": e["zoom"], "parts": e["parts"]}
+    return fill("model.html", {
+        "<!--HEAD-->": head(f"{e['title']} — 3D printable model, STEP and STL | {SITE_NAME}", description(e),
+                            page_path(mid), still),
+        "__STILL__": still[0], "__STILL_W__": str(still[1][0]), "__STILL_H__": str(still[1][1]),
+        "__STILL_ALT__": escape(still[2]),
+        "__PREV__": page_path(prev["id"]), "__PREV_TITLE__": escape(prev["title"]),
+        "__NEXT__": page_path(nxt["id"]), "__NEXT_TITLE__": escape(nxt["title"]),
+        "__GROUP__": "Models" if e["group"] == "models" else "Samples",
+        "__NUMBER__": escape(e["number"]), "__TITLE__": escape(e["title"]), "__SUMMARY__": escape(e["summary"]),
+        "__FACTS__": facts(e, built_titles, sample_titles),
+        "__PARTS__": "\n".join(part_row(p) for p in e["parts"]),
+        "__DOWNLOADS__": downloads,
+        "<!--SAFETY-->\n": safety,
+        "__CREDIT__": escape(f"{e['title']} from fdm-minimal-design by koedame, CC BY 4.0"),
+        "<!--NO_WARRANTY-->": no_warranty(),
+        '"__DATA__"': json.dumps(data, separators=(",", ":")).replace("<", "\\u003c"),
+    })
+
+
+def sitemap(entries):
+    urls = "".join(f"<url><loc>{escape(SITE_URL + p)}</loc></url>\n"
+                   for p in ["/"] + [page_path(e["id"]) for e in entries])
+    return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
+
+
+def robots():
+    """Every page may be crawled; the downloads are large and are not pages."""
+    return f"User-agent: *\nDisallow: /downloads/\n\nSitemap: {SITE_URL}/sitemap.xml\n"
+
+
+INLINE_STYLE = re.compile(r"<style>(.*?)</style>", re.S)
+
+
+def headers(pages):
+    """site/_headers with the hashes of the inline <style> blocks of the pages, so that the CSP allows them and no
+    other inline style. The pages share one style, so this is one hash however many models there are."""
+    hashes = []
+    for html in pages:
+        for body in INLINE_STYLE.findall(html):
+            digest = f"'sha256-{base64.b64encode(hashlib.sha256(body.encode('utf-8')).digest()).decode('ascii')}'"
+            if digest not in hashes:
+                hashes.append(digest)
+    return (SITE_DIR / "_headers").read_text(encoding="utf-8").replace("__STYLE_HASHES__", " ".join(hashes))
 
 
 def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
@@ -228,18 +384,24 @@ def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
     for name in ("three.min.js", "fdm-viewer.js", "three-LICENSE.txt"):
         shutil.copyfile(os.path.join(viewer.VIEWER_DIR, name), out / "viewer" / name)
     shutil.copyfile(SITE_DIR / "site.js", out / "site.js")
-    html = page(entries)
-    (out / "index.html").write_text(html, encoding="utf-8")
-    (out / "_headers").write_text(headers(html), encoding="utf-8")
+    sample_titles = {e["id"]: e["title"] for e in sample_entries()}
+    pages = {"index.html": page(entries), "404.html": fill("404.html", {})}
+    for i, e in enumerate(entries):
+        pages[f"models/{e['id']}/index.html"] = model_page(entries, i, sample_titles)
+    for name, html in pages.items():
+        (out / name).write_text(html, encoding="utf-8")
+    (out / "sitemap.xml").write_text(sitemap(entries), encoding="utf-8")
+    (out / "robots.txt").write_text(robots(), encoding="utf-8")
+    (out / "_headers").write_text(headers(pages.values()), encoding="utf-8")
     (out / ".well-known").mkdir()
     shutil.copyfile(SITE_DIR / ".well-known" / "security.txt", out / ".well-known" / "security.txt")
     return entries
 
 
 def sizes(out, entries):
-    """Bytes the browser reads before any model is opened, and the size of the whole site."""
+    """Bytes the browser reads for the home page, and the size of the whole site."""
     out = Path(out)
-    first = (out / "index.html").stat().st_size + (out / "site.js").stat().st_size
+    first = (out / "index.html").stat().st_size
     thumbs = sum((out / "models" / e["id"] / "thumb.webp").stat().st_size for e in entries)
     eager = sum((out / "models" / e["id"] / "thumb.webp").stat().st_size for e in entries if e["index"] < 8)
     viewer_js = sum((out / "viewer" / n).stat().st_size for n in ("three.min.js", "fdm-viewer.js"))
@@ -261,7 +423,8 @@ def main(argv=None):
     print(f"wrote {a.out}: {s['models']} models, {mb(s['total'])} in all")
     print(f"  first load: page {mb(s['page'])} + thumbnails of the first rows {mb(s['thumbs_first_rows'])}"
           f" (all thumbnails {mb(s['thumbs_all'])}, read as they scroll into view)")
-    print(f"  on first open: 3D viewer {mb(s['viewer_js'])} once, then one GLB per model (largest {mb(s['glb_max'])})")
+    print(f"  on a model page: 3D viewer {mb(s['viewer_js'])} (cached after the first), and its GLB"
+          f" (largest {mb(s['glb_max'])})")
     return 0
 
 

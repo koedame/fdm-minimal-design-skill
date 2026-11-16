@@ -1,12 +1,13 @@
 # Response headers of the website. Cloudflare reads _headers from the built folder; tools/build_site.py copies this
-# file there and fills in the hashes of the page's inline style and script. tests/test_site.py pins the content:
-# loosen a rule only together with its test and the reason.
+# file there and fills in the hash of the inline style the pages share (they have no inline script).
+# tests/test_site.py pins the content: loosen a rule only together with its test and the reason.
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'self' __SCRIPT_HASHES__; style-src 'self' __STYLE_HASHES__; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' __STYLE_HASHES__; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
   Strict-Transport-Security: max-age=15552000
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   Permissions-Policy: accelerometer=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), midi=(), payment=(), serial=(), usb=()
-# The model files are downloads. A viewer page opened from here is saved, not run on this site.
-/models/*
+# The model files are downloads. A viewer page opened from here is saved, not run on this site. The pages of the
+# models are under /models/, apart from these, so this rule cannot make a page a download.
+/downloads/*
   Content-Disposition: attachment

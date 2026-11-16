@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--HEAD-->
+<!-- Written by tools/build_site.py from site/model.html. Nothing here is read from another server. -->
+<!--STYLE-->
+</head>
+<body>
+<main class="model">
+  <div id="stage">
+    <img id="still" src="__STILL__" width="__STILL_W__" height="__STILL_H__" alt="__STILL_ALT__">
+    <div id="status"></div><div id="help" hidden>Drag to rotate · Shift + drag to pan · Wheel to zoom</div>
+  </div>
+  <aside>
+    <div class="bar">
+      <nav class="nav" aria-label="Models"><a class="btn" id="prev" href="__PREV__" rel="prev" aria-label="Previous model: __PREV_TITLE__">←</a><a class="btn" id="next" href="__NEXT__" rel="next" aria-label="Next model: __NEXT_TITLE__">→</a></nav>
+      <a class="btn" id="close" href="/">Close</a>
+    </div>
+    <p class="site label"><a href="/">fdm-minimal-design</a> · __GROUP__</p>
+    <section>
+      <h1 class="mhead"><span class="num">__NUMBER__</span> __TITLE__</h1>
+      <p class="summary">__SUMMARY__</p>
+      <p class="facts">__FACTS__</p>
+    </section>
+    <section id="controls" hidden>
+      <span class="label">Show</span>
+      <div class="seg" id="arrangement">
+        <button type="button" data-v="assembled" aria-pressed="true">Assembled</button>
+        <button type="button" data-v="print" aria-pressed="false">Print layout</button>
+      </div>
+      <div class="row" id="explode-row">
+        <span>Exploded</span>
+        <input type="range" id="explode" min="0" max="1" step="0.01" value="0" aria-label="Exploded view">
+      </div>
+      <div class="row"><span></span><button type="button" class="link" id="reset">Reset view</button></div>
+    </section>
+    <section>
+      <div class="row top"><h2>Parts</h2><button type="button" class="link" id="parts-all">Show all</button></div>
+      <table>
+        <thead><tr><th>Part · print orientation</th><th class="n">Qty</th><th class="n">Print size mm</th></tr></thead>
+        <tbody>
+__PARTS__
+        </tbody>
+      </table>
+    </section>
+    <section>
+      <h2>Download</h2>
+      <ul class="dl">
+__DOWNLOADS__
+      </ul>
+    </section>
+<!--SAFETY-->
+    <section class="notes">
+      <h2>Licence</h2>
+      <p><a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>. Credit as “__CREDIT__”,
+        link to <a href="__REPO__">the repository</a> and say if you changed anything.</p>
+    </section>
+    <section class="notes">
+      <h2>No warranty</h2>
+      <!--NO_WARRANTY-->
+    </section>
+  </aside>
+</main>
+<script type="application/json" id="model-data">"__DATA__"</script>
+<script src="/site.js" defer></script>
+</body>
+</html>

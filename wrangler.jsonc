@@ -5,7 +5,11 @@
   // Static assets only, no Worker script. The folder is written by `python tools/build_site.py --out build/site`;
   // its _headers file sets the response headers.
   "assets": {
-    "directory": "./build/site"
+    "directory": "./build/site",
+    // /models/<id> goes on to /models/<id>/, the address of its page (models/<id>/index.html).
+    "html_handling": "auto-trailing-slash",
+    // An address with no file gets 404.html with status 404, not the home page.
+    "not_found_handling": "404-page"
   },
   // The site's address. The first deploy sets up its DNS record and certificate.
   "routes": [{ "pattern": "fdm-minimal-design.koeda.me", "custom_domain": true }],
