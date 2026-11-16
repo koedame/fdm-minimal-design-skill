@@ -1,0 +1,15 @@
+{
+  "id": "098_router_stand_vertical",
+  "title": "Vertical router stand",
+  "summary": "A low block with one straight slot, open at both ends, in which a Wi-Fi router stands on its long edge.",
+  "based_on": ["05_stand", "03_tray"],
+  "size_mm": [128, 80, 32],
+  "parts": [
+    {"name": "stand", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte, 25 % infill or more"}
+  ],
+  "mechanisms": [],
+  "view": {"direction": [-0.7, -1, 0.6]},
+  "tags": ["stand", "router", "desk"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
