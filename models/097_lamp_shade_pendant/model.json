@@ -1,0 +1,21 @@
+{
+  "id": "097_lamp_shade_pendant",
+  "title": "Pendant lamp shade",
+  "summary": "A Ø160 x 160 translucent shade with a 45-degree shoulder, hung from a lamp socket on a cap that locates in its top opening.",
+  "based_on": ["10_lantern", "04_cylinder_speaker", "12_threaded_jar"],
+  "size_mm": [160, 160, 160],
+  "parts": [
+    {"name": "shade", "qty": 1, "orientation": "Bottom down (upright)", "material": "PETG, white translucent"},
+    {"name": "cap", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "shade", "against": "cap", "slide": [0, 0, 1], "free": [0, 2, 20]},
+    {"part": "shade", "against": "cap", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "shade", "against": "cap", "slide": [1, 0, 0], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, -0.15]},
+  "tags": ["lamp", "light", "pendant"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
