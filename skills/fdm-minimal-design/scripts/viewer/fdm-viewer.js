@@ -3,6 +3,7 @@
 //   const viewer = await FDMViewer.create(container, { glb, view: [-0.6, -1, 0.6], zoom: 1.15, anchors: { inlay: "plate" } });
 //   viewer.setArrangement("print");   // "assembled" (default) or "print"
 //   viewer.setVisible("lid", false);
+//   viewer.setTransparent("lid", true); // see the parts inside it
 //   viewer.setExplode(0.5);           // 0 = assembled, 1 = fully apart (assembled arrangement only)
 //   viewer.setEdges(true);
 //   viewer.setScroll("pan");          // what a trackpad two-finger scroll does: "zoom" (default) or "pan"
@@ -24,6 +25,8 @@
   "use strict";
 
   const ZOOM_STEP = 0.88; // distance factor per wheel notch
+  const EDGE_OPACITY = 0.35;
+  const TRANSPARENT = 0.2; // opacity of the faces of a part made transparent; its edges are drawn at half their own
 
   // How many wheel notches an event stands for, whatever the browser and OS.
   function notches(e) {
@@ -87,7 +90,6 @@
 
     // one group per arrangement, one mesh per part; the edges are drawn at creases over 30 degrees
     const groups = {}, parts = {};
-    const edgeMat = new T.LineBasicMaterial({ color: 0x3a3a38, transparent: true, opacity: 0.35 });
     for (const g of [...gltf.scene.children]) { // a copy: scene.add moves g out of gltf.scene
       groups[g.name] = g;
       for (const node of g.children) {
@@ -97,6 +99,7 @@
         mesh.material.polygonOffset = true; // lines in front of the faces they lie on
         mesh.material.polygonOffsetFactor = 1;
         mesh.material.polygonOffsetUnits = 1;
+        const edgeMat = new T.LineBasicMaterial({ color: 0x3a3a38, transparent: true, opacity: EDGE_OPACITY }); // one per part, for setTransparent
         const edges = new T.LineSegments(new T.EdgesGeometry(mesh.geometry, 30), edgeMat);
         edges.visible = opts.edges;
         mesh.add(edges);
@@ -229,6 +232,20 @@
       render();
     }
 
+    // A transparent part does not hide what is behind it (it writes no depth), so the parts inside show through.
+    // It is drawn after the edges of the other parts (renderOrder), so those are dimmed by it like their faces.
+    function setTransparent(name, on) {
+      for (const m of Object.values(parts[name] || {})) {
+        m.mesh.renderOrder = m.edges.renderOrder = on ? 1 : 0;
+        m.mesh.material.transparent = on;
+        m.mesh.material.opacity = on ? TRANSPARENT : 1;
+        m.mesh.material.depthWrite = !on;
+        m.mesh.material.needsUpdate = true;
+        m.edges.material.opacity = on ? EDGE_OPACITY / 2 : EDGE_OPACITY;
+      }
+      render();
+    }
+
     function setEdges(on) {
       for (const p of Object.values(parts)) for (const m of Object.values(p)) m.edges.visible = on;
       render();
@@ -274,6 +291,7 @@
       setArrangement,
       setExplode,
       setVisible,
+      setTransparent,
       setEdges,
       setScroll: (mode) => (state.scroll = mode === "pan" ? "pan" : "zoom"),
       resetView,

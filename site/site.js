@@ -12,6 +12,8 @@
   const dims = (s) => s.map(mm).join(" × ");
   const bytes = (n) => (n >= 1e6 ? `${(n / 1e6).toFixed(1)} MB` : `${Math.max(1, Math.round(n / 1e3))} kB`);
   const words = (s) => s.replace(/_/g, " ");
+  // two squares, the front one see-through: the button that makes a part transparent
+  const SEE_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor"/><rect x="5.5" y="5.5" width="9" height="9" rx="1.5" fill="currentColor" fill-opacity="0.25" stroke="currentColor"/></svg>';
 
   let viewerLoaded = null; // the promise of the two scripts, made once
   const loadScript = (src) => new Promise((resolve, reject) => {
@@ -32,6 +34,7 @@
   let shown = null; // id of the open model
   let opening = 0; // counts openings, so a slow load that was overtaken does not show up
   let pushed = false; // the dialog was opened from the list in this visit (then Close goes Back)
+  let partRows = []; // the rows of the parts table of the open model: { name, show (checkbox), see (button), tr }
 
   function fill(m) {
     $("m-num").textContent = m.number;
@@ -43,17 +46,28 @@
     meta.push(m.printed ? "printed and checked" : "not printed yet");
     $("m-meta").textContent = meta.join(" · ");
 
-    const rows = m.parts.map((p) => {
+    // each row shows or hides its part (the checkbox) and makes it transparent (the button); a new model starts
+    // with every part shown and opaque, as the rows are made again
+    partRows = m.parts.map((p) => {
       const tr = document.createElement("tr");
-      tr.innerHTML = '<td><span class="part"><span class="sw"></span><span><b></b><br><span class="muted"></span></span></span></td><td class="n"></td><td class="n"></td>';
+      tr.innerHTML = '<td><span class="part"><label><input type="checkbox" checked><span class="sw"></span><span><b></b><br><span class="muted"></span></span></label>'
+        + `<button type="button" class="see" aria-pressed="false" title="Transparent">${SEE_ICON}</button></span></td><td class="n"></td><td class="n"></td>`;
       tr.querySelector(".sw").style.background = p.color;
       tr.querySelector("b").textContent = words(p.name);
       tr.querySelector(".muted").textContent = p.anchor ? `${p.orientation}, printed with ${words(p.anchor)}` : p.orientation;
       tr.cells[1].textContent = String(p.qty);
       tr.cells[2].textContent = p.print_size ? dims(p.print_size) : "—"; // a bought part is not printed
-      return tr;
+      const row = { name: p.name, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr };
+      row.show.setAttribute("aria-label", `Show ${words(p.name)}`);
+      row.see.setAttribute("aria-label", `Transparent ${words(p.name)}`);
+      row.show.addEventListener("change", () => applyPart(row));
+      row.see.addEventListener("click", () => {
+        row.see.setAttribute("aria-pressed", String(row.see.getAttribute("aria-pressed") !== "true"));
+        applyPart(row);
+      });
+      return row;
     });
-    $("m-parts").replaceChildren(...rows);
+    $("m-parts").replaceChildren(...partRows.map((r) => r.tr));
 
     const labels = { step: "STEP assembly", stl: "STL for printing (zip)", viewer: "3D viewer (HTML, works offline)" };
     const items = Object.entries(labels).map(([k, label]) => {
@@ -73,6 +87,16 @@
       return p;
     }));
     $("m-credit").textContent = `${m.title} from fdm-minimal-design by koedame, CC BY 4.0`;
+  }
+
+  // the row's state is the state of the part: drawn on the row, and given to the 3D view once it is there
+  function applyPart(row) {
+    const see = row.see.getAttribute("aria-pressed") === "true";
+    row.tr.classList.toggle("off", !row.show.checked);
+    row.tr.classList.toggle("clear", see);
+    if (!viewer) return;
+    viewer.setVisible(row.name, row.show.checked);
+    viewer.setTransparent(row.name, see);
   }
 
   function setControls(arrangement) {
@@ -109,6 +133,7 @@
       });
       if (n !== opening) return v.dispose();
       viewer = v;
+      partRows.forEach(applyPart); // what was changed while the model was loading
       stage.style.backgroundImage = "";
       $("status").textContent = "";
     } catch (e) {
@@ -165,7 +190,8 @@
   $("prev").addEventListener("click", () => step(-1));
   $("next").addEventListener("click", () => step(1));
   dialog.addEventListener("keydown", (e) => {
-    if (e.target.matches("input") || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return; // Alt+Left is Back
+    // Alt+Left is Back; on the parts table the arrows would leave the model being taken apart
+    if (e.target.closest("input, #m-parts") || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey) return;
     if (e.key === "ArrowLeft") step(-1);
     if (e.key === "ArrowRight") step(1);
   });
@@ -177,6 +203,11 @@
   }));
   $("explode").addEventListener("input", (e) => viewer && viewer.setExplode(Number(e.target.value)));
   $("reset").addEventListener("click", () => viewer && viewer.resetView());
+  $("parts-all").addEventListener("click", () => partRows.forEach((row) => {
+    row.show.checked = true;
+    row.see.setAttribute("aria-pressed", "false");
+    applyPart(row);
+  }));
 
   route();
 })();

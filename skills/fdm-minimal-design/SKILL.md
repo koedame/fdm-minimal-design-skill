@@ -69,7 +69,7 @@ Check it with the procedure in `04_review.md` and return the problems in a table
 
 - **STL in print orientation** (one per part) and **STEP** (coloured assembly)
 - **Preview images**
-- **HTML 3D viewer** (`viewers/<name>.html` from `scripts/viewer.py`): one file that opens offline in any browser, with the assembled design in its colours, every part in print orientation, part visibility, an exploded view, the overall dimensions and the parts table. It is the way to check the shape for anyone without CAD; say that it is a mesh within 0.05 mm of the model, not the STEP itself
+- **HTML 3D viewer** (`viewers/<name>.html` from `scripts/viewer.py`): one file that opens offline in any browser, with the assembled design in its colours, every part in print orientation, part visibility and transparency, an exploded view, the overall dimensions and the parts table. It is the way to check the shape for anyone without CAD; say that it is a mesh within 0.05 mm of the model, not the STEP itself
 - **Dimension rationale table**
 - **Table of print orientation and colour per part**
 - **Review results** (including the verification numbers)
