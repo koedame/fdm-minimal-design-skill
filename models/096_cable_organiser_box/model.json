@@ -1,0 +1,22 @@
+{
+  "id": "096_cable_organiser_box",
+  "title": "Cable organiser box",
+  "summary": "A 144 x 96 x 64 box that hides the slack of cables, with four U notches that let them out and a lid that locates on a lip.",
+  "based_on": ["07_hinged_case", "06_radio"],
+  "size_mm": [144, 96, 64],
+  "parts": [
+    {"name": "body", "qty": 1, "orientation": "Bottom down", "material": "PLA or PETG, matte"},
+    {"name": "lid", "qty": 1, "orientation": "Top face down", "material": "PLA or PETG, matte"}
+  ],
+  "mechanisms": ["Location"],
+  "motions": [
+    {"part": "lid", "against": "body", "slide": [0, 0, 1], "free": [0, 2, 5, 20]},
+    {"part": "lid", "against": "body", "slide": [0, 0, -1], "stop": [0.3]},
+    {"part": "lid", "against": "body", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "lid", "against": "body", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.6, -1, 0.6]},
+  "tags": ["cable", "desk", "storage", "box"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
