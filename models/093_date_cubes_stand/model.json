@@ -1,0 +1,24 @@
+{
+  "id": "093_date_cubes_stand",
+  "title": "Date cubes and stand",
+  "summary": "Two cubes with a seven-segment digit inlaid on every face, which show any day of the month in a floating plinth.",
+  "based_on": ["03_tray", "01_clock"],
+  "size_mm": [76, 40, 35.5],
+  "parts": [
+    {"name": "stand", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "cube_a", "qty": 1, "orientation": "A face down (the 5)", "material": "PLA, matte"},
+    {"name": "cube_a_digits_inlay", "qty": 1, "orientation": "Printed with cube_a, in another colour", "material": "PLA, matte"},
+    {"name": "cube_b", "qty": 1, "orientation": "A face down (the 8)", "material": "PLA, matte"},
+    {"name": "cube_b_digits_inlay", "qty": 1, "orientation": "Printed with cube_b, in another colour", "material": "PLA, matte"}
+  ],
+  "mechanisms": [],
+  "motions": [
+    {"part": "cube_a", "against": "stand", "slide": [0, 0, 1], "free": [0, 5]},
+    {"part": "cube_a", "against": "stand", "slide": [1, 0, 0], "free": [0.2], "stop": [0.4]},
+    {"part": "cube_b", "against": "stand", "slide": [0, 1, 0], "free": [0.2], "stop": [0.4]}
+  ],
+  "view": {"direction": [-0.4, -1, 0.5]},
+  "tags": ["desk", "calendar", "stationery"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
