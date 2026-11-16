@@ -1,0 +1,15 @@
+{
+  "id": "092_plant_pocket_wall",
+  "title": "Wall plant pocket",
+  "summary": "A 72 cube that hangs on two keyholes and hides a 60 mm nursery pot, with a closed floor that keeps the drained water.",
+  "based_on": ["09_wall_unit"],
+  "size_mm": [72, 72, 72],
+  "parts": [
+    {"name": "pocket", "qty": 1, "orientation": "Bottom down", "material": "PETG, matte"}
+  ],
+  "mechanisms": ["Wall mounting"],
+  "view": {"direction": [-0.7, -1, 0.7]},
+  "tags": ["plant", "wall", "planter"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
