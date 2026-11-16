@@ -9,3 +9,5 @@ fdm_samples_out/
 my_designs_out/
 previews/
 out/
+node_modules/
+.wrangler/

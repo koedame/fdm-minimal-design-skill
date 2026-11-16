@@ -13,10 +13,14 @@ new model needs no change here. The output is plain files for any static host:
   models/<id>/thumb.webp     list image
   models/<id>/model.glb      meshes for the 3D view, read when the model is opened
   models/<id>/<id>_assembly.step, <id>_print_stl.zip, <id>_viewer.html   downloads
+  _headers                   response headers for Cloudflare (CSP with the hashes of the inline style and script)
+  .well-known/security.txt   where to report a vulnerability
 
 Nothing on the page is read from another server: no fonts, scripts or analytics from outside.
 """
 import argparse
+import base64
+import hashlib
 import json
 import multiprocessing
 import os
@@ -175,6 +179,21 @@ def page(entries):
     return re.sub("|".join(map(re.escape, fill)), lambda m: fill[m.group(0)], html)
 
 
+INLINE = re.compile(r"<(script|style)>(.*?)</\1>", re.S)
+
+
+def headers(html):
+    """site/_headers with the hashes of the inline <style> and <script> blocks of the page, so that the CSP allows
+    them and nothing else inline."""
+    hashes = {"script": [], "style": []}
+    for tag, body in INLINE.findall(html):
+        digest = base64.b64encode(hashlib.sha256(body.encode("utf-8")).digest()).decode("ascii")
+        hashes[tag].append(f"'sha256-{digest}'")
+    text = (SITE_DIR / "_headers").read_text(encoding="utf-8")
+    return text.replace("__SCRIPT_HASHES__", " ".join(hashes["script"])).replace(
+        "__STYLE_HASHES__", " ".join(hashes["style"]))
+
+
 def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
     """Write the site into out (emptied first). Returns the entries in page order."""
     entries = model_entries(models_dir) + sample_entries()
@@ -198,7 +217,11 @@ def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
     for name in ("three.min.js", "fdm-viewer.js", "three-LICENSE.txt"):
         shutil.copyfile(os.path.join(viewer.VIEWER_DIR, name), out / "viewer" / name)
     shutil.copyfile(SITE_DIR / "site.js", out / "site.js")
-    (out / "index.html").write_text(page(entries), encoding="utf-8")
+    html = page(entries)
+    (out / "index.html").write_text(html, encoding="utf-8")
+    (out / "_headers").write_text(headers(html), encoding="utf-8")
+    (out / ".well-known").mkdir()
+    shutil.copyfile(SITE_DIR / ".well-known" / "security.txt", out / ".well-known" / "security.txt")
     return entries
 
 

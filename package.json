@@ -1,0 +1,11 @@
+{
+  "name": "fdm-minimal-design-site",
+  "private": true,
+  "description": "Deploys build/site (written by tools/build_site.py) to Cloudflare. Only the deploy tool is here.",
+  "scripts": {
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "4.162.0"
+  }
+}
