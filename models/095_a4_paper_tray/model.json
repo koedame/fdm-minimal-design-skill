@@ -1,0 +1,17 @@
+{
+  "id": "095_a4_paper_tray",
+  "title": "A4 paper tray",
+  "summary": "A 236 x 320 desk tray for A4 sheets in two halves joined on steel dowels, with a U in the front wall to take a sheet.",
+  "based_on": ["11_split_riser", "03_tray"],
+  "size_mm": [236, 320, 40],
+  "parts": [
+    {"name": "half_front", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "half_back", "qty": 1, "orientation": "Bottom down", "material": "PLA, matte"},
+    {"name": "dowels_steel_ref", "qty": 4, "orientation": "Steel dowel Ø4 x 10", "material": "Steel", "ref": true}
+  ],
+  "mechanisms": ["Split joint"],
+  "view": {"direction": [-0.5, -1, 0.8]},
+  "tags": ["desk", "paper", "office", "tray"],
+  "printed": false,
+  "license": "CC-BY-4.0"
+}
