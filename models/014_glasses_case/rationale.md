@@ -26,6 +26,7 @@ the front seam is the one worked-out detail.
 |---|---|---|
 | base | Bottom down | Off-white |
 | lid | Top face down | Dark grey |
+| magnets_ref × 4 | Bought: 6 × 3 disc magnets | — |
 
 ## Review
 

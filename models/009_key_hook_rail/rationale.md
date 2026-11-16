@@ -20,6 +20,7 @@ A plain bar on the wall by the door that holds keys by their steel rings. Five m
 | Part | Orientation | Colour |
 |---|---|---|
 | rail | Front face down (the magnet holes and keyholes open upward) | Off-white |
+| magnets_ref × 5 | Bought: Ø10 × 3 disc magnets | — |
 
 ## Review
 

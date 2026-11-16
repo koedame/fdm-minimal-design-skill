@@ -24,7 +24,7 @@ V line; a shallow scoop at the front of the seam is the only place to put a fing
 |---|---|---|
 | base | Bottom down, as used | Off-white |
 | lid | Top face down | Dark grey |
-| (4 × magnet 6 × 3) | Bought, glued into the pockets | — |
+| magnets_ref × 4 | Bought: 6 × 3 disc magnets | — |
 
 ## Review
 

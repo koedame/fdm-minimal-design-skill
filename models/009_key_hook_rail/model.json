@@ -5,7 +5,8 @@
   "based_on": ["09_wall_unit"],
   "size_mm": [160, 12, 32],
   "parts": [
-    {"name": "rail", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"}
+    {"name": "rail", "qty": 1, "orientation": "Front face down", "material": "PLA, matte"},
+    {"name": "magnets_ref", "qty": 5, "orientation": "Bought: Ø10 x 3 disc magnets", "material": "Neodymium", "ref": true}
   ],
   "mechanisms": ["Wall mounting", "Magnets"],
   "tags": ["wall", "entryway", "keys"],

@@ -27,7 +27,8 @@ wall is thickened inside down to the rim, so the lip is part of the wall and not
 |---|---|---|
 | base | Bottom down | Off-white |
 | lid | Top down | Dark grey |
-| (1.75 filament pin 172 long, 4 × Ø6 × 3 magnets, 4 × Ø10 rubber feet) | Bought | — |
+| magnets_ref × 4 | Bought: 6 × 3 disc magnets | — |
+| (1.75 filament pin 172 long, 4 × Ø10 rubber feet) | Bought | — |
 
 ## Review
 

@@ -31,6 +31,7 @@ and by a vertical back, so every wall rises straight from the bed when it is pri
 | hand_hour | Flat | Dark grey |
 | hand_minute | Flat | Dark grey |
 | movement_ref | Reference only, do not print (a 56 × 56 × 16 quartz movement) | Dark grey |
+| magnets_ref × 4 | Bought: 6 × 3 disc magnets | — |
 
 ## Review
 

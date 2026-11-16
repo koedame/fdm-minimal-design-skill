@@ -46,7 +46,12 @@ def key_rail():
         seat = cq.Solid.makeLoft([stadium_wire(HEAD, zc, x, y0, y1), stadium_wire(SHANK, zl + 0.001, x, y0, y1)], True)
         bar = bar.cut(cq.Workplane("XY").add(seat))
     to_wall = lambda wp: rz(rx(wp, 90), 180)                # front faces -Y, back on the wall at y = +D
-    return {"rail": Part(to_wall(bar), bar, OFF)}
+    mags = [cyl(5.0, SKIN + 0.05, 3.0, x, H / 2) for x in MAG_X]    # Ø10 x 3, glued against the skin
+    return {
+        "rail": Part(to_wall(bar), bar, OFF),
+        "magnets_ref": Part(to_wall(cq.Workplane("XY").add(cq.Compound.makeCompound([m.val() for m in mags]))), None,
+                            (0.5, 0.5, 0.52), qty=5, ref=True),
+    }
 
 
 SAMPLES["009_key_hook_rail"] = key_rail

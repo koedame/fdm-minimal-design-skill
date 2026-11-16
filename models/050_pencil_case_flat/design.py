@@ -74,9 +74,13 @@ def pencil_case_flat():
     scoop = plane_xz(-D / 2 + 1.2).center(0, HB).circle(0.75 * HL).extrude(3)
     base, lid = base.cut(scoop), lid.cut(scoop)
     base = feet(base, [(sx * 80.0, sy * 20.0) for sx in (-1, 1) for sy in (-1, 1)])
+    mags = [cyl(3.0, HB - 3.15, 3.0, sx * MAG_X, fy) for sx in (-1, 1)] + \
+           [cyl(3.0, HB + 0.15, 3.0, sx * MAG_X, fy) for sx in (-1, 1)]
     return {
         "base": Part(base, base, OFF),
         "lid": Part(lid, rx(lid, 180), DARK),
+        "magnets_ref": Part(cq.Workplane("XY").add(cq.Compound.makeCompound([m.val() for m in mags])), None, (0.5, 0.5, 0.52),
+                            qty=4, ref=True),
     }
 
 
