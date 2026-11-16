@@ -39,29 +39,49 @@
   $("dims").addEventListener("change", () => drawOverlay());
   $("reset").addEventListener("click", () => viewer.resetView());
 
-  // ---- parts table ----
+  // ---- parts table: each row shows or hides its part (the checkbox) and makes it transparent (the button) ----
+  // two squares, the front one see-through
+  const SEE_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor"/><rect x="5.5" y="5.5" width="9" height="9" rx="1.5" fill="currentColor" fill-opacity="0.25" stroke="currentColor"/></svg>';
   const boxes = {};
+  const rows = [];
+  const applyPart = (row) => {
+    const see = row.see.getAttribute("aria-pressed") === "true";
+    row.tr.classList.toggle("off", !row.show.checked);
+    row.tr.classList.toggle("clear", see);
+    viewer.setVisible(row.name, row.show.checked);
+    viewer.setTransparent(row.name, see);
+  };
   for (const p of DATA.parts) {
+    const words = p.name.replace(/_/g, " ");
     const tr = document.createElement("tr");
     tr.className = "part";
-    tr.innerHTML = `<td><label><input type="checkbox" checked><span class="sw"></span><span><span class="name"></span><br><span class="orient"></span></span></label></td><td class="num"></td><td class="num"></td>`;
+    tr.innerHTML = `<td><span class="pick"><label><input type="checkbox" checked><span class="sw"></span><span><span class="name"></span><br><span class="orient"></span></span></label>`
+      + `<button type="button" class="see" aria-pressed="false" title="Transparent">${SEE_ICON}</button></span></td><td class="num"></td><td class="num"></td>`;
     tr.querySelector(".sw").style.background = p.color;
-    tr.querySelector(".name").textContent = p.name.replace(/_/g, " ");
+    tr.querySelector(".name").textContent = words;
     tr.querySelector(".orient").textContent = p.anchor ? `${p.orientation}, printed with ${p.anchor.replace(/_/g, " ")}` : p.orientation;
     tr.cells[1].textContent = `${p.qty}`;
     tr.cells[2].textContent = p.print_size ? dims(p.print_size) : "—"; // a bought part is not printed
-    const box = tr.querySelector("input");
-    box.addEventListener("change", () => {
-      viewer.setVisible(p.name, box.checked);
+    const row = { name: p.name, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr };
+    row.show.setAttribute("aria-label", `Show ${words}`);
+    row.see.setAttribute("aria-label", `Transparent ${words}`);
+    row.show.addEventListener("change", () => {
+      applyPart(row);
       drawOverlay();
     });
-    boxes[p.name] = box;
+    row.see.addEventListener("click", () => {
+      row.see.setAttribute("aria-pressed", String(row.see.getAttribute("aria-pressed") !== "true"));
+      applyPart(row);
+    });
+    boxes[p.name] = row.show;
+    rows.push(row);
     $("parts").append(tr);
   }
   $("all").addEventListener("click", () => {
-    for (const [name, box] of Object.entries(boxes)) {
-      box.checked = true;
-      viewer.setVisible(name, true);
+    for (const row of rows) {
+      row.show.checked = true;
+      row.see.setAttribute("aria-pressed", "false");
+      applyPart(row);
     }
     drawOverlay();
   });

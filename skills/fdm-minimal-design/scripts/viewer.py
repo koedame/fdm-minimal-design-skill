@@ -6,7 +6,7 @@ An interactive 3D viewer for a design, as one HTML file that opens offline in an
   python viewer.py pen_cup --module template_new_object.py --out viewers
 
 The page shows the assembled design in its part colours and every part laid out in its print
-orientation, with part visibility, an exploded view, the overall dimensions and a parts table
+orientation, with part visibility and transparency, an exploded view, the overall dimensions and a parts table
 (colour, quantity, print orientation, print size). three.js, its licence and the meshes are embedded,
 so the file reads nothing else: it can be sent as it is and opened with a double click.
 
