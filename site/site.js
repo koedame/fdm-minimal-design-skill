@@ -1,7 +1,8 @@
 // The page of one model (/models/<id>/, written by tools/build_site.py). Its name, parts and downloads are in the
 // HTML already; this script adds the 3D view of scripts/viewer.py (viewer/fdm-viewer.js on viewer/three.min.js) with
-// the model's meshes (model.glb), the parts table's switches (show or hide a part, see through it) and the menu of a
-// part clicked in the view (viewer/part-menu.js, which works the same switches), and the keys:
+// the model's meshes (model.glb), the parts table's switches (show or hide a part, see through it), the menu of a
+// part clicked in the view (viewer/part-menu.js, which works the same switches) and the dimensions drawn over the view
+// (viewer/dimensions.js, as in the viewer), and the keys:
 // Esc closes, ← and → go to the previous and next model. The model's data for the view (#model-data) is a JSON block
 // of the page. Everything is read from this site.
 (() => {
@@ -28,7 +29,9 @@
           if (!r.ok) throw new Error(`model.glb: HTTP ${r.status}`);
           return r.arrayBuffer();
         }),
-        loadScript("/viewer/three.min.js").then(() => Promise.all([loadScript("/viewer/fdm-viewer.js"), loadScript("/viewer/part-menu.js")])),
+        loadScript("/viewer/three.min.js").then(() => Promise.all([
+          loadScript("/viewer/fdm-viewer.js"), loadScript("/viewer/part-menu.js"), loadScript("/viewer/dimensions.js"),
+        ])),
       ]);
       viewer = await FDMViewer.create(stage, {
         glb, view: m.view, zoom: m.zoom, background: "#f6f6f4",
@@ -36,6 +39,8 @@
       });
       partRows.forEach(applyPart); // what was changed while the model was loading
       FDMPartMenu.attach(viewer, { container: stage, rows: partRows, showAll: $("parts-all") });
+      const dimensions = FDMDimensions.attach(viewer, { svg: $("overlay"), parts: m.parts, on: $("dims").checked });
+      $("dims").addEventListener("change", (e) => dimensions.setOn(e.target.checked));
       $("still").hidden = true; // the preview image stays until the 3D view is there
       $("status").textContent = "";
       $("help").hidden = false;

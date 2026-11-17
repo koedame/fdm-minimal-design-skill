@@ -2,7 +2,7 @@
 //
 //   const viewer = await FDMViewer.create(container, { glb, view: [-0.6, -1, 0.6], zoom: 1.15, anchors: { inlay: "plate" } });
 //   viewer.setArrangement("print");   // "assembled" (default) or "print"
-//   viewer.setVisible("lid", false);
+//   viewer.setVisible("lid", false);   // viewer.visible("lid") reads it back
 //   viewer.setTransparent("lid", true); // see the parts inside it
 //   viewer.setExplode(0.5);           // 0 = assembled, 1 = fully apart (assembled arrangement only)
 //   viewer.setEdges(true);
@@ -299,6 +299,7 @@
       for (const m of Object.values(parts[name] || {})) m.node.visible = on;
       render();
     }
+    const visible = (name) => Object.values(parts[name] || {}).some((m) => m.node.visible);
 
     // A transparent part does not hide what is behind it (it writes no depth), so the parts inside show through.
     // It is drawn after the edges of the other parts (renderOrder), so those are dimmed by it like their faces.
@@ -364,6 +365,7 @@
       setArrangement,
       setExplode,
       setVisible,
+      visible,
       setTransparent,
       setHighlight,
       setEdges,
@@ -373,6 +375,9 @@
       box,
       get arrangement() {
         return state.arrangement;
+      },
+      get explode() {
+        return state.explode;
       },
       onRender: (f) => listeners.push(f), // called after every frame that was drawn
       onPick: (f) => pickers.push(f),

@@ -53,6 +53,11 @@ footer p { margin: 4px 0 0; }
 #stage canvas { width: 100%; height: 100%; }
 #still { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 #still[hidden] { display: none; }
+/* the dimensions over the 3D view (viewer/dimensions.js), as in the viewer */
+#overlay { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; overflow: visible; }
+#overlay line { stroke: var(--ink2); stroke-width: 1; }
+#overlay text { fill: var(--ink); font-size: 11px; font-weight: 400; paint-order: stroke; stroke: var(--bg); stroke-width: 3px; }
+#overlay text.sub { fill: var(--ink2); font-weight: 300; }
 #status { position: absolute; left: 24px; bottom: 20px; color: var(--ink2); }
 #help { position: absolute; right: 24px; bottom: 20px; color: var(--ink2); font-size: 11px; }
 .model aside { border-left: 1px solid var(--line); overflow-y: auto; padding: 20px 24px 32px; }
@@ -74,6 +79,8 @@ footer p { margin: 4px 0 0; }
 .seg button[aria-pressed="true"] { color: var(--ink); background: #fff; box-shadow: inset 0 0 0 1px var(--accent); }
 .row { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
 input[type="range"] { flex: 1; accent-color: var(--accent); }
+.row label { display: flex; align-items: center; gap: 8px; cursor: pointer; }
+#dims { accent-color: var(--accent); margin: 0; }
 .row.off { color: var(--ink2); opacity: 0.6; }
 .link { font: inherit; color: var(--ink2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
 table { width: 100%; border-collapse: collapse; margin-top: 8px; }

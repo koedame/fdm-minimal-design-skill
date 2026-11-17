@@ -10,6 +10,7 @@
 <body>
 <main class="model">
   <div id="stage">
+    <svg id="overlay" aria-hidden="true"></svg>
     <img id="still" src="__STILL__" width="__STILL_W__" height="__STILL_H__" alt="__STILL_ALT__">
     <div id="status"></div><div id="help" hidden>Drag to rotate · Shift + drag to pan · Wheel to zoom · Click a part to hide it or see through it</div>
   </div>
@@ -34,7 +35,10 @@
         <span>Exploded</span>
         <input type="range" id="explode" min="0" max="1" step="0.01" value="0" aria-label="Exploded view">
       </div>
-      <div class="row"><span></span><button type="button" class="link" id="reset">Reset view</button></div>
+      <div class="row">
+        <label><input type="checkbox" id="dims" checked><span>Dimensions</span></label>
+        <button type="button" class="link" id="reset">Reset view</button>
+      </div>
     </section>
     <section>
       <div class="row top"><h2>Parts</h2><button type="button" class="link" id="parts-all">Show all</button></div>

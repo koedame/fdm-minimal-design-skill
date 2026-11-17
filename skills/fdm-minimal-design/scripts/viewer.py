@@ -15,8 +15,9 @@ With --module, a model.json next to the file gives the print orientation of each
 Bought parts (Part(ref=True)) are shown in the assembly only, not in the print layout.
 
 The page is viewer/page.html around viewer/fdm-viewer.js (the 3D view on its own,
-usable in other pages through FDMViewer.create), viewer/part-menu.js (the menu of a part clicked in the view)
-and viewer/three.min.js.
+usable in other pages through FDMViewer.create), viewer/part-menu.js (the menu of a part clicked in the view),
+viewer/dimensions.js (the dimensions drawn over the view) and viewer/three.min.js. The website's model pages use the
+same scripts.
 """
 import argparse
 import base64
@@ -257,7 +258,7 @@ def asset(name):
 
 
 def page(data, glb_bytes):
-    """The HTML page: page.html with three.js, fdm-viewer.js, part-menu.js, the data and the GLB filled in."""
+    """The HTML page: page.html with three.js, fdm-viewer.js, part-menu.js, dimensions.js, the data and the GLB filled in."""
     html = asset("page.html")
     script = lambda s: s.replace("</script", "<\\/script")            # noqa: E731
     fill = {
@@ -265,6 +266,7 @@ def page(data, glb_bytes):
         "/*THREE*/": script(asset("three.min.js")),
         "/*VIEWER*/": script(asset("fdm-viewer.js")),
         "/*MENU*/": script(asset("part-menu.js")),
+        "/*DIMS*/": script(asset("dimensions.js")),
         "/*PAGE*/": script(asset("page.js")),
         "__LICENSE__": escape(asset("three-LICENSE.txt")),
         '"__DATA__"': json.dumps(data, separators=(",", ":")).replace("<", "\\u003c"),
