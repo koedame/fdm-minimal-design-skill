@@ -67,16 +67,27 @@ def ground_contact(parts, thickness=0.05):
 
 
 CLASH = 1e-3   # mm3: more overlap than this is a collision
+NOISE = 1e-5   # the two measures of an overlap agree to this fraction of the part's volume (OCCT integrates volumes numerically)
 
 
 def overlap(a, b):
-    """Volume shared by the shapes a and b. OCCT's intersect sometimes returns nothing for shapes that do
-    overlap (seen on a lid turned 1 deg into its base: intersect 0, cut 519 mm3), so a result of zero is
-    checked once more as what a cut removes from b. A failed cut can only report too much, never too little."""
-    vol = a.intersect(b).Volume()
-    if vol <= CLASH:
-        vol = max(vol, b.Volume() - b.cut(a).Volume())
-    return vol
+    """Volume shared by the shapes a and b, and a note that is empty unless the two measures of it disagree.
+
+    OCCT's intersect sometimes misses part or all of an overlap where nearly parallel faces meet (a lid turned 1 deg into
+    its base: intersect 13 mm3, cut 1030 mm3; another lid: intersect 0, cut 519 mm3), and can return a whole part for
+    shapes that hardly overlap. So every pair whose bounding boxes touch is measured twice, as the intersect and as what
+    a cut removes from b. When they disagree by more than the numerical noise, the larger is taken (a missed collision
+    is worse than a false one; a failed cut can only report too much, never too little) and the note says so."""
+    ba, bb = a.BoundingBox(), b.BoundingBox()
+    if (ba.xmax < bb.xmin or bb.xmax < ba.xmin or ba.ymax < bb.ymin or bb.ymax < ba.ymin
+            or ba.zmax < bb.zmin or bb.zmax < ba.zmin):
+        return 0.0, ""
+    inter = a.intersect(b).Volume()
+    cut = b.Volume() - b.cut(a).Volume()
+    if abs(inter - cut) <= CLASH + NOISE * b.Volume():
+        return (inter if inter > CLASH else max(inter, cut)), ""
+    return max(inter, cut), (f"intersect {inter:.3f} mm3 but cut {cut:.3f} mm3: the two measures disagree,"
+                             " the larger is taken (look at this contact)")
 
 
 def parse_motion(kind, spec):
@@ -106,7 +117,7 @@ def motion_check(parts, motion):
       "free": [...]   no overlap: the part moves freely there
       "stop": [...]   overlap: a stop or end wall catches the part there (proves the limit exists)
       "snap": {"at": [...], "max_mm3": v}   a small overlap up to v: a snap or detent being pushed over
-    Returns [(position, overlap, expected, ok)].
+    Returns [(position, overlap, expected, ok, note)], note as from overlap().
     """
     a, b = parts[motion["part"]].asm, parts[motion["against"]].asm.val()
     snap = motion.get("snap", {})
@@ -114,10 +125,10 @@ def motion_check(parts, motion):
              + [(p, "snap") for p in snap.get("at", [])])
     out = []
     for pos, want in sorted(steps):
-        vol = overlap(moved(a, motion, pos).val(), b)
+        vol, note = overlap(moved(a, motion, pos).val(), b)
         ok = {"free": vol <= CLASH, "stop": vol > CLASH,
               "snap": CLASH < vol <= snap.get("max_mm3", 0)}[want]
-        out.append((pos, vol, want, ok))
+        out.append((pos, vol, want, ok, note))
     return out
 
 
@@ -154,9 +165,9 @@ def check(name, bed, motions=()):
     for a, b in itertools.combinations(parts, 2):
         if parts[a].anchor == b or parts[b].anchor == a:
             continue                       # inlay touches its parent by design
-        vol = overlap(parts[a].asm.val(), parts[b].asm.val())
+        vol, note = overlap(parts[a].asm.val(), parts[b].asm.val())
         if vol > CLASH:
-            clash.append(f"{a} x {b}: {vol:.3f} mm3")
+            clash.append(f"{a} x {b}: {vol:.3f} mm3" + (f" ({note})" if note else ""))
     print("  interference:", "none" if not clash else "")
     for c in clash:
         print("    " + c)
@@ -169,9 +180,9 @@ def check(name, bed, motions=()):
             print(f"  motion {m['part']} against {m['against']} skipped: the parts are not in this design")
             continue
         what, unit = ("hinge", "deg") if "hinge" in m else ("slide along ({:g}, {:g}, {:g})".format(*m["slide"]), "mm")
-        for pos, vol, want, good in motion_check(parts, m):
+        for pos, vol, want, good, note in motion_check(parts, m):
             print(f"  {what} {m['part']} against {m['against']} {pos:+g} {unit}: overlap {vol:.3f} mm3, "
-                  f"expected {want}" + ("" if good else "  <-- CHECK"))
+                  f"expected {want}" + ("" if good else "  <-- CHECK") + (f"\n    {note}" if note else ""))
             ok &= good
     print("  RESULT:", "OK" if ok else "NEEDS ATTENTION")
     return ok

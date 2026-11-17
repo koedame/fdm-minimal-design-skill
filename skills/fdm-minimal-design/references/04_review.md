@@ -54,7 +54,10 @@ python scripts/verify.py <sample_name> [--bed 256] [--hinge "moving:fixed:x1,y1,
 
 What it checks:
 - **Solid validity** (`isValid`): invalid shapes break in slicers and CAD
-- **Interference between parts**: 0 in the assembled state (contact between an inlay and its parent part excluded)
+- **Interference between parts**: 0 in the assembled state (contact between an inlay and its parent part excluded).
+  Each overlap is measured twice, as the intersect and as what a cut removes, because OCCT's intersect can miss part or all
+  of an overlap where nearly parallel faces meet. When the two disagree, verify takes the larger and prints both
+  (`intersect ... but cut ...`): look at that contact in a rendering before trusting either number
 - **Closed mesh** (watertight): the print STL is closed
 - **Lowest point in print orientation**: sits on z=0
 - **Fits the bed**

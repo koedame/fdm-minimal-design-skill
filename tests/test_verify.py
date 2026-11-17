@@ -17,7 +17,7 @@ def slider_parts():
 
 
 def results(parts, motion):
-    return {pos: (want, ok) for pos, _, want, ok in verify.motion_check(parts, motion)}
+    return {pos: (want, ok) for pos, _, want, ok, _ in verify.motion_check(parts, motion)}
 
 
 def test_when_a_slide_reaches_the_wall_the_stop_is_proven_and_before_it_the_part_is_free():
@@ -46,13 +46,21 @@ def test_when_a_hinge_turns_a_flap_into_the_base_the_overlap_is_found():
     assert results(parts, motion) == {-90: ("free", True), 90: ("stop", True)}
 
 
+class _Box:
+    def __init__(self, x0, x1):
+        self.xmin, self.xmax, self.ymin, self.ymax, self.zmin, self.zmax = x0, x1, 0, 10, 0, 10
+
+
 class _Vol:
-    """A shape that knows only its volume and what intersect and cut return."""
-    def __init__(self, vol, inter=None, rest=None):
-        self.vol, self.inter, self.rest = vol, inter, rest
+    """A shape that knows only its volume, its bounding box (0..10 in X unless given) and what intersect and cut return."""
+    def __init__(self, vol, inter=None, rest=None, box=(0, 10)):
+        self.vol, self.inter, self.rest, self.box = vol, inter, rest, _Box(*box)
 
     def Volume(self):
         return self.vol
+
+    def BoundingBox(self):
+        return self.box
 
     def intersect(self, other):
         return self.inter
@@ -61,17 +69,54 @@ class _Vol:
         return self.rest
 
 
-def test_when_intersect_returns_nothing_for_shapes_that_overlap_the_cut_still_finds_the_overlap():
+def test_when_intersect_returns_nothing_for_shapes_that_overlap_the_cut_finds_the_overlap_and_says_they_disagree():
     # what OCCT did on a lid turned 1 deg into its base: intersect empty, but the cut took 519 mm3 off the base
     base = _Vol(1000.0, rest=_Vol(481.0))
     lid = _Vol(800.0, inter=_Vol(0.0))
-    assert verify.overlap(lid, base) == 519.0
+    vol, note = verify.overlap(lid, base)
+    assert vol == 519.0
+    assert "intersect 0.000 mm3 but cut 519.000 mm3" in note
 
 
-def test_when_intersect_finds_an_overlap_it_is_taken_as_it_is():
-    base = _Vol(1000.0, rest=_Vol(0.0))           # a cut that failed would claim everything
-    lid = _Vol(800.0, inter=_Vol(20.0))
-    assert verify.overlap(lid, base) == 20.0
+def test_when_intersect_returns_only_part_of_an_overlap_the_larger_cut_is_taken():
+    # model 077 with the lid turned 1 deg into the base: intersect 13.049 mm3, cut 1029.515 mm3
+    base = _Vol(68453.202, rest=_Vol(68453.202 - 1029.515))
+    lid = _Vol(81964.513, inter=_Vol(13.049))
+    vol, note = verify.overlap(lid, base)
+    assert vol == 68453.202 - (68453.202 - 1029.515)
+    assert "disagree" in note
+
+
+def test_when_intersect_returns_a_whole_part_for_a_small_overlap_the_larger_is_taken_and_the_note_says_so():
+    # a missed collision is worse than a false one: the larger stays, and the note points at the contact to look at
+    base = _Vol(1000.0, rest=_Vol(980.0))
+    lid = _Vol(800.0, inter=_Vol(800.0))
+    vol, note = verify.overlap(lid, base)
+    assert vol == 800.0
+    assert "intersect 800.000 mm3 but cut 20.000 mm3" in note
+
+
+def test_when_the_two_measures_agree_within_the_numerical_noise_the_intersect_is_taken_without_a_note():
+    # 58.314 against 58.286 on a 43 cm3 part (model 049): the volumes are integrated numerically
+    base = _Vol(43148.738, rest=_Vol(43148.738 - 58.286))
+    lid = _Vol(9279.362, inter=_Vol(58.314))
+    assert verify.overlap(lid, base) == (58.314, "")
+
+
+def test_when_the_bounding_boxes_are_apart_the_overlap_is_zero_without_a_boolean():
+    base = _Vol(1000.0, box=(0, 10))
+    lid = _Vol(800.0, box=(10.5, 20))                  # intersect and cut would return None and fail
+    assert verify.overlap(lid, base) == (0.0, "")
+
+
+def test_when_the_two_measures_disagree_verify_prints_both_with_the_interference(capsys, monkeypatch):
+    monkeypatch.setattr(verify, "overlap", lambda a, b: (519.0, "intersect 0.000 mm3 but cut 519.000 mm3: disagree"))
+    fs.SAMPLES["_test_disagree"] = lambda: {"base": fs.Part(BASE, BASE, fs.OFF), "lid": fs.Part(BASE, BASE, fs.OFF)}
+    try:
+        assert verify.check("_test_disagree", 256) is False
+        assert "base x lid: 519.000 mm3 (intersect 0.000 mm3 but cut 519.000 mm3: disagree)" in capsys.readouterr().out
+    finally:
+        del fs.SAMPLES["_test_disagree"]
 
 
 def test_when_copies_of_a_part_touch_and_are_unioned_verify_reports_them_fused(capsys):
