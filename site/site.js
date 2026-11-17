@@ -1,6 +1,7 @@
 // The page of one model (/models/<id>/, written by tools/build_site.py). Its name, parts and downloads are in the
 // HTML already; this script adds the 3D view of scripts/viewer.py (viewer/fdm-viewer.js on viewer/three.min.js) with
-// the model's meshes (model.glb), the parts table's switches (show or hide a part, see through it), and the keys:
+// the model's meshes (model.glb), the parts table's switches (show or hide a part, see through it) and the menu of a
+// part clicked in the view (viewer/part-menu.js, which works the same switches), and the keys:
 // Esc closes, ← and → go to the previous and next model. The model's data for the view (#model-data) is a JSON block
 // of the page. Everything is read from this site.
 (() => {
@@ -27,13 +28,14 @@
           if (!r.ok) throw new Error(`model.glb: HTTP ${r.status}`);
           return r.arrayBuffer();
         }),
-        loadScript("/viewer/three.min.js").then(() => loadScript("/viewer/fdm-viewer.js")),
+        loadScript("/viewer/three.min.js").then(() => Promise.all([loadScript("/viewer/fdm-viewer.js"), loadScript("/viewer/part-menu.js")])),
       ]);
       viewer = await FDMViewer.create(stage, {
         glb, view: m.view, zoom: m.zoom, background: "#f6f6f4",
         anchors: Object.fromEntries(m.parts.filter((p) => p.anchor).map((p) => [p.name, p.anchor])),
       });
       partRows.forEach(applyPart); // what was changed while the model was loading
+      FDMPartMenu.attach(viewer, { container: stage, rows: partRows, showAll: $("parts-all") });
       $("still").hidden = true; // the preview image stays until the 3D view is there
       $("status").textContent = "";
       $("help").hidden = false;
@@ -46,7 +48,8 @@
   // each row of the parts table shows or hides its part (the checkbox) and makes it transparent (the button); the
   // page starts with every part shown and opaque
   const partRows = [...document.querySelectorAll("tr[data-part]")].map((tr) => ({
-    name: tr.dataset.part, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr,
+    name: tr.dataset.part, label: tr.querySelector("b").textContent, color: tr.querySelector(".sw rect").getAttribute("fill"),
+    show: tr.querySelector("input"), see: tr.querySelector(".see"), tr,
   }));
   // the row's state is the state of the part: drawn on the row, and given to the 3D view once it is there
   function applyPart(row) {

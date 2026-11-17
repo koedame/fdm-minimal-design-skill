@@ -19,7 +19,7 @@ new model needs no change here. The output is plain files for any static host:
                              HTML is saved and never runs on this site. They are kept out of /models/ so that the
                              rule cannot reach a page.
   site.js                    the 3D view, the parts switches and the keys of a model page
-  viewer/                    three.min.js, fdm-viewer.js (the 3D view of scripts/viewer.py), three.js licence
+  viewer/                    three.min.js, fdm-viewer.js (the 3D view of scripts/viewer.py), part-menu.js, three.js licence
   404.html                   sent with status 404 for any other address (wrangler.jsonc: not_found_handling)
   sitemap.xml, robots.txt    the home page and every model page, for search engines
   _headers                   response headers for Cloudflare (CSP with the hash of the inline style)
@@ -384,7 +384,7 @@ def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
         built = list(pool.map(build_model, [(e, str(out)) for e in entries]))
     for i, (e, b) in enumerate(zip(entries, built)):
         e.update(b, index=i)
-    for name in ("three.min.js", "fdm-viewer.js", "three-LICENSE.txt"):
+    for name in ("three.min.js", "fdm-viewer.js", "part-menu.js", "three-LICENSE.txt"):
         shutil.copyfile(os.path.join(viewer.VIEWER_DIR, name), out / "viewer" / name)
     shutil.copyfile(SITE_DIR / "site.js", out / "site.js")
     sample_titles = {e["id"]: e["title"] for e in sample_entries()}
@@ -407,7 +407,7 @@ def sizes(out, entries):
     first = (out / "index.html").stat().st_size
     thumbs = sum((out / "models" / e["id"] / "thumb.webp").stat().st_size for e in entries)
     eager = sum((out / "models" / e["id"] / "thumb.webp").stat().st_size for e in entries if e["index"] < 8)
-    viewer_js = sum((out / "viewer" / n).stat().st_size for n in ("three.min.js", "fdm-viewer.js"))
+    viewer_js = sum((out / "viewer" / n).stat().st_size for n in ("three.min.js", "fdm-viewer.js", "part-menu.js"))
     total = sum(p.stat().st_size for p in out.rglob("*") if p.is_file())
     return {"page": first, "thumbs_first_rows": eager, "thumbs_all": thumbs, "viewer_js": viewer_js,
             "glb_max": max(e["glb_bytes"] for e in entries), "total": total, "models": len(entries)}

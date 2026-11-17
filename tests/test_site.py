@@ -217,12 +217,12 @@ def test_when_a_model_page_starts_its_3d_view_the_script_reads_only_files_of_thi
     assert not re.search(r"https?://|//[a-z0-9.-]+\.[a-z]{2,}/|XMLHttpRequest|import\(|sendBeacon|document\.cookie", code)
     assert not re.search(r"localStorage|sessionStorage|indexedDB", code)
     assert re.findall(r"\bfetch\(([^)]*)\)", code) == ["`/models/${m.id}/model.glb`"]
-    assert sorted(re.findall(r'loadScript\("([^"]+)"\)', code)) == ["/viewer/fdm-viewer.js", "/viewer/three.min.js"]
+    assert sorted(re.findall(r'loadScript\("([^"]+)"\)', code)) == ["/viewer/fdm-viewer.js", "/viewer/part-menu.js", "/viewer/three.min.js"]
 
 
 def test_when_the_site_is_built_the_3d_view_and_the_three_js_licence_are_copied_from_the_skill(built):
     out, _, _ = built
-    for name in ("three.min.js", "fdm-viewer.js", "three-LICENSE.txt"):
+    for name in ("three.min.js", "fdm-viewer.js", "part-menu.js", "three-LICENSE.txt"):
         assert (out / "viewer" / name).read_bytes() == (ROOT / "skills" / "fdm-minimal-design" / "scripts" / "viewer" / name).read_bytes()
 
 
