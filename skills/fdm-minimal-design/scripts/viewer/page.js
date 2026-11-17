@@ -1,4 +1,5 @@
-// The page around FDMViewer (page.html): the panel, the parts table and the dimension overlay.
+// The page around FDMViewer (page.html): the panel and the parts table, with the part menu (part-menu.js) and the
+// dimensions (dimensions.js) on the view.
 // DATA (from scripts/viewer.py) and GLB (base64) are defined by the page before this script.
 (async () => {
   "use strict";
@@ -34,15 +35,13 @@
     $("explode").disabled = print;
     $("explode-row").classList.toggle("off", print);
   }));
-  $("explode").addEventListener("input", (e) => viewer.setExplode(Number(e.target.value))); // redraws the overlay
+  $("explode").addEventListener("input", (e) => viewer.setExplode(Number(e.target.value)));
   $("edges").addEventListener("change", (e) => viewer.setEdges(e.target.checked));
-  $("dims").addEventListener("change", () => drawOverlay());
   $("reset").addEventListener("click", () => viewer.resetView());
 
   // ---- parts table: each row shows or hides its part (the checkbox) and makes it transparent (the button) ----
   // two squares, the front one see-through
   const SEE_ICON = '<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><rect x="1.5" y="1.5" width="9" height="9" rx="1.5" fill="none" stroke="currentColor"/><rect x="5.5" y="5.5" width="9" height="9" rx="1.5" fill="currentColor" fill-opacity="0.25" stroke="currentColor"/></svg>';
-  const boxes = {};
   const rows = [];
   const applyPart = (row) => {
     const see = row.see.getAttribute("aria-pressed") === "true";
@@ -65,15 +64,11 @@
     const row = { name: p.name, label: words, color: p.color, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr };
     row.show.setAttribute("aria-label", `Show ${words}`);
     row.see.setAttribute("aria-label", `Transparent ${words}`);
-    row.show.addEventListener("change", () => {
-      applyPart(row);
-      drawOverlay();
-    });
+    row.show.addEventListener("change", () => applyPart(row));
     row.see.addEventListener("click", () => {
       row.see.setAttribute("aria-pressed", String(row.see.getAttribute("aria-pressed") !== "true"));
       applyPart(row);
     });
-    boxes[p.name] = row.show;
     rows.push(row);
     $("parts").append(tr);
   }
@@ -83,10 +78,12 @@
       row.see.setAttribute("aria-pressed", "false");
       applyPart(row);
     }
-    drawOverlay();
   });
   // clicking a part in the view opens its menu, which works the controls of its row
   FDMPartMenu.attach(viewer, { container: $("view"), rows, showAll: $("all") });
+  // the dimensions follow the view and the parts shown (they are drawn again after every frame)
+  const dimensions = FDMDimensions.attach(viewer, { svg: $("overlay"), parts: DATA.parts, on: $("dims").checked });
+  $("dims").addEventListener("change", (e) => dimensions.setOn(e.target.checked));
 
   // ---- controls help and the two-finger scroll setting (remembered on this device) ----
   const SCROLL_KEY = "fdm-viewer.scroll";
@@ -105,59 +102,4 @@
     setScroll(b.dataset.v);
   }));
 
-  // ---- dimension overlay: overall box when assembled, name and size of each part in the print layout ----
-  const SVG = "http://www.w3.org/2000/svg";
-  const overlay = $("overlay");
-  const add = (tag, attrs, text) => {
-    const e = document.createElementNS(SVG, tag);
-    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-    if (text !== undefined) e.textContent = text;
-    overlay.append(e);
-    return e;
-  };
-  const line = (a, b) => add("line", { x1: a.x, y1: a.y, x2: b.x, y2: b.y });
-  const label = (p, text, cls) => add("text", { x: p.x, y: p.y, "text-anchor": "middle", "dominant-baseline": "middle", class: cls || "" }, text);
-
-  // one dimension: the edge a-b moved outward by `off`, with extension lines and the length in the middle
-  function dimension(a, b, off) {
-    const pa = a.map((v, i) => v + off[i]), pb = b.map((v, i) => v + off[i]);
-    const [sa, sb, ea, eb] = [pa, pb, a, b].map((v) => viewer.toScreen(v));
-    if ([sa, sb].some((s) => s.behind)) return;
-    line(ea, sa);
-    line(eb, sb);
-    line(sa, sb);
-    const len = Math.hypot(...a.map((v, i) => b[i] - v));
-    label({ x: (sa.x + sb.x) / 2, y: (sa.y + sb.y) / 2 }, mm(len));
-  }
-
-  function drawOverlay() {
-    overlay.replaceChildren();
-    if (!$("dims").checked) return;
-    if (viewer.arrangement === "assembled") {
-      // the overall size is the size of the assembled object, so it is not drawn while exploded
-      if (Number($("explode").value) > 0 || !Object.values(boxes).some((b) => b.checked)) return;
-      const { min: [x0, y0, z0], max: [x1, y1, z1] } = viewer.box();
-      const o = Math.max(x1 - x0, y1 - y0, z1 - z0) * 0.06;
-      dimension([x0, y0, z0], [x1, y0, z0], [0, -o, 0]); // width along the front
-      dimension([x1, y0, z0], [x1, y1, z0], [o, 0, 0]); // depth along the right side
-      dimension([x0, y0, z0], [x0, y0, z1], [-o, -o, 0]); // height at the front left corner
-    } else {
-      const taken = []; // label boxes already drawn; a label that would overlap one moves down
-      for (const p of DATA.parts) {
-        if (!boxes[p.name].checked || p.anchor || p.ref) continue;
-        const { min: [x0, y0, z0], max: [x1] } = viewer.box(p.name);
-        const s = viewer.toScreen([(x0 + x1) / 2, y0, z0]);
-        if (s.behind) continue;
-        const name = label({ x: s.x, y: s.y + 12 }, p.name.replace(/_/g, " ") + (p.qty > 1 ? ` ×${p.qty}` : ""));
-        const size = label({ x: s.x, y: s.y + 26 }, dims(p.print_size), "sub");
-        const w = Math.max(name.getBBox().width, size.getBBox().width) + 8;
-        let y = s.y + 4;
-        while (taken.some((r) => Math.abs(r.x - s.x) < (r.w + w) / 2 && Math.abs(r.y - y) < 30)) y += 30;
-        taken.push({ x: s.x, y, w });
-        name.setAttribute("y", y + 8);
-        size.setAttribute("y", y + 22);
-      }
-    }
-  }
-  viewer.onRender(drawOverlay);
 })();

@@ -149,13 +149,23 @@ def test_when_a_model_page_has_parts_each_row_has_a_switch_to_show_it_and_a_butt
     html = model_html(out, "03_tray")
     names = [p["name"] for p in model_data(html)["parts"]]
     assert [a["data-part"] for t, a in tags(html) if t == "tr" and "data-part" in a] == names
-    boxes = [a for t, a in tags(html) if t == "input" and a.get("type") == "checkbox"]
+    boxes = [a for t, a in tags(html) if t == "input" and a.get("type") == "checkbox" and a.get("id") != "dims"]
     sees = [a for t, a in tags(html) if t == "button" and a.get("class") == "see"]
     assert [a["aria-label"] for a in boxes] == [f"Show {n.replace('_', ' ')}" for n in names]
     assert all("checked" in a for a in boxes) and all(a["aria-pressed"] == "false" for a in sees)
     assert 'id="parts-all"' in html
     css = (ROOT / "site" / "style.css").read_text(encoding="utf-8")
     assert ".model:not(.js) :is(.part input, .see, #parts-all) { display: none; }" in css   # inert without the script
+
+
+def test_when_a_model_page_is_built_its_3d_view_has_a_dimensions_switch_that_starts_on_and_an_overlay_for_them(built):
+    out, _, _ = built
+    html = model_html(out, "03_tray")
+    dims = [a for t, a in tags(html) if t == "input" and a.get("id") == "dims"]
+    assert len(dims) == 1 and dims[0]["type"] == "checkbox" and "checked" in dims[0]   # on by default, as in the viewer
+    assert [a for t, a in tags(html) if t == "svg" and a.get("id") == "overlay"]
+    css = (ROOT / "site" / "style.css").read_text(encoding="utf-8")
+    assert "pointer-events: none" in css[css.index("#overlay {"):].split("}")[0]   # clicks reach the parts under it
 
 
 def test_when_a_model_is_built_its_step_print_stls_viewer_and_meshes_are_ready_to_download(built):
@@ -217,12 +227,12 @@ def test_when_a_model_page_starts_its_3d_view_the_script_reads_only_files_of_thi
     assert not re.search(r"https?://|//[a-z0-9.-]+\.[a-z]{2,}/|XMLHttpRequest|import\(|sendBeacon|document\.cookie", code)
     assert not re.search(r"localStorage|sessionStorage|indexedDB", code)
     assert re.findall(r"\bfetch\(([^)]*)\)", code) == ["`/models/${m.id}/model.glb`"]
-    assert sorted(re.findall(r'loadScript\("([^"]+)"\)', code)) == ["/viewer/fdm-viewer.js", "/viewer/part-menu.js", "/viewer/three.min.js"]
+    assert sorted(re.findall(r'loadScript\("([^"]+)"\)', code)) == ["/viewer/dimensions.js", "/viewer/fdm-viewer.js", "/viewer/part-menu.js", "/viewer/three.min.js"]
 
 
 def test_when_the_site_is_built_the_3d_view_and_the_three_js_licence_are_copied_from_the_skill(built):
     out, _, _ = built
-    for name in ("three.min.js", "fdm-viewer.js", "part-menu.js", "three-LICENSE.txt"):
+    for name in ("three.min.js", "fdm-viewer.js", "part-menu.js", "dimensions.js", "three-LICENSE.txt"):
         assert (out / "viewer" / name).read_bytes() == (ROOT / "skills" / "fdm-minimal-design" / "scripts" / "viewer" / name).read_bytes()
 
 

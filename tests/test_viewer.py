@@ -91,11 +91,11 @@ def test_when_a_page_is_written_it_loads_no_other_file_and_nothing_from_the_netw
     doc = gltf_json(glb)
     assert all("uri" not in b for b in doc["buffers"])
     assert "images" not in doc and "textures" not in doc
-    assert "/*THREE*/" not in remote_page and "/*MENU*/" not in remote_page and "__DATA__" not in remote_page and "__GLB__" not in remote_page
+    assert "/*THREE*/" not in remote_page and "/*MENU*/" not in remote_page and "/*DIMS*/" not in remote_page and "__DATA__" not in remote_page and "__GLB__" not in remote_page
 
 
 def test_when_a_page_is_written_the_viewer_scripts_do_not_fetch_anything():
-    for name in ("fdm-viewer.js", "part-menu.js", "page.js"):
+    for name in ("fdm-viewer.js", "part-menu.js", "dimensions.js", "page.js"):
         code = viewer.asset(name)
         assert not re.search(r"\bfetch\(|XMLHttpRequest|import\(|https?://(?!www\.w3\.org/2000/svg)", code), name
 
