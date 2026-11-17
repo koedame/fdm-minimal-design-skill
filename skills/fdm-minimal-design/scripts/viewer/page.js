@@ -62,7 +62,7 @@
     tr.querySelector(".orient").textContent = p.anchor ? `${p.orientation}, printed with ${p.anchor.replace(/_/g, " ")}` : p.orientation;
     tr.cells[1].textContent = `${p.qty}`;
     tr.cells[2].textContent = p.print_size ? dims(p.print_size) : "—"; // a bought part is not printed
-    const row = { name: p.name, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr };
+    const row = { name: p.name, label: words, color: p.color, show: tr.querySelector("input"), see: tr.querySelector(".see"), tr };
     row.show.setAttribute("aria-label", `Show ${words}`);
     row.see.setAttribute("aria-label", `Transparent ${words}`);
     row.show.addEventListener("change", () => {
@@ -85,6 +85,8 @@
     }
     drawOverlay();
   });
+  // clicking a part in the view opens its menu, which works the controls of its row
+  FDMPartMenu.attach(viewer, { container: $("view"), rows, showAll: $("all") });
 
   // ---- controls help and the two-finger scroll setting (remembered on this device) ----
   const SCROLL_KEY = "fdm-viewer.scroll";
