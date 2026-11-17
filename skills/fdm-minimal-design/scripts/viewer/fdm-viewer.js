@@ -7,6 +7,8 @@
 //   viewer.setExplode(0.5);           // 0 = assembled, 1 = fully apart (assembled arrangement only)
 //   viewer.setEdges(true);
 //   viewer.setScroll("pan");          // what a trackpad two-finger scroll does: "zoom" (default) or "pan"
+//   viewer.onPick((name, at) => ...); // a click or tap on the view (not a drag): the part under it or null, at {x, y} on the canvas
+//   viewer.setHighlight("lid");       // tint a part (null: none), e.g. the one a menu is open for
 //   viewer.resetView();
 //   viewer.dispose();
 //
@@ -20,13 +22,15 @@
 //   mouse     wheel = zoom (a fixed step per notch), drag = rotate, Shift + drag or middle drag = pan
 //   trackpad  pinch or two-finger scroll = zoom, click-drag = rotate, Shift + click-drag = pan;
 //             with setScroll("pan"): two-finger scroll = pan, Shift + two-finger scroll = rotate
-// The right button is not used (the browser menu opens there).
+// A click or tap that does not move (by more than TAP_SLOP) picks the part under it, so does the right button.
 (function (root) {
   "use strict";
 
   const ZOOM_STEP = 0.88; // distance factor per wheel notch
   const EDGE_OPACITY = 0.35;
   const TRANSPARENT = 0.2; // opacity of the faces of a part made transparent; its edges are drawn at half their own
+  const HIGHLIGHT = 0x6b3f05; // emissive colour of a highlighted part: the accent, dimmed
+  const TAP_SLOP = { mouse: 4, pen: 6, touch: 10 }; // CSS px a pointer may move and still click rather than rotate
 
   // How many wheel notches an event stands for, whatever the browser and OS.
   function notches(e) {
@@ -57,6 +61,20 @@
   function zoomDelta(e) {
     if (e.ctrlKey) return e.deltaY;
     return (Math.sign(e.deltaY) * notches(e) * 100 * Math.log(ZOOM_STEP)) / Math.log(0.95);
+  }
+
+  // Whether a press of one pointer was a click or tap (not a drag that rotates or pans, not a pinch):
+  // g = { button, pointerType, moved (the farthest it got from where it went down, px), multi (another pointer was down) }
+  function isTap(g) {
+    return g.button === 0 && !g.multi && g.moved <= (TAP_SLOP[g.pointerType] ?? TAP_SLOP.mouse);
+  }
+
+  // The part a click picks from the parts under it, nearest first ({part, transparent}): the nearest opaque one, so
+  // a part made transparent to look inside lets the parts behind it be picked; where only transparent parts are
+  // under the pointer, the nearest of them. Hidden parts are not in the list.
+  function choose(hits) {
+    const h = hits.find((x) => !x.transparent) || hits[0];
+    return h ? h.part : null;
   }
 
   function decode(base64) {
@@ -90,6 +108,7 @@
 
     // one group per arrangement, one mesh per part; the edges are drawn at creases over 30 degrees
     const groups = {}, parts = {};
+    const partOf = new Map(); // mesh -> part name, for picking
     for (const g of [...gltf.scene.children]) { // a copy: scene.add moves g out of gltf.scene
       groups[g.name] = g;
       for (const node of g.children) {
@@ -104,6 +123,7 @@
         edges.visible = opts.edges;
         mesh.add(edges);
         (parts[node.userData.part] ||= {})[g.name] = { node, mesh, edges, home: node.position.clone() };
+        partOf.set(mesh, node.userData.part);
       }
       scene.add(g);
     }
@@ -153,7 +173,55 @@
 
     const el = renderer.domElement;
     el.addEventListener("mousedown", (e) => e.button === 1 && e.preventDefault()); // no autoscroll
-    el.addEventListener("contextmenu", (e) => e.preventDefault());
+
+    // ---- picking: a click or tap (isTap) or the right button tells onPick the part under it ----
+    const pickers = [];
+    const raycaster = new T.Raycaster();
+    function pick(clientX, clientY) {
+      const r = el.getBoundingClientRect();
+      const ndc = new T.Vector2(((clientX - r.left) / r.width) * 2 - 1, 1 - ((clientY - r.top) / r.height) * 2);
+      scene.updateMatrixWorld(); // the camera and the exploded parts as they are now, not as last drawn
+      raycaster.setFromCamera(ndc, camera);
+      const meshes = Object.values(parts).map((p) => p[state.arrangement]).filter((m) => m && m.node.visible).map((m) => m.mesh);
+      return choose(raycaster.intersectObjects(meshes, false).map((h) => ({ part: partOf.get(h.object), transparent: h.object.material.transparent })));
+    }
+    const picked = (e) => {
+      const r = el.getBoundingClientRect();
+      const name = pick(e.clientX, e.clientY);
+      for (const f of pickers) f(name, { x: e.clientX - r.left, y: e.clientY - r.top, pointerType: e.pointerType || "mouse" });
+    };
+    const down = new Set(); // pointers that are down
+    let press = null; // the press of the first of them
+    let tapped = null; // a press that ended as a tap: picks on the click that follows it
+    el.addEventListener("pointerdown", (e) => {
+      if (e.isPrimary) down.clear(); // a new first pointer: any other was lifted (also when its pointerup got lost)
+      down.add(e.pointerId);
+      if (down.size === 1) press = { id: e.pointerId, x: e.clientX, y: e.clientY, button: e.button, pointerType: e.pointerType, moved: 0, multi: false };
+      else if (press) press.multi = true;
+    });
+    el.addEventListener("pointermove", (e) => {
+      if (press && e.pointerId === press.id) press.moved = Math.max(press.moved, Math.hypot(e.clientX - press.x, e.clientY - press.y));
+    });
+    const lift = (e) => {
+      down.delete(e.pointerId);
+      if (!press || e.pointerId !== press.id) return;
+      const p = press;
+      press = null;
+      tapped = e.type === "pointerup" && isTap(p) ? e : null;
+    };
+    // The pick waits for the click, which after a tap comes after the mouse events the browser makes from the touch:
+    // a menu opened on pointerup would get them (a click on an item under the finger, a mousedown taking the focus).
+    el.addEventListener("click", () => {
+      const e = tapped;
+      tapped = null;
+      if (e) picked(e);
+    });
+    el.addEventListener("pointerup", lift);
+    el.addEventListener("pointercancel", lift);
+    el.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+      picked(e);
+    });
     el.addEventListener("wheel", (e) => {
       if (!isTrackpadPan(e, state.scroll)) return;
       e.preventDefault();
@@ -246,6 +314,11 @@
       render();
     }
 
+    function setHighlight(name) {
+      for (const [n, p] of Object.entries(parts)) for (const m of Object.values(p)) m.mesh.material.emissive.setHex(n === name ? HIGHLIGHT : 0);
+      render();
+    }
+
     function setEdges(on) {
       for (const p of Object.values(parts)) for (const m of Object.values(p)) m.edges.visible = on;
       render();
@@ -292,6 +365,7 @@
       setExplode,
       setVisible,
       setTransparent,
+      setHighlight,
       setEdges,
       setScroll: (mode) => (state.scroll = mode === "pan" ? "pan" : "zoom"),
       resetView,
@@ -301,6 +375,7 @@
         return state.arrangement;
       },
       onRender: (f) => listeners.push(f), // called after every frame that was drawn
+      onPick: (f) => pickers.push(f),
       canvas: el,
       dispose() {
         cancelAnimationFrame(frame);
@@ -313,5 +388,5 @@
     };
   }
 
-  root.FDMViewer = { create, decode, input: { notches, isTrackpadPan, zoomDelta, ZOOM_STEP } };
+  root.FDMViewer = { create, decode, input: { notches, isTrackpadPan, zoomDelta, ZOOM_STEP, isTap, TAP_SLOP, choose } };
 })(typeof window !== "undefined" ? window : globalThis);

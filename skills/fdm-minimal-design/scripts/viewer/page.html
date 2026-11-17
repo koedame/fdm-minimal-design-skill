@@ -48,6 +48,7 @@
   .see:hover { color: var(--ink); border-color: var(--line); }
   .see[aria-pressed="true"] { color: var(--ink); background: #fff; box-shadow: inset 0 -2px 0 var(--accent); }
   tr.off td, tr.off .orient { color: var(--ink2); }
+  tr.picked td { background: rgba(240, 158, 38, 0.1); }
   tr.off .sw, tr.clear .sw { opacity: 0.35; }
   .sw { flex: none; width: 12px; height: 12px; border-radius: 2px; margin-top: 2px; border: 1px solid rgba(0, 0, 0, 0.12); }
   .name { font-weight: 400; overflow-wrap: anywhere; }
@@ -55,6 +56,16 @@
   .link { font: inherit; color: var(--ink2); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 2px; }
   .help td { border-top: 0; padding: 2px 0; color: var(--ink2); }
   .help td:first-child { color: var(--ink); width: 34%; padding-right: 8px; }
+  .part-menu { position: absolute; z-index: 2; min-width: 168px; max-width: 240px; padding: 4px 0; background: var(--panel); border: 1px solid var(--line); border-radius: 4px; box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08); }
+  .pm-title { display: flex; gap: 8px; align-items: flex-start; padding: 6px 12px 8px; margin-bottom: 4px; border-bottom: 1px solid var(--line); font-weight: 400; overflow-wrap: anywhere; }
+  .pm-sw { flex: none; width: 12px; height: 12px; margin-top: 2px; border-radius: 2px; border: 1px solid rgba(0, 0, 0, 0.12); }
+  .part-menu [role="menu"] button { display: flex; justify-content: space-between; gap: 12px; width: 100%; font: inherit; color: var(--ink); background: none; border: 0; padding: 6px 12px; text-align: left; cursor: pointer; }
+  .part-menu [role="menu"] button:hover, .part-menu [role="menu"] button:focus { background: #fff; outline: none; box-shadow: inset 2px 0 0 var(--accent); }
+  .part-menu [role="menu"] button[aria-disabled="true"] { color: var(--ink2); cursor: default; }
+  .part-menu [role="menu"] button[aria-disabled="true"]:not(:focus) { background: none; box-shadow: none; }
+  /* the tick is drawn, not a character, so it is not read as part of the item's name */
+  .part-menu [aria-checked="true"]::after { content: ""; flex: none; width: 4px; height: 8px; margin: 2px 3px 0 0; border: solid var(--accent); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+  @media (pointer: coarse) { .part-menu [role="menu"] button { padding: 10px 12px; } }
   details { color: var(--ink2); }
   summary { cursor: pointer; }
   pre { white-space: pre-wrap; font: 300 10px/1.5 ui-monospace, Menlo, Consolas, monospace; }
@@ -104,6 +115,7 @@
       <tr><td>Rotate</td><td>Drag · trackpad: <span id="tp-rotate"></span></td></tr>
       <tr><td>Pan</td><td>Shift + drag, middle drag · trackpad: <span id="tp-pan"></span></td></tr>
       <tr><td>Zoom</td><td>Wheel · trackpad: <span id="tp-zoom"></span></td></tr>
+      <tr><td>Part</td><td>Click, tap or right-click a part to hide it or see through it</td></tr>
     </table>
     <div class="row">
       <span>Two-finger scroll</span>
@@ -125,6 +137,7 @@
 </aside>
 <script>/*THREE*/</script>
 <script>/*VIEWER*/</script>
+<script>/*MENU*/</script>
 <script>
 const DATA = "__DATA__";
 const GLB = "__GLB__";
