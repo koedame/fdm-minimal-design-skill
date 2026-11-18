@@ -23,10 +23,12 @@ on:
 permissions:
   contents: read
 
+# A private repository can run these on a self-hosted runner named by the LINUX_RUNNER variable; a public one always
+# uses the GitHub-hosted runner, so that pull requests from forks never reach a self-hosted machine.
 jobs:
   pip-audit:
     name: PyPI advisories
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.repository.private && vars.LINUX_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -46,7 +48,7 @@ jobs:
 
   npm-audit:
     name: npm advisories (deploy tool)
-    runs-on: ubuntu-latest
+    runs-on: ${{ github.event.repository.private && vars.LINUX_RUNNER || 'ubuntu-latest' }}
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
