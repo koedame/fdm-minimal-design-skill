@@ -21,10 +21,13 @@ concurrency:
 jobs:
   check:
     name: Samples, models and skill bundle
-    runs-on: ubuntu-latest
+    # A private repository can run this on a self-hosted runner named by the LINUX_RUNNER variable. A public one always
+    # uses the GitHub-hosted runner, so that pull requests from forks never reach a self-hosted machine.
+    runs-on: ${{ github.event.repository.private && vars.LINUX_RUNNER || 'ubuntu-latest' }}
     # The limit is there to stop a hung build. A normal run builds every model twice (check, website) and grows by
     # about a minute per ten models; with 80 it took 19.5 of the old 20, so the limit leaves room for growth.
-    timeout-minutes: 40
+    # The self-hosted runner is slower, so it gets twice as long.
+    timeout-minutes: ${{ vars.LINUX_RUNNER && github.event.repository.private && 80 || 40 }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
@@ -37,7 +40,9 @@ jobs:
             requirements-dev.txt
 
       # VTK renders off-screen through OSMesa when there is no display.
+      # The self-hosted runner has no sudo and comes with OSMesa installed.
       - name: Install OSMesa for off-screen rendering
+        if: runner.environment == 'github-hosted'
         run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libosmesa6
 
       - name: Install the pinned environment
