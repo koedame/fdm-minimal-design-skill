@@ -48,7 +48,7 @@ Use cases:
 verify.py: all parts valid and watertight, no interference (the movement reference included), every part fits a 256 bed,
 ground contact 100.0 × 44.5 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2, and the BC and AB alarm clocks): those clocks are small square
+Compared with well-known products in this style, including small alarm clocks: those clocks are small square
 or round cases with numerals and a coloured second hand; this is a 100 mm leaning slab with bar indices on a raised disc and
 no second hand. No product was used as a model.
 

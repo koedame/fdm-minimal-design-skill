@@ -39,7 +39,7 @@ Use cases:
 
 verify.py: valid and watertight, fits a 256 bed (128 high as printed); ground contact 5440 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 napkin holder. Upright U-shaped napkin holders are a common form; no product was used as a model.
 
 Safety (kitchen): the holder is not for food contact and not for the dishwasher. PLA softens at about 55–60 °C; keep it away from

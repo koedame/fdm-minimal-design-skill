@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, no interference (the movement included), fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2) and Braun's BC and AB travel alarms: the travel alarms are small square
+Compared with well-known products in this style, including small travel alarm clocks: the travel alarms are small square
 or round cases with numerals and a coloured second hand; this is a column on its side with bar indices, an accent at 12 instead of on a
 hand, and no second hand. No product was used as a model.
 

@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: every part valid, watertight; fits a 256 bed; no interference; the cubes lift free and stop at 0.4 sideways in their pockets.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): the ET 66 is a calculator with a display, but a flat slab with round
+Compared with well-known products in this style: the calculator among them has a display, but it is a flat slab with round
 keys, nothing like a pair of cubes. Date cubes with digits on their faces are a common desk object; the seven-segment digits made of
 stadium segments are drawn for this model, and no product was used as a model.
 

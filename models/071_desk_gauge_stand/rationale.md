@@ -59,7 +59,7 @@ Use cases:
 verify.py: both printed parts valid and watertight, one solid each; no interference (the gauge included); fit a 256 bed; ground contact
 3412 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2, and Braun's BC and AB clocks): a round dial in a rectangular front
+Compared with well-known products in this style, including small alarm clocks: a round dial in a rectangular front
 is common to many clocks and instruments, including those alarm clocks. This one differs in its proportions (an upright 76 × 92 front
 with the dial in the top and a 3 × band below), the open-back sleeve and the separate dark plinth; it holds a bought gauge, has no
 clock face of its own, and no product was used as a model.

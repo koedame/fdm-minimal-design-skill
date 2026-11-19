@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: both printed parts valid, watertight, one solid each; no interference with the cells; contact area 2776 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a container. A round screw-top tube is a common kind of
+Compared with well-known products in this style: none is a container. A round screw-top tube is a common kind of
 object; no product was used as a model.
 
 Safety (lithium-ion cells): store only undamaged cells, charged to about half for long storage. Do not leave the case in a car or in the

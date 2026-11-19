@@ -52,7 +52,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid per part, no interference, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a raceway; a plain box with one V seam shares only the
+Compared with well-known products in this style: none of them is a raceway; a plain box with one V seam shares only the
 general language. Cable raceways and cable combs are common kinds of object; no product was used as a model.
 
 Safety: no batteries, LEDs, magnets or heat. Do not run mains cables with damaged insulation through it, and do not pinch cables under

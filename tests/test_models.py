@@ -82,6 +82,20 @@ def test_when_rationale_md_lacks_the_review_section_check_reports_it(models_dir)
     assert any(p.startswith("rationale.md: needs the sections") for p in problems_of(models_dir))
 
 
+def test_when_rationale_md_names_a_product_by_model_number_check_reports_it(models_dir):
+    path = models_dir / "001_pen_cup" / "rationale.md"
+    path.write_text(path.read_text() + "\nCompared with the SK 4 and the ET 66: none is a cup.\n")
+    assert any(p.startswith("rationale.md: names a product model number (ET 66, SK 4)")
+               for p in problems_of(models_dir))
+
+
+def test_when_rationale_md_describes_compared_products_by_kind_check_does_not_report_it(models_dir):
+    path = models_dir / "001_pen_cup" / "rationale.md"
+    path.write_text(path.read_text() + "\nCompared with well-known products in this style: radios and a calculator; "
+                    "none is a cup. A screw M3 and an R12 corner are not model numbers.\n")
+    assert not any("model number" in p for p in problems_of(models_dir))
+
+
 def test_when_preview_png_is_not_a_png_check_reports_it(models_dir):
     (models_dir / "001_pen_cup" / "preview.png").write_bytes(b"not an image")
     assert "preview.png: not a PNG file" in problems_of(models_dir)

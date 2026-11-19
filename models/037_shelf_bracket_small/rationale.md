@@ -47,7 +47,7 @@ Use cases:
 
 verify.py: bracket and plate valid and watertight, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 bracket. Plain L brackets with a corner web are a common form; no product was used as a model.
 
 Safety (load): a shelf can fall with everything on it. The bracket's strength has not been calculated or tested, so it has no rated

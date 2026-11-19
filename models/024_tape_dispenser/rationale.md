@@ -47,7 +47,7 @@ Use cases:
 verify.py: body, plate and hub valid and watertight, no interference (the tape roll included), fit a 256 bed; ground contact 4027 mm²
 over 38.9 × 118.9. Motions as above: the hub stops 0.4 down and 0.5 sideways, the plate is located by its lips.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a tape dispenser. A weighted block with a roll in a trough is
+Compared with well-known products in this style: none is a tape dispenser. A weighted block with a roll in a trough is
 a common desk form; no product was used as a model.
 
 Not verified:

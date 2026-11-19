@@ -50,7 +50,7 @@ Use cases:
 verify.py: both printed parts valid and watertight, no interference (the board included), fit a 256 bed, ground contact 2522 mm²
 over 83.1 × 39.1.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a USB hub. A plain rounded box with port windows
+Compared with well-known products in this style: none of them is a USB hub. A plain rounded box with port windows
 is a generic electronics case; no product was used as a model.
 
 Safety (electronics): the printed case is not certified for anything. Use a hub board from a trustworthy source with its own

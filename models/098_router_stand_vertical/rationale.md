@@ -45,7 +45,7 @@ slot overlaps nothing.
 Safety:
 - Stand the router upright only if its manual allows it; keep its vents clear of the cheeks, which cover the lowest 24 of its faces.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 stand. A block with a slot is the common form of a router or book stand; no product was used as a model.
 
 Not verified:

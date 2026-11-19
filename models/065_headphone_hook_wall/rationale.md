@@ -52,7 +52,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid. (The ground-contact line is the arm's end and not meaningful for a wall-mounted part.)
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a wall fitting; they are housings with controls,
+Compared with well-known products in this style: none of them is a wall fitting; they are housings with controls,
 grilles or perforation. Wall hooks for headphones are a common kind of object; no product was used as a model.
 
 Safety: the hook has no batteries, LEDs, magnets or heat of its own. Fix the screws into wall plugs suited to the wall. The arm is

@@ -46,7 +46,7 @@ Use cases:
 verify.py: both printed parts valid and watertight, no interference (the driver included), fit a 256 bed, ground contact 6739 mm²
 over Ø94.9.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are boxes and a pocket radio; none is a low cylinder with a
+Compared with well-known products in this style: they are boxes and a pocket radio; none is a low cylinder with a
 screw-on perforated lid. Round perforated speakers are a common form; no product was used as a model.
 
 Safety (electronics): this is a passive speaker. If an amplifier or a battery is put inside, use certified modules, keep the battery

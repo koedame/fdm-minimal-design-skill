@@ -65,8 +65,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid per part, no interference, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2) and Braun's travel alarms: ET 66 is a slab with a display and a grid of
-buttons; the BC and AB alarms are small squares with an analogue face. This is a slab with one window and one large dial of the same
+Compared with well-known products in this style, including small travel alarm clocks: the calculator among them is a slab with a display and a grid of buttons; the travel alarms are small squares with an analogue face. This is a slab with one window and one large dial of the same
 width; it shares only the general language (a plain block, one material, one dial). No product was used as a model.
 
 Safety: an LED display and electronics, powered over USB-C (5 V); no batteries inside. Keep it away from the hob and oven (PLA softens at

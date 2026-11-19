@@ -41,7 +41,7 @@ Use cases:
 
 verify.py: valid and watertight, fits a 256 bed, ground contact 8366 mm² over 102.9 × 102.9, narrowest patch 12.0.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a container. A square utensil crock is a common
+Compared with well-known products in this style: none of them is a container. A square utensil crock is a common
 kitchen form; the slot-and-channel drain is not taken from any product, and no product was used as a model.
 
 Safety (food, heat): the crock holds utensils that touch food. An FDM print is not food-safe: the layer lines hold residue and

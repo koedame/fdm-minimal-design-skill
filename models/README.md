@@ -53,6 +53,10 @@ Three sections, in this order:
    the output summary of `verify.py`, and a list of what has not been verified (always including
    "not printed on a real printer" until it has been).
 
+When the review compares the model with well-known products, describe them by kind ("the radios and the
+calculator in this style"), never by brand or model number. `tools/models.py check` and `tests/test_naming.py`
+report a rationale.md that names one.
+
 ## model.json
 
 ```json

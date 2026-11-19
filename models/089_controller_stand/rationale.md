@@ -52,7 +52,7 @@ Use cases:
 verify.py: stand and cover valid, watertight; fits a 256 bed; no interference with the magnets; the cover lifts free and stops
 sideways at 0.4.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a stand.
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a stand.
 A wedge with a lip is the common form of a display stand; no product was used as a model.
 
 Safety (magnets): neodymium magnets are dangerous if swallowed (two can pinch through the gut); glue them in with epoxy or

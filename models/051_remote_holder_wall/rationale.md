@@ -54,7 +54,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid, fits a 256 bed, contact area 2166 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a wall cup; the radio, calculator and speaker are
+Compared with well-known products in this style: none of them is a wall cup; the radio, calculator and speaker are
 closed housings with controls or perforation, and this has neither. Open wall pockets for remotes are a common kind of object; no
 product was used as a model.
 

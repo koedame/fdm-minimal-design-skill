@@ -67,7 +67,7 @@ Use cases:
 
 verify.py: all printed parts valid and watertight, one solid each; no interference (the driver and the magnets included); fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): L 2 is a loudspeaker; this box is not drawn from it or from any other
+Compared with well-known products in this style: one of them is a loudspeaker; this box is not drawn from it or from any other
 product. A rounded box with a perforated front is the common form of a small speaker; the proportions here (2 : 3 front, depth 128), the
 flush magnetic grille in a reveal and the dark grille on an off-white body come from the driver size and the rules.
 

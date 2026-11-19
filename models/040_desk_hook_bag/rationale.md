@@ -48,7 +48,7 @@ Use cases:
 
 verify.py: hook and plate valid and watertight, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 hook. Under-desk bag hooks are a common item; no product was used as a model.
 
 Safety (load): the hook's strength has not been calculated or tested, so it has no rated load. It depends on the material (PETG; PLA

@@ -48,7 +48,7 @@ Use cases:
 verify.py: every part valid and watertight, no interference (the movement included), every part fits a 256 bed. (The ground contact
 line is not meaningful: the clock hangs on the wall.)
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2) and Braun's BC and AB travel alarms: the travel alarms are small
+Compared with well-known products in this style, including small travel alarm clocks: the travel alarms are small
 desk cases with a dial set into a frame; this is a wall disc whose face is the dial,
 with no bezel, no numerals, no second hand and inlaid bars. A round wall clock is a common form; no product was used as a model.
 

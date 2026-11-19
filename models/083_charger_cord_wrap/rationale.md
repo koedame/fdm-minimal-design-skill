@@ -52,7 +52,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, one solid each; no interference; fit a 256 bed; every motion as recorded.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a cord
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a cord
 winder. Flat bobbins for cords are a common kind of object; no product was used as a model.
 
 Not verified:

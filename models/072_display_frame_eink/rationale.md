@@ -64,7 +64,7 @@ Use cases:
 
 verify.py: all printed parts valid and watertight, one solid each; no interference (the panel included); fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): a radio, a record player, a calculator, a loudspeaker and a radio
+Compared with well-known products in this style: a radio, a record player, a calculator, a loudspeaker and a radio
 with a perforated front; none is a picture or display frame. A rounded frame round a rectangular window is a common kind of object;
 no product was used as a model.
 

@@ -39,7 +39,7 @@ Use cases:
 
 verify.py: tray and liner valid and watertight, no interference, fit a 256 bed; ground contact 10324 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a tray.
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a tray.
 Round dishes on a plinth are a common form; no product was used as a model.
 
 Not verified:

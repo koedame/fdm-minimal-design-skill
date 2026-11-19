@@ -37,7 +37,7 @@ Use cases:
 
 verify.py: valid and watertight, fits a 256 bed, ground contact 22952 mm² over 188.5 × 124.5.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a tray. Divided valet trays are a common form; this one
+Compared with well-known products in this style: none is a tray. Divided valet trays are a common form; this one
 re-divides 03_tray and was not modelled on a product.
 
 Not verified:

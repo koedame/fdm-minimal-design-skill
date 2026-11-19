@@ -50,8 +50,7 @@ Safety:
   residue, so use it for dry salt only, wash it by hand and replace it if it stains or smells. Not for the dishwasher.
 - The pin is plastic on purpose: a steel pin rusts in salt.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; the SK 4's
-lid is a hinged clear cover, not a swivel. A salt box with a lid turning on a corner pin is a common form; no product was used as a model.
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; the record player's lid is a hinged clear cover, not a swivel. A salt box with a lid turning on a corner pin is a common form; no product was used as a model.
 
 Not verified:
 - Not printed on a real printer.

@@ -37,7 +37,7 @@ Use cases:
 
 verify.py: valid and watertight, fits a 256 bed. (The ground-contact line is not meaningful: the bar hangs on the wall.)
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a wall rail; a plain bar with hidden magnets
+Compared with well-known products in this style: none of them is a wall rail; a plain bar with hidden magnets
 is not taken from any product. No product was used as a model.
 
 Safety (magnets, wall mounting): neodymium magnets are dangerous if swallowed, above all two or more. Glue them in fully, mount the

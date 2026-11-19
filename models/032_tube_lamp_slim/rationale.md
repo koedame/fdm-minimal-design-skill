@@ -54,7 +54,7 @@ Use cases:
 verify.py: all printed parts valid and watertight, no interference with each other, the strips or the board; fit a 256 bed; ground
 contact 2776 mm². Tube and cap located by the lips (stopped 0.4 sideways); the cap seats on the tube.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a lamp; this is a plain tube on a disc. Tube lamps of
+Compared with well-known products in this style: none of them is a lamp; this is a plain tube on a disc. Tube lamps of
 this kind are common; no product was used as a model.
 
 Safety (LED, electricity, heat): use a certified USB power supply and a breakout board with the CC resistors (without them a USB-C

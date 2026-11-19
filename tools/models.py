@@ -28,6 +28,9 @@ import verify        # noqa: E402
 ID_RE = re.compile(r"^\d{3}_[a-z0-9]+(?:_[a-z0-9]+)*$")
 REQUIRED_FILES = ("design.py", "rationale.md", "model.json", "preview.png")
 RATIONALE_SECTIONS = ("## Dimensions", "## Parts", "## Review")
+# The look-alike check in rationale.md describes products by kind ("a radio", "a calculator"), never by model
+# number (brand names are kept out by tests/test_naming.py): the models must not read as copies of a named product.
+MODEL_NUMBER = re.compile(r"\b(?:SK|ET|TP|RT|KF|TG|BC|AB)\s?\d+\b|\bBC and AB\b")
 SIZE_TOLERANCE = 0.5
 PNG_MAGIC = b"\x89PNG\r\n\x1a\n"
 FIELDS = {   # field: (type, check on the value or None)
@@ -196,6 +199,10 @@ def check_model(model_dir, bed=256.0):
     positions = [rationale.find(s) for s in RATIONALE_SECTIONS]
     if -1 in positions or positions != sorted(positions):
         problems.append(f"rationale.md: needs the sections {', '.join(RATIONALE_SECTIONS)} in this order")
+    named = sorted({m.group(0) for m in MODEL_NUMBER.finditer(rationale)})
+    if named:
+        problems.append(f"rationale.md: names a product model number ({', '.join(named)}); "
+                        "describe compared products by kind")
     if (model_dir / "preview.png").read_bytes()[:8] != PNG_MAGIC:
         problems.append("preview.png: not a PNG file")
 

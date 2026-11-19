@@ -47,7 +47,7 @@ Use cases:
 
 verify.py: base and lid valid and watertight, no interference, fit a 256 bed; ground contact 2928 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 case. A small rounded box with a dark lid is a common form for earbud and jewellery cases; no product was used as a model.
 
 Safety (magnets): neodymium magnets are dangerous if swallowed, above all two or more. Glue them in fully and do not use the case if

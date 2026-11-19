@@ -48,7 +48,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 stand for tubes. Test-tube racks and propagation stations are common objects; no product was used as a model.
 
 Safety (water): the printed parts are not watertight and not certified for anything; the water stays in the glass tubes. Wipe the

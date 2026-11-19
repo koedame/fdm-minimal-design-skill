@@ -47,7 +47,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a desk block with a slot; the shared traits are
+Compared with well-known products in this style: none of them is a desk block with a slot; the shared traits are
 only the general language (rounded plan, one chamfer, no ornament). Card holders with a slanted slot are a common kind of object; no
 product was used as a model.
 

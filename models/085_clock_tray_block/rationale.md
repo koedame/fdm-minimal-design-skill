@@ -65,7 +65,7 @@ Use cases:
 verify.py: every printed part valid and watertight, one solid each; no interference (the movement included); fit a 256 bed; the lid's
 motions as recorded.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2, and Braun's BC and AB clocks): a round dial in a rectangular front is
+Compared with well-known products in this style, including small alarm clocks: a round dial in a rectangular front is
 common to many clocks, including those. This one differs in its plan (a square split into a tray in front and a block behind), the dial
 set in the block's front with a tray below, and its proportions; no product was used as a model.
 

@@ -56,7 +56,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2) and Braun's BC and AB travel alarms: the travel alarms are small
+Compared with well-known products in this style, including small travel alarm clocks: the travel alarms are small
 square cases standing on a desk with a dial; the calculator has a display window over a grid of keys, but here the second field is air
 slots, not keys, and the object hangs flat on a wall. Wall thermo-hygrometer cases with a window and vents are a common kind of object;
 no product was used as a model.

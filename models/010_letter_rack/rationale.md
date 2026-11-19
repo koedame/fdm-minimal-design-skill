@@ -41,7 +41,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, no interference, fit a 256 bed, ground contact 14628 mm² over 158.9 × 94.9 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a letter rack; stepped upright dividers on a
+Compared with well-known products in this style: none of them is a letter rack; stepped upright dividers on a
 base are a generic office form, and no product was used as a model.
 
 Not verified:

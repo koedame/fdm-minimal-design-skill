@@ -45,7 +45,7 @@ verify.py: both parts valid, watertight; fits a 256 bed; the lid lifts free, sto
 Heat: the box is for the slack of cables. A charger or a power strip inside it has no ventilation and warms the box; if you put one in, use
 only a certified device rated for the load and check that it stays cool with the lid on. Printed PLA softens at about 55 °C.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a box with
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a box with
 cable notches. A box with a lid and notches for cables is the common form of a cable organiser; no product was used as a model.
 
 Not verified:

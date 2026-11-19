@@ -46,7 +46,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a jar or a container.
+Compared with well-known products in this style: radios, a calculator and a loudspeaker; none is a jar or a container.
 Hexagonal spice jars are a common kind of object; no product was used as a model.
 
 Safety (food): for dry spices only. Print in a food-contact grade PETG with a stainless steel nozzle; layer lines hold residue, so

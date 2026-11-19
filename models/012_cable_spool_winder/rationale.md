@@ -39,7 +39,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed, ground contact 2573 mm² over Ø62.8.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a cable spool. A flanged spool is a generic
+Compared with well-known products in this style: none of them is a cable spool. A flanged spool is a generic
 form; no product was used as a model.
 
 Not verified:

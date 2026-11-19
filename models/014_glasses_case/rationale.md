@@ -48,7 +48,7 @@ Use cases:
 verify.py: both parts valid and watertight, no interference, fit a 256 bed, ground contact 9312 mm² over 166.9 × 62.9; hinge free
 at 0 to −150°, overlap 10.9 mm³ at −170° (stop) and 519.3 mm³ at +1° (closed stop).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a case. A stadium hard case with a dark lid is a
+Compared with well-known products in this style: none of them is a case. A stadium hard case with a dark lid is a
 common form for glasses cases; no product was used as a model.
 
 Safety (magnets): neodymium magnets are dangerous if swallowed, above all two or more. Glue them in fully and do not use the case

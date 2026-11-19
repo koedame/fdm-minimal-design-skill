@@ -50,7 +50,7 @@ stop past closed.
 Food: the clip touches the outside of the bag only. Do not use it to close a bag with the food against the jaws: printed PLA or PETG is
 not certified for food contact, and its layer lines hold dirt.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a clip or has a hinge of this kind. A hinged bar clip with a
+Compared with well-known products in this style: none is a clip or has a hinge of this kind. A hinged bar clip with a
 latch is the common form of a bag clip; no product was used as a model.
 
 Not verified:

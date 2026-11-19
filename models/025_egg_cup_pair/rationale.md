@@ -39,7 +39,7 @@ Use cases:
 verify.py: valid and watertight, the two copies separate, no interference with the egg (it rests 0.1 clear of the rim chamfer), fit a
 256 bed; ground contact 3104 mm² over two Ø44.5 plinths.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is tableware. A cylindrical egg cup is a common form; no product
+Compared with well-known products in this style: none is tableware. A cylindrical egg cup is a common form; no product
 was used as a model.
 
 Safety (food, heat): printed PETG or PLA is not certified for food contact; the cup only touches the shell. Let a boiled egg cool for a

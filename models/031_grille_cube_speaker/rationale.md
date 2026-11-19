@@ -52,7 +52,7 @@ Use cases:
 verify.py: body, baffle and cap valid and watertight; no interference with each other or the driver; fit a 256 bed; ground contact
 8558 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): L 2 is a box loudspeaker with a perforated front; this is a cube
+Compared with well-known products in this style: the loudspeaker among them is a box with a perforated front; this is a cube
 that sounds to all four sides through slot fields on its upper half and is closed by a plain cap. The others are radios, a pocket radio
 and a calculator. Cube speakers are a common type; no product was used as a model.
 

@@ -50,7 +50,7 @@ around its foot would be an overhang.
 verify.py: both printed parts valid and watertight, no interference (the dowels included), fit a 256 bed, ground contact 11501 mm²
 over 126.9 × 94.9.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a stand. Plate-on-slab headphone stands are a common form;
+Compared with well-known products in this style: none is a stand. Plate-on-slab headphone stands are a common form;
 no product was used as a model.
 
 Not verified:

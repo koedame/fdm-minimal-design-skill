@@ -64,7 +64,7 @@ Use cases:
 verify.py: valid, watertight, one solid per part, no interference, fits a 256 bed. Its ground-contact line refers to standing the clip on
 a table; in use it hangs on the cover.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a clip light. Clip-on reading lights are a common kind
+Compared with well-known products in this style: none of them is a clip light. Clip-on reading lights are a common kind
 of object (usually on a gooseneck); this one is a block clip with a rigid head that rests on a stop. No product was used as a model.
 
 Safety: a CR2032 coin cell and an LED. **Keep coin cells away from children: a swallowed coin cell can cause severe internal burns within

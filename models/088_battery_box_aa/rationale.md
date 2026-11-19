@@ -54,8 +54,7 @@ Use cases:
 verify.py: body and lid valid, watertight; fits a 256 bed; no interference with the holder; the lid slides free from 8 to 80, snaps from
 0.5 to 5 (3.2 mm³ at most), stops at −0.3, and stops sideways at 0.4 and upward at 0.8.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker. The ET 66
-calculator holds its cells behind a cover on its back; this box is a plain rounded slab whose whole top slides off. A sliding-lid
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker. The calculator among them holds its cells behind a cover on its back; this box is a plain rounded slab whose whole top slides off. A sliding-lid
 battery box is a common enclosure; no product was used as a model.
 
 Safety (batteries): do not short the leads: insulate the bare ends before the cells go in, and add a fuse or a switch in the circuit you

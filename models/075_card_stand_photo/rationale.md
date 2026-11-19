@@ -40,7 +40,7 @@ Use cases:
 
 verify.py: valid and watertight, one solid; fits a 256 bed; ground contact 2961 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a card or photo stand. A block with a leaning slot is the common
+Compared with well-known products in this style: none is a card or photo stand. A block with a leaning slot is the common
 form of a card stand; no product was used as a model.
 
 Not verified:

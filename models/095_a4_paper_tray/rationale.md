@@ -47,7 +47,7 @@ Use cases:
 verify.py: both halves valid, watertight; fit a 256 bed; no interference with the dowels; a stack of A4 10 high lying in the middle does not
 touch the tray (checked in the review, 0 mm³).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a tray. An open desk tray for A4 is a common object; no product
+Compared with well-known products in this style: none is a tray. An open desk tray for A4 is a common object; no product
 was used as a model.
 
 Not verified:
