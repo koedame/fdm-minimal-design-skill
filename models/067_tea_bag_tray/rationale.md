@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; fits the bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a dish; they are housings with controls and grilles.
+Compared with well-known products in this style: none of them is a dish; they are housings with controls and grilles.
 Ribbed dishes for tea bags and soap are a common kind of object; no product was used as a model.
 
 Safety (food, heat): print in PETG, not PLA; a tea bag straight from the pot can be near 90 °C and PLA softens at about 55–60 °C. Printed

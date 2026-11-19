@@ -45,7 +45,7 @@ verify.py: all parts valid and watertight, one solid each, no interference, fit 
 (300 × 215 × 16) against the two stands with `verify.motion_check`: no overlap at rest, lifting 0 / 5 / 30 and sliding up the
 slope 0 / 20 / 100 free, 0.3 down the slope 97 mm³ (the lips stop it).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a stand. Laptop stands
+Compared with well-known products in this style: radios, a calculator and a loudspeaker; none is a stand. Laptop stands
 of two wedges are a common kind of object; no product was used as a model.
 
 Not verified:

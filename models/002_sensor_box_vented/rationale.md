@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, no interference, fits a 256 bed, ground contact 352 mm² over 47.1 × 47.1 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a small upright vented box; the slot fields
+Compared with well-known products in this style: none of them is a small upright vented box; the slot fields
 are vertical, plain-walled and not arranged like any of their grilles. No product was used as a model.
 
 Safety: this box holds electronics powered over USB. Use a certified power supply; the printed parts are not certified for anything.

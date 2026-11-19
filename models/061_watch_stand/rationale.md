@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: both parts valid, watertight, one solid each; no interference; contact area 4205 mm²; motions as above.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a stand; they are housings with controls, a grille or
+Compared with well-known products in this style: none of them is a stand; they are housings with controls, a grille or
 perforation, and this has none of those. Posts and cushions for watches are a common kind of object; no product was used as a model.
 
 Safety: the stand has no batteries, LEDs, magnets or heat of its own.

@@ -47,7 +47,7 @@ Use cases:
 verify.py: both parts valid, watertight; fits a 256 bed; the lid is free closed and 20 up, overlaps only the barbs' engaged tips (22.8 mm³)
 while being pulled off (swept as a snap from 1 to 9), stops on the rim when pushed down, and stops at 0.4 sideways in x and y.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker, none a box with a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker, none a box with a
 lid. A rounded box with a shallow lid is the common form of a small case; no product was used as a model.
 
 Not verified:

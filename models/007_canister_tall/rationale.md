@@ -39,7 +39,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed, ground contact 3616 mm² over Ø70.9.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a container; a plain cylinder with a flush lid is
+Compared with well-known products in this style: none of them is a container; a plain cylinder with a flush lid is
 a common form, and no product was used as a model.
 
 Safety (food): an FDM print is not a food-safe container. The layer lines hold residue and bacteria that washing does not remove,

@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: valid and watertight, no interference with the cables, fits a 256 bed; prints 42.7 × 26.7 × 24.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; this is a single
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; this is a single
 bent clip with no controls. Desk edge clips of this C shape are common; no product was used as a model.
 
 Safety: none of the listed hazards (no battery, light, heat, food contact or magnet). Do not hang heavy loads on the hook: the grip is

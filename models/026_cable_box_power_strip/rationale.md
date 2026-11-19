@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: cover and base valid and watertight, no interference (the strip included), fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; this is a closed
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; this is a closed
 storage box with no controls. Cable boxes of this shape are common; no product was used as a model.
 
 Safety (electricity, heat): printed PLA, PETG and ASA are not flame-retardant. Use a certified power strip with overcurrent protection,

@@ -42,7 +42,7 @@ Use cases:
 
 verify.py: stand valid and watertight, fits a 256 bed; ground contact 11593 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a stand; this is a plain block with one slot.
+Compared with well-known products in this style: none of them is a stand; this is a plain block with one slot.
 Slot stands for tablets are common; no product was used as a model.
 
 Not verified:

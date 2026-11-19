@@ -44,7 +44,7 @@ Slide check (the `motions` of model.json, swept by verify.py on every check): al
 0.88 mm³ (the ridge under the lid) from 1 to 60 mm out, free at 100; 0.3 further in, 5 mm³ (the stop).
 Down 0.25 free, 0.3 on the ring (29 mm³); up 0.3 free, 0.4 against the lip (6 mm³).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a case; a box with a sliding lid is a generic
+Compared with well-known products in this style: none of them is a case; a box with a sliding lid is a generic
 form, and no product was used as a model.
 
 Not verified:

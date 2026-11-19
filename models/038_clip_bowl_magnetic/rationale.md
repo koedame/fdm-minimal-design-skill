@@ -42,7 +42,7 @@ Use cases:
 
 verify.py: bowl and cover valid and watertight, no interference with the magnet, fit a 256 bed; ground contact 2400 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 bowl. Magnetic clip holders are a common desk item; no product was used as a model.
 
 Safety (magnets): a Ø20 neodymium magnet is strong; it is dangerous if swallowed and pinches skin between itself and steel. Keep it

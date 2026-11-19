@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: valid and watertight, fits a 256 bed (160 high), ground contact 3832 mm² over 126.9 × 30.3.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a wall pocket. A wall pocket for mail is a common form; no
+Compared with well-known products in this style: none is a wall pocket. A wall pocket for mail is a common form; no
 product was used as a model.
 
 Safety (wall mounting): the holder is made for letters, postcards and flyers; its strength has not been calculated or tested, so it

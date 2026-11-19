@@ -47,7 +47,7 @@ Use cases:
 
 verify.py: both parts valid and watertight, no interference, fit a 256 bed; ground contact 6713 mm² on the Ø92.5 plinth.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; none is a planter.
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; none is a planter.
 Self-watering planters with a wick and a reservoir are common; no product was used as a model.
 
 Safety (water, food): print in PETG, not PLA (PLA softens and breaks down when wet for months). Printed parts are not certified for food

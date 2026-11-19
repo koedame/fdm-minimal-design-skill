@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, no interference, fits a 256 bed, ground contact 4582 mm² over 62.9 × 78.9 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a light; the stepped profile with the switch strip
+Compared with well-known products in this style: none of them is a light; the stepped profile with the switch strip
 behind a cube is not taken from any product. No product was used as a model.
 
 Safety: this light holds LEDs and electronics powered over USB. Use a certified USB power supply and LED module, keep the LEDs'

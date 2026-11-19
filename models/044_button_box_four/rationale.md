@@ -56,7 +56,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): the calculator has a grid of many small round keys under a display;
+Compared with well-known products in this style: the calculator has a grid of many small round keys under a display;
 the radios have dials and a few keys among a grille. This is a single row of four large equal buttons on a plain box, with no display
 or grille. Button boxes and macro pads are a common kind of object; no product was used as a model.
 

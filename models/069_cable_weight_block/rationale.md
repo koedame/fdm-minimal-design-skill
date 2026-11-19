@@ -51,7 +51,7 @@ Use cases:
 
 verify.py: both printed parts valid, watertight, one solid each; no interference with the coins or the cables; motions as above.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a cable holder; they are housings with controls and
+Compared with well-known products in this style: none of them is a cable holder; they are housings with controls and
 grilles. Weighted cable holders for the desk are a common kind of object; no product was used as a model.
 
 Safety: no batteries, LEDs, magnets, heat or food. Coins are small parts: keep the filled block away from small children, who could open

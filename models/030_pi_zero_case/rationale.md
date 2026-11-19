@@ -51,7 +51,7 @@ Use cases:
 
 verify.py: body and lid valid and watertight, no interference with the board, fit a 256 bed; ground contact 2736 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; this is a closed
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; this is a closed
 case with ports and no controls. Small single-board computer cases with a sliding lid are common; no product was used as a model.
 
 Safety (heat, electricity): a Zero 2 W under load gets hot; the case has no fan. PLA softens at about 55–60 °C, so print in PETG if the

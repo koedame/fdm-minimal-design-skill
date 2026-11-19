@@ -52,7 +52,7 @@ Safety:
   only their own weight; the cord and the socket carry the lamp.
 - Check that the bulb's base and the socket's shell stay below about 50 °C after an hour on; if the cap is soft or discoloured, stop using it.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a lamp.
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a lamp.
 A drum shade with a sloped shoulder is a common pendant form; no product was used as a model.
 
 Not verified:

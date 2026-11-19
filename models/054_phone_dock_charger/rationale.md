@@ -56,7 +56,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; no interference with the plug.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a dock; the block with a groove shares only the
+Compared with well-known products in this style: none of them is a dock; the block with a groove shares only the
 general language. Phone docks with a cable led through the base are a common kind of object; no product was used as a model.
 
 Safety (electrical): the dock carries no electronics; it holds the plug of a cable. Use a certified cable and charger. Do not use a

@@ -53,7 +53,7 @@ Use cases:
 
 verify.py: both printed parts valid and watertight, one solid each; no interference (the tape included); fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a light channel. A U profile with a snap-on diffuser is the
+Compared with well-known products in this style: none is a light channel. A U profile with a snap-on diffuser is the
 generic form of an LED profile; no product was used as a model.
 
 Safety (LEDs, heat): PLA softens at about 55 °C. Use LED tape of moderate power (check its rating and how warm it gets), from a power

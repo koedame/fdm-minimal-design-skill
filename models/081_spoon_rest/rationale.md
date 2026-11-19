@@ -46,7 +46,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; fits a 256 bed; ground contact 9197 mm² over 140.5 × 68.5.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 kitchen tray or a spoon rest. A shallow tray with a notch for the handle is the common form of a spoon rest; no product was used as a
 model.
 

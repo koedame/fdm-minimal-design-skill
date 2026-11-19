@@ -61,8 +61,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid per part, no interference, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): SK 61 and SK 4 are radios with grilles and several controls; L 2 is a
-speaker. This is a plain box with a single knob on its front; it shares the general language (one material, rounded rectangle, one
+Compared with well-known products in this style: the radios among them have grilles and several controls, and one is a loudspeaker. This is a plain box with a single knob on its front; it shares the general language (one material, rounded rectangle, one
 control) and no specific layout. No product was used as a model.
 
 Safety: magnets: keep the loose magnets away from children (swallowed magnets are dangerous) and glue them in. Electronics on a 5–12 V

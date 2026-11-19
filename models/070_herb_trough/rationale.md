@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: both halves valid, watertight, one solid each, each fits a 256 bed; no interference.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a planter; they are housings with controls and grilles.
+Compared with well-known products in this style: none of them is a planter; they are housings with controls and grilles.
 Long window troughs are a common kind of object; no product was used as a model.
 
 Safety (water, food): print in PETG, not PLA (PLA softens and breaks down when wet for months). Printed parts are not certified for food

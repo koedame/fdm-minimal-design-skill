@@ -43,8 +43,7 @@ Use cases:
 
 verify.py: body and cap valid, watertight; fits a 256 bed; the cap lifts free, sits on the rim, and stops sideways at 0.4.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; the L 2 is a
-tall box, but a loudspeaker with a front grille, not a jar with a cap. A rounded-square jar with a cap is the common form of a swab
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; the loudspeaker among them is a tall box, but a loudspeaker with a front grille, not a jar with a cap. A rounded-square jar with a cap is the common form of a swab
 holder; no product was used as a model.
 
 Not verified:

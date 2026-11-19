@@ -55,7 +55,7 @@ Use cases:
 
 verify.py: hook and plate valid and watertight, one solid each; no interference; fit a 256 bed; every motion as recorded.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 hook. Under-desk headphone hooks are a common item; no product was used as a model.
 
 Safety (load): the hook is made for one pair of headphones (200–400 g); its strength has not been calculated or tested, and it is not

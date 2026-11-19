@@ -56,7 +56,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): the L 2 is an upright box loudspeaker with a grille across its whole
+Compared with well-known products in this style: the loudspeaker among them is an upright box with a grille across its whole
 front, and the radios are boxes with a perforated or slotted area; none is a tube on its side in a cradle. Cylindrical speakers are a
 common kind of object; no product was used as a model.
 

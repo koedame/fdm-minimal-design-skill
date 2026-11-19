@@ -53,7 +53,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 tray or hangs under a desk. Under-desk cable trays are a common kind of object; no product was used as a model.
 
 Safety (electricity, heat, load): a power strip or adapters in the tray stay warm; leave room around them, print in PETG, and do not

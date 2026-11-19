@@ -46,7 +46,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid per part, 4 separate coasters, no interference.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a tray or a coaster; the dark plate in a light
+Compared with well-known products in this style: none of them is a tray or a coaster; the dark plate in a light
 frame is a general contrast of secondary and body colour, not any product's layout. Coaster sets in a holder are a common kind of
 object; no product was used as a model.
 

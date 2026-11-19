@@ -45,7 +45,7 @@ Use cases:
 
 verify.py: all parts valid and watertight, one solid each, no interference, fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a tray or a box with
+Compared with well-known products in this style: radios, a calculator and a loudspeaker; none is a tray or a box with
 compartments. Jewelry boxes with ring slots are a common kind of object; no product was used as a model.
 
 Not verified:

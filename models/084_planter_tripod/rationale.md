@@ -51,7 +51,7 @@ Use cases:
 
 verify.py: pot and legs valid and watertight, three separate legs; no interference with the dowels; fit a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 planter. A pot on splayed legs is a common kind of object; no product was used as a model.
 
 Safety: the pot holds water. Check that no water stands on furniture that it can damage; the printed pot is not proven watertight.

@@ -43,7 +43,7 @@ Use cases:
 
 verify.py: body and lid valid and watertight, no interference, fit a 256 bed; ground contact 4293 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 box. Small boxes with a sliding lid and fixed compartments are common; no product was used as a model.
 
 Safety (food): this is not a pill box. Printed PLA or PETG has layer gaps that hold dirt and cannot be cleaned like a moulded part; do

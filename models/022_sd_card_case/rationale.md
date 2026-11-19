@@ -46,7 +46,7 @@ verify.py: both parts valid and watertight, no interference, fit a 256 bed; grou
 Motions: the lid lifts with the bumps pushed over the lid wall at 1–10 mm (8.35 mm³, under 10), is free at 11.5–14 mm, stops on the
 shoulder (0.3 down) and is located sideways by the neck (free at 0.2, stopped at 0.4).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; none is a small
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; none is a small
 storage case. Card cases with a lift-off lid are common; no product was used as a model.
 
 Not verified:

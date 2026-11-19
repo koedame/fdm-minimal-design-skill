@@ -53,7 +53,7 @@ Use cases:
 
 verify.py: both printed parts valid, watertight, one solid each; no interference with the label.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a label holder or a clip. Clip-on shelf label holders are a
+Compared with well-known products in this style: none is a label holder or a clip. Clip-on shelf label holders are a
 common kind of object; no product was used as a model.
 
 Not verified:

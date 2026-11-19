@@ -53,7 +53,7 @@ Use cases:
 verify.py: all printed parts valid and watertight, no interference, fit a 256 bed, ground contact 3450 mm² on the base; the knob
 slides +8 mm along the slot against the base with 0 overlap.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a light. Half-cylinder wall lights are a common
+Compared with well-known products in this style: none of them is a light. Half-cylinder wall lights are a common
 form; this one follows 10_lantern's tiers and was not modelled on a product.
 
 Safety (light, electronics, wall mounting): this sconce holds an LED module and a switch powered over USB. Use a certified USB power

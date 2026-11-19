@@ -55,7 +55,7 @@ Use cases:
 verify.py: base and deck valid and watertight, one solid each; no interference with the board; fit a 256 bed; the deck's motions as
 recorded.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 board mount. A tray with standoffs is the common way to hold a board; no product was used as a model.
 
 Safety (electronics): the printed parts are not certified for anything. Power the board from a supply of a trustworthy source with its

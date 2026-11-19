@@ -46,7 +46,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; contact area 12895 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a tray; they are housings with controls and grilles.
+Compared with well-known products in this style: none of them is a tray; they are housings with controls and grilles.
 Divided trays with hand notches are a common kind of object; no product was used as a model.
 
 Safety: the tray has no batteries, LEDs, magnets or heat of its own. It is not meant for food.

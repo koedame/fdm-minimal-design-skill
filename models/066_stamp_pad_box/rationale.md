@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: both printed parts valid, watertight, one solid each; no interference with the pad or the seal; motions as above.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a box for small things; they are housings with
+Compared with well-known products in this style: none of them is a box for small things; they are housings with
 controls and grilles. Boxes for a seal and an ink pad are a common kind of object; no product was used as a model.
 
 Safety: the box has no batteries, LEDs, magnets or heat of its own. Ink pads contain oil-based ink; the box is not meant for food.

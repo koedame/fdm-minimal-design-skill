@@ -42,7 +42,7 @@ Use cases:
 verify.py: all parts valid and watertight, no interference (the driver reference included), fits a 256 bed, ground contact
 6688 mm² over 79.1 × 95.1 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): the L 2 and other speakers of that family are upright boxes with
+Compared with well-known products in this style: the loudspeakers among them are upright boxes with
 a perforated front; this has a leaning front, a slot field square to the slope and no visible panel or frame. No product was used
 as a model.
 

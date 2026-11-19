@@ -57,7 +57,7 @@ Use cases:
 
 verify.py: all printed parts valid, watertight, one solid each; no interference with the bits or the magnets; contact area 3630 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a case with a lid.
+Compared with well-known products in this style: radios, a calculator and a loudspeaker; none is a case with a lid.
 Bit cases with a hinged lid are a common kind of object; no product was used as a model.
 
 Safety (magnets): the magnets are small; keep the case away from small children who could swallow a magnet that comes loose, and glue

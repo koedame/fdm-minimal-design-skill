@@ -44,7 +44,7 @@ Use cases:
 verify.py: valid, watertight; fits a 256 bed; the pot's envelope (rim Ø60, base Ø45, 55 high, on the ribs) does not touch the pocket
 (checked in the review, 0 mm³).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none hangs on a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none hangs on a
 wall or holds a plant. A cube planter is the common form; no product was used as a model.
 
 Safety (load, water): with a wet pot the pocket carries about 400 g, more with water standing in it; its strength has not been

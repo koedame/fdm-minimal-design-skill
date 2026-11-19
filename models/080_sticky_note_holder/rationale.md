@@ -45,7 +45,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; no interference with the pad; contact area 7169 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is a holder or a tray. Square trays for sticky notes are a common
+Compared with well-known products in this style: none is a holder or a tray. Square trays for sticky notes are a common
 kind of object; no product was used as a model.
 
 Not verified:

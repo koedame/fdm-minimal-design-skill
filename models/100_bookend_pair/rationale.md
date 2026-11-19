@@ -42,7 +42,7 @@ Use cases:
 
 verify.py: bookend valid, watertight, fits a 256 bed on its side; the two copies do not touch; both stand on their bases.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker; none is a
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker; none is a
 bookend. An L-shaped bookend is the common form; no product was used as a model.
 
 Not verified:

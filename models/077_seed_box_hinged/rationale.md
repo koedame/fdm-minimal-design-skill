@@ -59,7 +59,7 @@ Use cases:
 
 verify.py: both printed parts valid, watertight, one solid each; no interference with the magnets; contact area 9563 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a calculator and a loudspeaker; none is a box with cells or a
+Compared with well-known products in this style: radios, a calculator and a loudspeaker; none is a box with cells or a
 lid. Divided boxes with a hinged lid are a common kind of object; no product was used as a model.
 
 Safety (magnets, seeds): the magnets are small; keep the box away from small children who could swallow a magnet that comes loose, and

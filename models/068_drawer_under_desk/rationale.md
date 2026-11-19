@@ -51,7 +51,7 @@ Use cases:
 
 verify.py: both parts valid, watertight, one solid each; no interference closed; motions as above.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a drawer; they are housings with controls and grilles.
+Compared with well-known products in this style: none of them is a drawer; they are housings with controls and grilles.
 Under-desk drawers on rails are a common kind of object; no product was used as a model.
 
 Safety: no batteries, LEDs, magnets, heat or food. Screw the housing into solid wood or a solid board with screws that suit it; do not

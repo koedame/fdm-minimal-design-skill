@@ -44,7 +44,7 @@ verify.py: both parts valid and watertight, no interference, fit a 256 bed; grou
 Motions: the lid lifts free over 0–13 mm, stops on the shoulder (0.3 down: 167 mm³ overlap), and the neck catches it sideways at
 0.4 in X and Y (free at 0.2).
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): they are radios, a pocket radio and a calculator; none is a
+Compared with well-known products in this style: they are radios, a pocket radio and a calculator; none is a
 container. A square caddy with a flush lid is a common form; no product was used as a model.
 
 Safety (food): printed PLA or PETG is not certified for food contact, and layer lines hold dust and oils. Keep loose tea in a

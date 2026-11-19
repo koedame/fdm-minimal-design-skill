@@ -25,6 +25,13 @@ def test_no_python_code_or_comment_contains_braun_or_rams():
     assert hits == []
 
 
+def test_no_model_document_names_braun_or_rams():
+    # The look-alike check in each rationale.md describes products by kind, not by brand.
+    hits = [str(p.relative_to(ROOT)) for p in (ROOT / "models").rglob("*.md")
+            if BRAND.search(p.read_text(encoding="utf-8"))]
+    assert hits == []
+
+
 def test_the_skill_name_in_skill_md_is_neutral_and_matches_its_folder():
     front = SKILL.joinpath("SKILL.md").read_text(encoding="utf-8").split("---")[1]
     name = re.search(r"^name:\s*(\S+)", front, re.M).group(1)

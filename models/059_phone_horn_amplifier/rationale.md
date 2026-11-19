@@ -47,7 +47,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a phone horn; L 2 is a powered speaker. Passive phone
+Compared with well-known products in this style: none of them is a phone horn; the loudspeaker among them is a powered speaker. Passive phone
 horns are a common kind of object; this one is a plain block with one slot and one mouth. No product was used as a model.
 
 Safety: no batteries, LEDs, magnets or heat; the phone may warm up while playing, which PLA tolerates. Do not charge the phone in it with

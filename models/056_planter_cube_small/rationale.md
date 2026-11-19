@@ -46,7 +46,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid, fits a 256 bed.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a planter; a circle in a square is a general figure
+Compared with well-known products in this style: none of them is a planter; a circle in a square is a general figure
 and appears on none of them as the main element. Cube planters with a round bore are a common kind of object; no product was used as a
 model.
 

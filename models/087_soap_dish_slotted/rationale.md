@@ -50,8 +50,8 @@ Use cases:
 
 verify.py: valid, watertight, one solid; fits a 256 bed; ground contact 8201 mm² over 108.5 × 76.5.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): radios, a pocket radio, a calculator and a loudspeaker. The vertical
-slots echo the loudspeaker grilles of that family in idea only; none of them is a dish or a tray, and the slots here are drains sized for
+Compared with well-known products in this style: radios, a pocket radio, a calculator and a loudspeaker. The vertical
+slots echo the loudspeaker grilles of those products in idea only; none of them is a dish or a tray, and the slots here are drains sized for
 water. A tray with ribs and a drain is the common form of a soap dish; no product was used as a model.
 
 Not verified:

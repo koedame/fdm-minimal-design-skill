@@ -53,7 +53,7 @@ Use cases:
 verify.py: both printed parts valid and watertight, one solid each; no interference (the magnets included); fit a 256 bed; ground contact
 13996 mm² for the three trays.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none is an organiser. Square trays on a grid are a common kind of object;
+Compared with well-known products in this style: none is an organiser. Square trays on a grid are a common kind of object;
 no product was used as a model.
 
 Safety (magnets): 28 small magnets. Keep the trays away from small children who could swallow a magnet that comes loose, and glue every

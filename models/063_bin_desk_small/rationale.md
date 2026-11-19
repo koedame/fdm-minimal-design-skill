@@ -50,7 +50,7 @@ Use cases:
 
 verify.py: valid, watertight, one solid; contact area 8130 mm².
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a container; they are housings with controls,
+Compared with well-known products in this style: none of them is a container; they are housings with controls,
 grilles or perforation. Square desk bins are a common kind of object; no product was used as a model.
 
 Safety: the bin has no batteries, LEDs, magnets or heat of its own. PLA softens at about 60 °C: do not put hot ash or matches in it.

@@ -36,7 +36,7 @@ Use cases:
 
 verify.py: valid and watertight, no interference, fits a 256 bed, ground contact 4221 mm² over 73.4 mm.
 
-Compared with well-known products (SK 4, T 3, ET 66, SK 61, L 2): none of them is a tray; stacking dishes on a conical seat are a
+Compared with well-known products in this style: none of them is a tray; stacking dishes on a conical seat are a
 common household form, and no product was used as a model.
 
 Not verified:
