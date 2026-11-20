@@ -56,7 +56,9 @@ is installed (see [Environment](#environment)).
 ## Environment
 
 The scripts need Python 3.11 or later. The tested versions are pinned in `requirements.txt`.
-On Linux without a display, `render.py` needs OSMesa or EGL (`sudo apt-get install libosmesa6` on Debian and Ubuntu).
+On Linux, CadQuery needs the OpenGL library (`libGL.so.1`) and a font (the samples carve text), and on a machine without a display
+`render.py` needs OSMesa or EGL. On Debian and Ubuntu: `sudo apt-get install libgl1 libosmesa6 fonts-dejavu-core`.
+A desktop install usually has them already; a minimal image or container does not.
 
 ```bash
 python -m venv .venv
@@ -142,7 +144,7 @@ Everything here is provided as is, without warranty (see the licences). In parti
 Issues and pull requests are welcome. A contribution is published under the licence of the part it changes (MIT for
 code and documents, CC BY 4.0 for models and images); open a pull request only with work you made yourself and may
 publish that way. New models must be original designs: do not copy the shape, name or logo of a specific product.
-CI must pass (the same checks as `.github/workflows/ci.yml`).
+CI must pass (the same checks as `.github/workflows/ci.yml`). See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Security
 
