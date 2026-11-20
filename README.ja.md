@@ -55,7 +55,8 @@ cp -r fdm-minimal-design-skill/skills/fdm-minimal-design ~/.claude/skills/
 ## 環境
 
 スクリプトには Python 3.11 以上が要る。確かめた版は `requirements.txt` に固定してある。
-画面の無い Linux では、`render.py` に OSMesa か EGL が要る（Debian・Ubuntu なら `sudo apt-get install libosmesa6`）。
+Linux では、CadQuery に OpenGL ライブラリ（`libGL.so.1`）とフォント（サンプルが文字を彫る）が要り、画面の無い環境では `render.py` に OSMesa か EGL が要る。
+Debian・Ubuntu なら `sudo apt-get install libgl1 libosmesa6 fonts-dejavu-core`。デスクトップ環境には普通入っているが、最小のイメージやコンテナには入っていない。
 
 ```bash
 python -m venv .venv
@@ -125,7 +126,7 @@ tests/                       道具のテスト（pytest）とビューワーの
 
 ## 貢献
 
-Issue とプルリクエストを歓迎する。貢献は、変えた部分のライセンス（コードと文書は MIT、モデルと画像は CC BY 4.0）で公開する。自分で作り、そのライセンスで公開してよいものだけを出すこと。新しいモデルはオリジナルの設計にし、特定の製品の形・名前・ロゴを写さないこと。CI（`.github/workflows/ci.yml` と同じ検査）が通ること。
+Issue とプルリクエストを歓迎する。貢献は、変えた部分のライセンス（コードと文書は MIT、モデルと画像は CC BY 4.0）で公開する。自分で作り、そのライセンスで公開してよいものだけを出すこと。新しいモデルはオリジナルの設計にし、特定の製品の形・名前・ロゴを写さないこと。CI（`.github/workflows/ci.yml` と同じ検査）が通ること。詳しくは [CONTRIBUTING.md](CONTRIBUTING.md)（英語）。
 
 ## セキュリティ
 
