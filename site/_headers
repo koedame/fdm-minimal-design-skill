@@ -1,5 +1,6 @@
 # Response headers of the website. Cloudflare reads _headers from the built folder; tools/build_site.py copies this
-# file there and fills in the hash of the inline style the pages share (they have no inline script).
+# file there and fills in the hash of the inline style the pages share (their only inline scripts are data blocks,
+# which do not run).
 # tests/test_site.py pins the content: loosen a rule only together with its test and the reason.
 /*
   Content-Security-Policy: default-src 'none'; script-src 'self'; style-src 'self' __STYLE_HASHES__; img-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
@@ -11,3 +12,12 @@
 # models are under /models/, apart from these, so this rule cannot make a page a download.
 /downloads/*
   Content-Disposition: attachment
+# For agents: llms.txt and the Markdown version of each page. They hold "×", "—" and "°", so they say they are UTF-8
+# (Cloudflare sends text/plain and text/markdown without a charset). A placeholder matches one segment, so the rule
+# reaches the Markdown files and not the pages beside them.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+/index.md
+  Content-Type: text/markdown; charset=utf-8
+/models/:id/index.md
+  Content-Type: text/markdown; charset=utf-8

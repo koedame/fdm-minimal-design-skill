@@ -139,7 +139,7 @@ def test_when_a_part_name_holds_html_it_is_text_in_the_table_and_does_not_end_th
     entries = three_models(built)
     entries[0]["parts"][0]["name"] = '</script><img src=x onerror=alert(1)>'
     html = site_tool.model_page(entries, 0, {})
-    assert "<img src=x" not in html and html.count("</script>") == 2
+    assert "<img src=x" not in html and html.count("</script>") == 3   # JSON-LD, the data block and site.js
     assert model_data(html)["parts"][0]["name"] == '</script><img src=x onerror=alert(1)>'
     assert "&lt;/script&gt;&lt;img src=x onerror=alert(1)&gt;" in html
 
@@ -192,13 +192,14 @@ def test_when_a_model_has_several_parts_its_page_data_holds_each_with_colour_qty
 
 
 def loads(html):
-    """What a page makes the browser read: (tag, address) of every src, and of every <link> but the canonical."""
+    """What a page makes the browser read: (tag, address) of every src, and of every <link> but the canonical and the
+    Markdown version (addresses of the page, not files the browser fetches)."""
     found = []
     for tag, a in tags(html):
         for k in ("src", "srcset", "data", "poster", "action", "background"):
             if k in a:
                 found.append((tag, a[k]))
-        if tag == "link" and a.get("rel") != "canonical":
+        if tag == "link" and a.get("rel") not in ("canonical", "alternate"):
             found.append((tag, a.get("href")))
     return sorted(found)
 
@@ -293,7 +294,7 @@ def test_when_a_title_holds_html_it_is_shown_as_text_on_the_list_and_on_the_mode
         assert "<b class" not in html and shown in html
     page = model_html(odd, "001_pen_cup")
     assert f"<title>{shown} — " in page and f'<h1 class="mhead"><span class="num">001</span> {shown}</h1>' in page
-    assert page.count("</script>") == 2   # the data block and site.js, nothing ended early
+    assert page.count("</script>") == 3   # JSON-LD, the data block and site.js, nothing ended early
     assert head_tags(page)["og:title"].startswith('</script><b class="x">Cup & "co"</b>')
 
 
@@ -350,7 +351,7 @@ def test_when_a_page_is_served_its_csp_allows_only_files_of_this_site_and_the_on
                    for body in re.findall(r"<style>(.*?)</style>", page, re.S)}
         scripts = [a for t, a in tags(page) if t == "script"]
         # a script is a file of this site or a JSON data block, which the browser does not run
-        assert all(a.get("src") or a.get("type") == "application/json" for a in scripts), name
+        assert all(a.get("src") or a.get("type") in ("application/json", "application/ld+json") for a in scripts), name
         assert not re.search(r"<[^>]+\s(on[a-z]+|style)=", page), name   # no event handler or style attribute
     assert len(styles) == 1   # the same for every page, so the header stays one hash for any number of models
     assert policy["default-src"] == ["'none'"]
@@ -412,3 +413,102 @@ def test_when_a_safety_paragraph_has_no_hazard_list_or_is_a_bulleted_list_it_is_
     assert site_tool.safety_notes(rationale) == [
         "Safety: a CR2032 cell. Keep cells away from children. Use a locking holder.",
         "Safety: Food contact: dry salt only. Not for the dishwasher."]
+
+
+def test_when_robots_txt_is_read_the_pages_may_be_searched_and_quoted_by_ai_but_not_trained_on(built):
+    out, _, _ = built
+    lines = (out / "robots.txt").read_text(encoding="utf-8").splitlines()
+    group = lines[:lines.index("")]   # the User-agent: * group, before the Sitemap
+    assert group == ["User-agent: *", "Content-Signal: search=yes, ai-input=yes, ai-train=no", "Disallow: /downloads/"]
+
+
+def test_when_an_agent_reads_llms_txt_it_gets_the_site_in_one_quote_and_the_markdown_of_every_page(built):
+    out, entries, _ = built
+    text = (out / "llms.txt").read_text(encoding="utf-8")
+    lines = text.splitlines()
+    assert lines[0] == "# fdm-minimal-design" and lines[2] == "> " + site_tool.HOME_DESCRIPTION
+    links = re.findall(r"^- \[[^\]]+\]\((https://[^)]+)\)", text, re.M)
+    md_pages = [f"{site_tool.SITE_URL}/models/{e['id']}/index.md" for e in entries]
+    assert links == [site_tool.SITE_URL + "/index.md"] + md_pages + [site_tool.REPO_URL]
+    for url in links[:-1]:
+        assert (out / url.removeprefix(site_tool.SITE_URL + "/")).is_file(), url
+    assert text.index("## Models") < text.index("Pen cup") < text.index("## Samples") < text.index("Tray")
+
+
+def test_when_a_page_is_read_by_an_agent_its_head_points_to_a_markdown_version_that_holds_the_same_content(built):
+    out, entries, html = built
+    alt = lambda page: [a["href"] for t, a in tags(page) if t == "link" and a.get("rel") == "alternate"   # noqa: E731
+                        and a.get("type") == "text/markdown"]
+    assert alt(html) == ["/index.md"]
+    home = (out / "index.md").read_text(encoding="utf-8")
+    assert home.startswith("# fdm-minimal-design\n") and "<" not in home.replace("<!--", "")
+    lead = re.search(r'<p class="lead">(.*?)</p>', html, re.S).group(1)
+    assert " ".join(lead.split()) in " ".join(home.split())   # the same introduction as the page
+    for e in entries:
+        page = model_html(out, e["id"])
+        assert alt(page) == [f"/models/{e['id']}/index.md"]
+        text = (out / "models" / e["id"] / "index.md").read_text(encoding="utf-8")
+        assert text.startswith(f"# {e['number']} {e['title']}\n")
+        assert f"{site_tool.SITE_URL}/models/{e['id']}/" in text and "](/" not in text   # absolute addresses only
+        rows = re.findall(r"^\| (?!Part \||---)([^|]+) \|", text, re.M)
+        assert rows == [p["name"].replace("_", " ") for p in model_data(page)["parts"]]
+        downloads = re.findall(r"\]\((https://[^)]+/downloads/[^)]+)\)", text)
+        assert downloads == [site_tool.SITE_URL + a["href"] for t, a in tags(page) if t == "a" and "download" in a]
+        assert "## No warranty\n\nProvided as is." in text and "__" not in text
+
+
+def test_when_a_title_or_safety_note_holds_html_or_markdown_the_markdown_version_shows_it_as_text(odd):
+    text = (odd / "models" / "001_pen_cup" / "index.md").read_text(encoding="utf-8")
+    assert text.startswith(r'# 001 \</script\>\<b class="x"\>Cup & "co"\</b\>' + "\n")
+    assert r"keep it \<b\>below\</b\> 50 °C & dry." in text
+    assert site_tool.md("a *b* [c](d) | e_f `g`") == r"a \*b\* \[c\](d) \| e\_f \`g\`"
+
+
+def json_ld(html):
+    blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', html, re.S)
+    assert len(blocks) == 1
+    return json.loads(blocks[0])
+
+
+def test_when_the_home_page_is_read_by_a_machine_its_json_ld_names_the_site_the_skill_and_every_model_page(built):
+    out, entries, html = built
+    graph = {n["@type"]: n for n in json_ld(html)["@graph"]}
+    assert set(graph) == {"WebSite", "SoftwareSourceCode", "ItemList"}
+    assert graph["WebSite"]["url"] == head_tags(html)["canonical"]
+    assert graph["SoftwareSourceCode"]["codeRepository"] == site_tool.REPO_URL
+    items = graph["ItemList"]["itemListElement"]
+    assert [i["url"] for i in items] == [f"{site_tool.SITE_URL}/models/{e['id']}/" for e in entries]
+    assert [i["position"] for i in items] == list(range(1, len(entries) + 1))
+
+
+def test_when_a_model_page_is_read_by_a_machine_its_json_ld_is_a_3d_model_with_its_downloads_and_licence(built):
+    out, entries, _ = built
+    for e in entries:
+        page = model_html(out, e["id"])
+        ld, meta = json_ld(page), head_tags(page)
+        assert ld["@type"] == "3DModel" and ld["name"] == e["title"] and ld["url"] == meta["canonical"]
+        assert ld["description"] == meta["description"] and ld["image"] == meta["og:image"]
+        assert ld["license"] == "https://creativecommons.org/licenses/by/4.0/"
+        assert [m["contentUrl"] for m in ld["encoding"]] == [
+            site_tool.SITE_URL + a["href"] for t, a in tags(page) if t == "a" and "download" in a]
+        assert {m["encodingFormat"] for m in ld["encoding"]} == {"model/step", "application/zip", "text/html"}
+
+
+def test_when_a_title_holds_html_the_json_ld_keeps_it_as_data_and_does_not_end_the_script(odd):
+    for html in ((odd / "index.html").read_text(encoding="utf-8"), model_html(odd, "001_pen_cup")):
+        ld = json_ld(html)
+        names = [ld["name"]] if "name" in ld else [i["name"] for n in ld["@graph"] if n["@type"] == "ItemList"
+                                                   for i in n["itemListElement"]]
+        assert names == ['</script><b class="x">Cup & "co"</b>']
+
+
+def test_when_llms_txt_or_a_markdown_version_is_served_it_says_it_is_utf_8_and_the_pages_keep_their_type(built):
+    out, entries, _ = built
+    rules = response_headers(out)
+    assert rules["/llms.txt"] == {"Content-Type": "text/plain; charset=utf-8"}
+    assert rules["/index.md"] == rules["/models/:id/index.md"] == {"Content-Type": "text/markdown; charset=utf-8"}
+    assert [p for p, h in rules.items() if "Content-Type" in h] == ["/llms.txt", "/index.md", "/models/:id/index.md"]
+    for e in entries:   # the placeholder pattern reaches exactly the Markdown file of each model
+        pattern = re.compile("^" + re.escape("/models/:id/index.md").replace(re.escape(":id"), "[^/]+") + "$")
+        assert pattern.match(f"/models/{e['id']}/index.md") and not pattern.match(f"/models/{e['id']}/")
+    assert "×" in (out / "models" / entries[0]["id"] / "index.md").read_text(encoding="utf-8")   # the charset matters
