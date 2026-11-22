@@ -90,7 +90,10 @@ python tools/build_site.py --out build/site 001_pen_cup 06_radio  # only these
 writes a static site: a home page that introduces the skill and lists the models and samples, and a page for each
 one at `/models/<id>/` with its parts, its STEP, print STLs (zip) and viewer HTML to download, and its 3D view (the
 viewer of `viewer.py`). Each page has its own title, description and preview image for search engines and shared
-links, and is complete without JavaScript; `sitemap.xml` lists them. The list is built from `models/`, so a new
+links, and is complete without JavaScript; `sitemap.xml` lists them. For agents, each page also has a Markdown
+version (`index.md` beside it, named in the page's head) and schema.org data (JSON-LD), `llms.txt` lists the
+Markdown versions, and `robots.txt` says the pages may be searched and quoted by AI but not used to train it
+(Content-Signal). The list is built from `models/`, so a new
 model needs no change to the site. The pages read nothing from other servers; the folder also holds `_headers` (the
 response headers: a Content Security Policy that allows only the site's own files, and the downloads under
 `/downloads/` sent as attachments), `404.html` and `.well-known/security.txt`. Serve the folder from any static host

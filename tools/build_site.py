@@ -9,8 +9,11 @@ The list is built from models/ (model.json, preview.png, design.py) and from the
 new model needs no change here. The output is plain files for any static host:
 
   index.html                 the home page; the list links to the page of each model
+  index.md                   the home page in Markdown, for agents (<link rel="alternate" type="text/markdown">)
+  llms.txt                   what the site is and the Markdown version of every model page, for agents
   models/<id>/index.html     the page of one model (/models/<id>/): its name, parts and downloads are in the HTML,
                              so it reads without JavaScript; site.js adds the 3D view
+  models/<id>/index.md       the same page in Markdown (site/model.md)
   models/<id>/thumb.webp     list image
   models/<id>/preview.png    the still shown until the 3D view is ready, and the image of a shared link (og:image)
   models/<id>/model.glb      meshes for the 3D view
@@ -22,12 +25,15 @@ new model needs no change here. The output is plain files for any static host:
   viewer/                    three.min.js, fdm-viewer.js (the 3D view of scripts/viewer.py), part-menu.js, dimensions.js,
                              three.js licence
   404.html                   sent with status 404 for any other address (wrangler.jsonc: not_found_handling)
-  sitemap.xml, robots.txt    the home page and every model page, for search engines
-  _headers                   response headers for Cloudflare (CSP with the hash of the inline style)
+  sitemap.xml, robots.txt    the home page and every model page, for search engines; robots.txt also says what the
+                             pages may be used for (Content-Signal)
+  _headers                   response headers for Cloudflare (CSP with the hash of the inline style, UTF-8 for
+                             llms.txt and the Markdown files)
   .well-known/security.txt   where to report a vulnerability
 
-Every page has the same inline style (site/style.css) and no inline script (a model's data for the 3D view is a
-JSON data block, which is not run), so the CSP allows one style hash and scripts from this site only. Nothing on the
+Every page has the same inline style (site/style.css) and no inline script that runs: a model's data for the 3D view
+and the structured data of each page (schema.org, JSON-LD) are data blocks, which the browser does not run and the CSP
+does not apply to. So the CSP allows one style hash and scripts from this site only. Nothing on the
 pages is read from another server: no fonts, scripts or analytics from outside.
 """
 import argparse
@@ -208,12 +214,14 @@ def section(group, entries, heading, lead, empty):
             f'<p class="lead2">{lead}</p>\n<ul class="grid">\n{cards}\n</ul>\n</section>')
 
 
-def head(title, description, path, image=None):
-    """<title>, description, canonical address and the tags of a shared link (Open Graph, X) of one page."""
+def head(title, description, path, ld, image=None):
+    """<title>, description, canonical address, the Markdown version, the tags of a shared link (Open Graph, X) and
+    the structured data (ld, JSON-LD) of one page."""
     url = SITE_URL + path
     tags = [f"<title>{escape(title)}</title>",
             f'<meta name="description" content="{escape(description)}">',
             f'<link rel="canonical" href="{escape(url)}">',
+            f'<link rel="alternate" type="text/markdown" href="{escape(markdown_path(path))}">',
             f'<meta property="og:site_name" content="{SITE_NAME}">',
             f'<meta property="og:type" content="website">',
             f'<meta property="og:title" content="{escape(title)}">',
@@ -225,31 +233,84 @@ def head(title, description, path, image=None):
                  f'<meta property="og:image:width" content="{w}">', f'<meta property="og:image:height" content="{h}">',
                  f'<meta property="og:image:alt" content="{escape(alt)}">',
                  '<meta name="twitter:card" content="summary_large_image">']
+    tags.append(f'<script type="application/ld+json">{data_block(ld)}</script>')
     return "\n".join(tags)
+
+
+def data_block(value):
+    """JSON for the inside of a <script> data block: no "<", so no text can end the block or open a comment."""
+    return json.dumps(value, separators=(",", ":")).replace("<", "\\u003c")
+
+
+def markdown_path(path):
+    """The Markdown version of the page at path ("/" -> "/index.md", "/models/<id>/" -> "/models/<id>/index.md")."""
+    return path + "index.md"
+
+
+WEBSITE_ID = SITE_URL + "/#website"
+CREATOR = {"@type": "Organization", "name": "koedame"}
+LICENCE_MODELS = "https://creativecommons.org/licenses/by/4.0/"
+INTRO = "An agent skill that designs minimalist objects for FDM 3D printing"
+
+
+def home_ld(entries, description):
+    """The site, the skill and the list of the model pages."""
+    return {"@context": "https://schema.org", "@graph": [
+        {"@type": "WebSite", "@id": WEBSITE_ID, "name": SITE_NAME, "url": SITE_URL + "/", "description": description,
+         "inLanguage": "en", "creator": CREATOR},
+        {"@type": "SoftwareSourceCode", "name": SITE_NAME, "description": INTRO + ".", "codeRepository": REPO_URL,
+         "programmingLanguage": "Python", "license": REPO_URL + "/blob/main/LICENSE", "creator": CREATOR},
+        {"@type": "ItemList", "name": "Models and samples", "numberOfItems": len(entries),
+         "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": e["title"],
+                              "url": SITE_URL + page_path(e["id"])} for i, e in enumerate(entries)]},
+    ]}
+
+
+ENCODING_FORMATS = {"step": "model/step", "stl": "application/zip", "viewer": "text/html"}
+
+
+def model_ld(e, built_ids, description):
+    """One model as a schema.org 3DModel, with its downloads as its encodings."""
+    mid = e["id"]
+    ld = {"@context": "https://schema.org", "@type": "3DModel", "name": e["title"], "description": description,
+          "url": SITE_URL + page_path(mid), "image": f"{SITE_URL}/models/{mid}/preview.png",
+          "license": LICENCE_MODELS, "creator": CREATOR, "isPartOf": {"@id": WEBSITE_ID},
+          "encoding": [{"@type": "MediaObject", "name": DOWNLOAD_LABELS[k], "encodingFormat": ENCODING_FORMATS[k],
+                        "contentUrl": f"{SITE_URL}/downloads/{mid}/{d['file']}", "contentSize": f"{d['bytes']} B"}
+                       for k in DOWNLOAD_LABELS for d in [e["downloads"][k]]]}
+    based = [SITE_URL + page_path(s) for s in e["based_on"] if s in built_ids]
+    if based:
+        ld["isBasedOn"] = based
+    return ld
 
 
 def fill(template, values):
     """The template of site/ with each placeholder replaced; stops when the template lacks one."""
-    html = (SITE_DIR / template).read_text(encoding="utf-8")
-    values = {"<!--STYLE-->": f"<style>\n{(SITE_DIR / 'style.css').read_text(encoding='utf-8')}</style>",
-              "__REPO__": REPO_URL, **values}
-    missing = [k for k in values if k not in html]
+    text = (SITE_DIR / template).read_text(encoding="utf-8")
+    common = {"__REPO__": REPO_URL}
+    if template.endswith(".html"):
+        common["<!--STYLE-->"] = f"<style>\n{(SITE_DIR / 'style.css').read_text(encoding='utf-8')}</style>"
+    values = {**common, **values}
+    missing = [k for k in values if k not in text]
     if missing:
         raise SystemExit(f"site/{template} has no {missing}")
-    return re.sub("|".join(map(re.escape, values)), lambda m: values[m.group(0)], html)
+    return re.sub("|".join(map(re.escape, values)), lambda m: values[m.group(0)], text)
 
 
 def no_warranty():
     return (SITE_DIR / "no-warranty.html").read_text(encoding="utf-8").strip()
 
 
+HOME_DESCRIPTION = (INTRO + ", and the models designed with it, in 3D, with STEP and print-ready STL files to "
+                    "download.")
+
+
 def page(entries):
     samples = [e for e in entries if e["group"] == "samples"]
     made = [e for e in entries if e["group"] == "models"]
     return fill("index.html", {
-        "<!--HEAD-->": head(f"{SITE_NAME} — an agent skill for minimal objects printed in FDM",
-                            "An agent skill that designs minimalist objects for FDM 3D printing, and the models designed "
-                            "with it, in 3D, with STEP and print-ready STL files to download.", "/"),
+        "<!--HEAD-->": head(f"{SITE_NAME} — an agent skill for minimal objects printed in FDM", HOME_DESCRIPTION, "/",
+                            home_ld(entries, HOME_DESCRIPTION)),
         "<!--MODELS-->": section("models", made, "Models", "Designed with the skill. Select one to turn it in 3D.",
                                  "None yet. The samples below show what the skill makes."),
         "<!--SAMPLES-->": section("samples", samples, "Samples",
@@ -262,16 +323,25 @@ def page(entries):
 DOWNLOAD_LABELS = {"step": "STEP assembly", "stl": "STL for printing (zip)", "viewer": "3D viewer (HTML, works offline)"}
 
 
-def facts(e, built_titles, sample_titles):
-    """The line under the summary: size, parts, the samples it is based on (linked when built), mechanisms, printed."""
+def html_link(text, path):
+    return f'<a href="{escape(path)}">{escape(text)}</a>'
+
+
+def md_link(text, path):
+    return f"[{md(text)}]({SITE_URL + path})"
+
+
+def facts(e, built_titles, sample_titles, esc=escape, link=html_link):
+    """The line under the summary: size, parts, the samples it is based on (linked when built), mechanisms, printed.
+    esc and link write it as HTML (the page) or as Markdown (md, md_link)."""
     n = len(e["parts"])
-    out = [escape(f"{dims(e['size'])} mm"), f"{n} part{'s' if n > 1 else ''}"]
+    out = [esc(f"{dims(e['size'])} mm"), f"{n} part{'s' if n > 1 else ''}"]
     if e["based_on"]:
-        names = [f'<a href="{page_path(s)}">{escape(built_titles[s])}</a>' if s in built_titles
-                 else escape(sample_titles.get(s, words(s))) for s in e["based_on"]]
+        names = [link(built_titles[s], page_path(s)) if s in built_titles
+                 else esc(sample_titles.get(s, words(s))) for s in e["based_on"]]
         out.append("based on " + ", ".join(names))
     if e["mechanisms"]:
-        out.append(escape(", ".join(e["mechanisms"]).lower()))
+        out.append(esc(", ".join(e["mechanisms"]).lower()))
     out.append("printed and checked" if e["printed"] else "not printed yet")
     return " · ".join(out)
 
@@ -282,10 +352,14 @@ SEE_ICON = ('<svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true">
             'fill="currentColor" fill-opacity="0.25" stroke="currentColor"/></svg>')
 
 
+def how_printed(p):
+    return f"{p['orientation']}, printed with {words(p['anchor'])}" if p["anchor"] else p["orientation"]
+
+
 def part_row(p):
     """One row of the parts table. Its checkbox shows or hides the part in the 3D view, its button makes it
     transparent (site.js); both are hidden while the page has no script."""
-    how = f"{p['orientation']}, printed with {words(p['anchor'])}" if p["anchor"] else p["orientation"]
+    how = how_printed(p)
     size = dims(p["print_size"]) if p["print_size"] else "—"   # a bought part is not printed
     name = escape(words(p["name"]))
     return (f'          <tr data-part="{escape(p["name"])}"><td><span class="part"><label>'
@@ -322,7 +396,7 @@ def model_page(entries, i, sample_titles):
     data = {"id": mid, "view": e["view"], "zoom": e["zoom"], "parts": e["parts"]}
     return fill("model.html", {
         "<!--HEAD-->": head(f"{e['title']} — 3D printable model, STEP and STL | {SITE_NAME}", description(e),
-                            page_path(mid), still),
+                            page_path(mid), model_ld(e, built_titles, description(e)), still),
         "__STILL__": still[0], "__STILL_W__": str(still[1][0]), "__STILL_H__": str(still[1][1]),
         "__STILL_ALT__": escape(still[2]),
         "__PREV__": page_path(prev["id"]), "__PREV_TITLE__": escape(prev["title"]),
@@ -335,8 +409,77 @@ def model_page(entries, i, sample_titles):
         "<!--SAFETY-->\n": safety,
         "__CREDIT__": escape(f"{e['title']} from fdm-minimal-design by koedame, CC BY 4.0"),
         "<!--NO_WARRANTY-->": no_warranty(),
-        '"__DATA__"': json.dumps(data, separators=(",", ":")).replace("<", "\\u003c"),
+        '"__DATA__"': data_block(data),
     })
+
+
+MD_SPECIAL = re.compile(r"([\\`*_\[\]<>|#])")
+
+
+def md(text):
+    """Text from model.json or rationale.md as one line of Markdown that shows as written: no markup, link or HTML."""
+    return MD_SPECIAL.sub(r"\\\1", " ".join(str(text).split()))
+
+
+def md_no_warranty():
+    return "\n\n".join(" ".join(p.split()) for p in re.findall(r"<p>(.*?)</p>", no_warranty(), re.S))
+
+
+def md_list(entries):
+    return "\n".join(f"- {md_link(e['number'] + ' ' + e['title'], page_path(e['id']))}: {md(e['summary'].rstrip('.'))}."
+                     f" {md(dims(e['size']))} mm. Markdown: {SITE_URL + markdown_path(page_path(e['id']))}"
+                     for e in entries) or "None yet."
+
+
+def home_markdown(entries):
+    """site/index.md: the home page in Markdown."""
+    return fill("index.md", {
+        "__PAGE__": SITE_URL + "/",
+        "__MODELS__": md_list([e for e in entries if e["group"] == "models"]),
+        "__SAMPLES__": md_list([e for e in entries if e["group"] == "samples"]),
+        "<!--NO_WARRANTY-->": md_no_warranty(),
+    })
+
+
+def model_markdown(entries, i, sample_titles):
+    """site/model.md: the page of entries[i] in Markdown, with what the HTML page holds but the 3D view."""
+    e = entries[i]
+    mid = e["id"]
+    built_titles = {x["id"]: x["title"] for x in entries}
+    parts = "\n".join(f"| {md(words(p['name']))} | {md(how_printed(p))} | {p['qty']} | "
+                      f"{md(dims(p['print_size'])) if p['print_size'] else '—'} |" for p in e["parts"])
+    downloads = "\n".join(f"- [{label}]({SITE_URL}/downloads/{mid}/{d['file']}): {nbytes(d['bytes'])}"
+                          for k, label in DOWNLOAD_LABELS.items() for d in [e["downloads"][k]])
+    safety = ""
+    if e["safety"]:
+        safety = "## Safety\n\n" + "\n\n".join(md(s) for s in e["safety"]) + "\n\n"
+    return fill("model.md", {
+        "__NUMBER__": md(e["number"]), "__TITLE__": md(e["title"]), "__SUMMARY__": md(e["summary"]),
+        "__FACTS__": facts(e, built_titles, sample_titles, esc=md, link=md_link),
+        "__PAGE__": SITE_URL + page_path(mid),
+        "__STILL_ALT__": md(f"{e['title']}: a rendering of the assembled model"),
+        "__STILL__": f"{SITE_URL}/models/{mid}/preview.png",
+        "__PARTS__": parts, "__DOWNLOADS__": downloads, "<!--SAFETY-->\n": safety,
+        "__CREDIT__": md(f"{e['title']} from fdm-minimal-design by koedame, CC BY 4.0"),
+        "<!--NO_WARRANTY-->": md_no_warranty(),
+    })
+
+
+def llms_txt(entries):
+    """/llms.txt (llmstxt.org): what the site is, and the Markdown version of every page."""
+    def section(heading, group):
+        found = [e for e in entries if e["group"] == group]
+        lines = [f"- [{md(e['title'])}]({SITE_URL + markdown_path(page_path(e['id']))}): {md(e['summary'].rstrip('.'))}"
+                 for e in found]
+        return f"## {heading}\n\n" + ("\n".join(lines) if lines else "None yet.") + "\n"
+    return (f"# {SITE_NAME}\n\n> {HOME_DESCRIPTION}\n\n"
+            "Each model has a page with a 3D view and a Markdown version, linked below, that lists its size, parts "
+            "(print orientation, quantity, print size), safety notes and downloads: a STEP assembly, a zip of "
+            "print-ready STL files and a 3D viewer that works offline. Models and images are CC BY 4.0; the code and "
+            "the skill documents are MIT. The files under /downloads/ are downloads, not pages.\n\n"
+            f"- [Home page]({SITE_URL}/index.md): the skill, how to install it, and every model\n\n"
+            + section("Models", "models") + "\n" + section("Samples", "samples") + "\n"
+            f"## Optional\n\n- [Source]({REPO_URL}): the skill, its scripts, and the design script of every model\n")
 
 
 def sitemap(entries):
@@ -345,9 +488,13 @@ def sitemap(entries):
     return f'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n{urls}</urlset>\n'
 
 
+CONTENT_SIGNAL = "search=yes, ai-input=yes, ai-train=no"   # contentsignals.org: searched and quoted, not trained on
+
+
 def robots():
-    """Every page may be crawled; the downloads are large and are not pages."""
-    return f"User-agent: *\nDisallow: /downloads/\n\nSitemap: {SITE_URL}/sitemap.xml\n"
+    """Every page may be crawled; the downloads are large and are not pages. Content-Signal says what the pages may be
+    used for."""
+    return f"User-agent: *\nContent-Signal: {CONTENT_SIGNAL}\nDisallow: /downloads/\n\nSitemap: {SITE_URL}/sitemap.xml\n"
 
 
 INLINE_STYLE = re.compile(r"<style>(.*?)</style>", re.S)
@@ -392,8 +539,11 @@ def build(out, models_dir=models.MODELS_DIR, ids=None, workers=None):
     pages = {"index.html": page(entries), "404.html": fill("404.html", {})}
     for i, e in enumerate(entries):
         pages[f"models/{e['id']}/index.html"] = model_page(entries, i, sample_titles)
-    for name, html in pages.items():
-        (out / name).write_text(html, encoding="utf-8")
+    texts = {"index.md": home_markdown(entries), "llms.txt": llms_txt(entries)}
+    for i, e in enumerate(entries):
+        texts[f"models/{e['id']}/index.md"] = model_markdown(entries, i, sample_titles)
+    for name, text in {**pages, **texts}.items():
+        (out / name).write_text(text, encoding="utf-8")
     (out / "sitemap.xml").write_text(sitemap(entries), encoding="utf-8")
     (out / "robots.txt").write_text(robots(), encoding="utf-8")
     (out / "_headers").write_text(headers(pages.values()), encoding="utf-8")
