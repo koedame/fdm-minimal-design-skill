@@ -93,8 +93,10 @@ viewer of `viewer.py`). Each page has its own title, description and preview ima
 links, and is complete without JavaScript; `sitemap.xml` lists them. For agents, each page also has a Markdown
 version (`index.md` beside it, named in the page's head) and schema.org data (JSON-LD), `llms.txt` lists the
 Markdown versions, and `robots.txt` says the pages may be searched and quoted by AI but not used to train it
-(Content-Signal). The list is built from `models/`, so a new
-model needs no change to the site. The pages read nothing from other servers; the folder also holds `_headers` (the
+(Content-Signal). Content-Signal is a preference addressed to crawlers of the pages, not a licence term: it does not
+change the licences of the models and images (CC BY 4.0) or the code (MIT), which allow any use, training included,
+on their own terms (see [Licence](#licence)). The list is built from `models/`, so a new model needs no change to the
+site. The pages read nothing from other servers; the folder also holds `_headers` (the
 response headers: a Content Security Policy that allows only the site's own files, and the downloads under
 `/downloads/` sent as attachments), `404.html` and `.well-known/security.txt`. Serve the folder from any static host
 that serves `<dir>/index.html` for `<dir>/`; to look at it locally, `python -m http.server -d build/site` (opening

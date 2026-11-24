@@ -88,7 +88,7 @@ python tools/build_site.py --out build/site 001_pen_cup 06_radio  # 指定した
 静的なサイトを書き出す。スキルを紹介してモデル・サンプルを並べるトップページと、1 つずつのページ（`/models/<id>/`）で、
 後者には部品・ダウンロード（STEP・造形向きの STL の zip・ビューワーの HTML）と、`viewer.py` のビューワーによる 3D 表示が載る。
 ページごとに検索エンジンと共有のリンク向けのタイトル・説明・プレビュー画像を持ち、JavaScript が無くても中身が読める。一覧は `sitemap.xml` にも出す。
-エージェント向けに、ページごとの Markdown 版（隣の `index.md`。ページの head で示す）と schema.org の構造化データ（JSON-LD）を持ち、`llms.txt` に Markdown 版を並べる。`robots.txt` では、検索と AI の回答には使ってよく、AI の学習には使わないでほしいことを示す（Content-Signal）。
+エージェント向けに、ページごとの Markdown 版（隣の `index.md`。ページの head で示す）と schema.org の構造化データ（JSON-LD）を持ち、`llms.txt` に Markdown 版を並べる。`robots.txt` では、検索と AI の回答には使ってよく、AI の学習には使わないでほしいことを示す（Content-Signal）。Content-Signal はサイトのページを巡回する側への意思表示で、ライセンスの条件ではない。モデルと画像（CC BY 4.0）とコード（MIT）のライセンスは変えず、学習を含むどんな用途にもそれぞれの条件で使える（[ライセンス](#ライセンス)）。
 一覧は `models/` から組むので、モデルを足してもサイトの手直しは要らない。
 ページは外のサーバーから何も読まない。フォルダーには、応答ヘッダーを決める `_headers`（サイト自身のファイルだけを許す Content Security Policy と、`/downloads/` の下を添付として送る指定）・`404.html`・`.well-known/security.txt` も入る。
 `<dir>/` に `<dir>/index.html` を返す静的なホスティングにフォルダーをそのまま置く。手元で見るときは `python -m http.server -d build/site`
